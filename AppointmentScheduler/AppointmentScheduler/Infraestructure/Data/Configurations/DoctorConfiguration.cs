@@ -11,19 +11,22 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
         builder.ToTable("Doctors");
 
         builder.HasKey(doctor => doctor.Id);
-        builder.Property(doctor => doctor.Id).ValueGeneratedOnAdd();
 
-        builder.Property(doctor => doctor.Name).HasMaxLength(200).IsRequired();
-        builder.Property(doctor => doctor.Crm).HasMaxLength(6).IsRequired();
-        builder.Property(doctor => doctor.Specialty).IsRequired();
-        builder.Property(doctor => doctor.PhoneNumber).IsRequired();
-        builder.Property(doctor => doctor.Email).IsRequired();
+        builder.Property(doctor => doctor.Name).IsRequired().HasMaxLength(200);
+        builder.Property(doctor => doctor.Crm).IsRequired().HasMaxLength(15).IsUnicode(false);
+        builder.Property(doctor => doctor.PhoneNumber).IsRequired().HasMaxLength(20).IsUnicode(false);
+        builder.Property(doctor => doctor.Email).IsRequired().HasMaxLength(200);
         builder.Property(doctor => doctor.HiringDate).IsRequired();
-        builder.Property(doctor => doctor.Active).IsRequired();
-        builder.Property(doctor => doctor.Schedules).IsRequired();
+        builder.Property(doctor => doctor.Active).IsRequired().HasDefaultValue(true);
 
-        builder.HasOne(doctor => doctor.Specialty);
-        builder.HasMany(doctor => doctor.Schedules).WithOne(schedule => schedule.Doctor)
-            .HasForeignKey(schedule => schedule.Id);
+        builder.HasOne(doctor => doctor.Specialty).WithMany().HasForeignKey(doctor => doctor.SpecialtyId)
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(doctor => doctor.Appointments).WithOne(appointment => appointment.Doctor)
+            .HasForeignKey(appointment => appointment.DoctorId).OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(doctor => doctor.Crm).IsUnique();
+        builder.HasIndex(doctor => doctor.Email).IsUnique();
+        builder.HasIndex(doctor => doctor.Active);
+        builder.HasIndex(doctor => doctor.Name);
     }
 }

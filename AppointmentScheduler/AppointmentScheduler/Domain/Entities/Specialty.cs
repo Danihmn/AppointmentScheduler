@@ -2,5 +2,7 @@
 
 public class Specialty : BaseEntity
 {
-    public required string Description { get; set; }
+    public string Description { get; set; } = null!;
+
+    public ICollection<Request> Requests { get; set; } = new List<Request>();
 }

@@ -11,20 +11,21 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
         builder.ToTable("Appointments");
 
         builder.HasKey(appointment => appointment.Id);
-        builder.Property(appointment => appointment.Id).ValueGeneratedOnAdd();
 
-        builder.Property(appointment => appointment.Date).HasDefaultValueSql("GETDATE()").IsRequired();
+        builder.Property(appointment => appointment.Date).IsRequired();
         builder.Property(appointment => appointment.Status).HasConversion<string>().IsRequired();
-        builder.Property(appointment => appointment.Patient).IsRequired();
-        builder.Property(appointment => appointment.Doctor).IsRequired();
-        builder.Property(appointment => appointment.Specialty).IsRequired();
         builder.Property(appointment => appointment.Notes).HasMaxLength(250);
-        builder.Property(appointment => appointment.Secretary).IsRequired();
 
         builder.HasOne(appointment => appointment.Patient).WithMany(patient => patient.Appointments)
-            .HasForeignKey(appointment => appointment.Id);
-        builder.HasOne(appointment => appointment.Doctor);
-        builder.HasOne(appointment => appointment.Specialty);
-        builder.HasOne(appointment => appointment.Secretary);
+            .HasForeignKey(appointment => appointment.PatientId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(appointment => appointment.Doctor).WithMany(doctor => doctor.Appointments)
+            .HasForeignKey(appointment => appointment.DoctorId)
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(appointment => appointment.Specialty).WithMany()
+            .HasForeignKey(appointment => appointment.SpecialtyId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(appointment => appointment.Secretary).WithMany()
+            .HasForeignKey(appointment => appointment.SecretaryId).OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(appointment => new { appointment.DoctorId, appointment.Date }).IsUnique();
     }
 }

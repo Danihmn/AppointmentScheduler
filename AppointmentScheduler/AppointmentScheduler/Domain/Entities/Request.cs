@@ -4,9 +4,20 @@ namespace AppointmentScheduler.Domain.Entities;
 
 public class Request : BaseEntity
 {
-    public required ERequestStatus Status { get; set; }
-    public required ERequestType Type { get; set; }
-    public required DateTime RequestDate { get; set; }
-    public required Patient Patient { get; set; }
-    public required Specialty Specialty { get; set; }
+    public ERequestStatus Status { get; set; } = ERequestStatus.Pending;
+    public ERequestType Type { get; set; }
+    public DateTime DesiredDate { get; set; }
+    public string Description { get; set; } = null!;
+    public string? Notes { get; set; }
+    public EPriority Priority { get; set; } = EPriority.Medium;
+
+    public int PatientId { get; set; }
+    public int SpecialtyId { get; set; }
+    public int? ProcessedBySecretaryId { get; set; }
+    public int? ResultingAppointmentId { get; set; }
+
+    public virtual Patient Patient { get; set; } = null!;
+    public virtual Specialty Specialty { get; set; } = null!;
+    public virtual Secretary? ProcessedBySecretary { get; set; }
+    public virtual Appointment? ResultingAppointment { get; set; }
 }
