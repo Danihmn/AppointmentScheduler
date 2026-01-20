@@ -13,7 +13,7 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
         builder.HasKey(appointment => appointment.Id);
 
         builder.Property(appointment => appointment.Date).IsRequired();
-        builder.Property(appointment => appointment.Status).HasConversion<string>().IsRequired();
+        builder.Property(appointment => appointment.Status).IsRequired().HasConversion<string>().HasMaxLength(50);
         builder.Property(appointment => appointment.Notes).HasMaxLength(250);
 
         builder.HasOne(appointment => appointment.Patient).WithMany(patient => patient.Appointments)

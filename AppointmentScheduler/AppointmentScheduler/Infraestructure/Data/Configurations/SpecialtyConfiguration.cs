@@ -11,8 +11,10 @@ public class SpecialtyConfiguration : IEntityTypeConfiguration<Specialty>
         builder.ToTable("Specialties");
 
         builder.HasKey(specialty => specialty.Id);
-        builder.Property(specialty => specialty.Id).ValueGeneratedOnAdd();
 
         builder.Property(specialty => specialty.Description).HasMaxLength(250).IsRequired();
+
+        builder.HasMany(specialty => specialty.Requests).WithOne(request => request.Specialty)
+            .HasForeignKey(request => request.SpecialtyId).OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -11,13 +11,21 @@ public class SecretaryConfiguration : IEntityTypeConfiguration<Secretary>
         builder.ToTable("Secretaries");
 
         builder.HasKey(secretary => secretary.Id);
-        builder.Property(secretary => secretary.Id).ValueGeneratedOnAdd();
 
         builder.Property(secretary => secretary.Name).HasMaxLength(200).IsRequired();
-        builder.Property(secretary => secretary.Cpf).HasMaxLength(11).IsRequired();
-        builder.Property(secretary => secretary.PhoneNumber).HasMaxLength(11).IsRequired();
+        builder.Property(secretary => secretary.Cpf).HasMaxLength(11).IsFixedLength().IsRequired();
+        builder.Property(secretary => secretary.PhoneNumber).HasMaxLength(20).IsRequired();
         builder.Property(secretary => secretary.Email).HasMaxLength(200).IsRequired();
-        builder.Property(secretary => secretary.CreatedAt).HasDefaultValueSql("GETDATE()").IsRequired();
-        builder.Property(secretary => secretary.Active).HasDefaultValue(true).IsRequired();
+        builder.Property(secretary => secretary.HiringDate).IsRequired();
+        builder.Property(secretary => secretary.Active).IsRequired().HasDefaultValue(true);
+
+        builder.HasMany(secretary => secretary.Appointments).WithOne(appointment => appointment.Secretary)
+            .HasForeignKey(appointment => appointment.SecretaryId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(secretary => secretary.ProcessedRequests).WithOne(request => request.ProcessedBy)
+            .HasForeignKey(request => request.ProcessedById).OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(secretary => secretary.Cpf).IsUnique();
+        builder.HasIndex(secretary => secretary.PhoneNumber).IsUnique();
+        builder.HasIndex(secretary => secretary.Email).IsUnique();
     }
 }

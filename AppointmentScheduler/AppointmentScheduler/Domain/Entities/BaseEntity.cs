@@ -1,6 +1,6 @@
 ﻿namespace AppointmentScheduler.Domain.Entities;
 
-public class BaseEntity
+public abstract class BaseEntity
 {
     public required int Id { get; set; }
 }

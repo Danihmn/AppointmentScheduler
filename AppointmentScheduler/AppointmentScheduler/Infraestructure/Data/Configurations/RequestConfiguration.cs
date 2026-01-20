@@ -19,7 +19,8 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
         builder.Property(request => request.DesiredDate).IsRequired();
         builder.Property(request => request.Description).IsRequired().HasMaxLength(1000);
         builder.Property(request => request.Notes).HasMaxLength(500);
-        builder.Property(request => request.Priority).IsRequired().HasDefaultValue(3);
+        builder.Property(request => request.Priority).IsRequired().HasConversion<string>().HasMaxLength(20)
+            .HasDefaultValue("Medium");
 
         builder.HasOne(request => request.Patient).WithMany(patient => patient.Requests)
             .HasForeignKey(request => request.PatientId).OnDelete(DeleteBehavior.Restrict);

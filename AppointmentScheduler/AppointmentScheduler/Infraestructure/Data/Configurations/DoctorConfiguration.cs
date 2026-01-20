@@ -19,7 +19,8 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
         builder.Property(doctor => doctor.HiringDate).IsRequired();
         builder.Property(doctor => doctor.Active).IsRequired().HasDefaultValue(true);
 
-        builder.HasOne(doctor => doctor.Specialty).WithMany().HasForeignKey(doctor => doctor.SpecialtyId)
+        builder.HasOne(doctor => doctor.Specialty).WithMany(specialty => specialty.Doctors)
+            .HasForeignKey(doctor => doctor.SpecialtyId)
             .OnDelete(DeleteBehavior.Restrict);
         builder.HasMany(doctor => doctor.Appointments).WithOne(appointment => appointment.Doctor)
             .HasForeignKey(appointment => appointment.DoctorId).OnDelete(DeleteBehavior.Restrict);

@@ -16,7 +16,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<Request> Requests { get; set; }
     public DbSet<Secretary> Secretaries { get; set; }
     public DbSet<Specialty> Specialties { get; set; }
-    public DbSet<WaitingList> WaitingLists { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

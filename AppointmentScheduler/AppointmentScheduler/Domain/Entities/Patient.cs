@@ -11,6 +11,6 @@ public class Patient : BaseEntity
     public EGender Gender { get; set; }
     public string? Notes { get; set; } = null!;
 
-    public required ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
-    public required ICollection<Request> Requests { get; set; } = new List<Request>();
+    public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 }
