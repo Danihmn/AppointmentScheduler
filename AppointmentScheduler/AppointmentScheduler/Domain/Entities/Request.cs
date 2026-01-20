@@ -15,11 +15,9 @@ public class Request : BaseEntity
     public int SpecialtyId { get; set; }
     public int? ProcessedBySecretaryId { get; set; }
     public int? ResultingAppointmentId { get; set; }
-    public int? ProcessedById { get; set; }
 
     public virtual Patient Patient { get; set; } = null!;
     public virtual Specialty Specialty { get; set; } = null!;
     public virtual Secretary? ProcessedBySecretary { get; set; }
     public virtual Appointment? ResultingAppointment { get; set; }
-    public virtual Secretary ProcessedBy { get; set; } = null!;
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using AppointmentScheduler.Configurations;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace AppointmentScheduler;
@@ -8,6 +9,8 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateSlimBuilder(args);
+
+        builder.Services.AddDatabaseConfiguration(builder.Configuration);
 
         builder.Services.ConfigureHttpJsonOptions(options =>
         {

@@ -9,7 +9,7 @@ public class Patient : BaseEntity
     public string PhoneNumber { get; set; } = null!;
     public string Email { get; set; } = null!;
     public EGender Gender { get; set; }
-    public string? Notes { get; set; } = null!;
+    public string? Notes { get; set; }
 
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();

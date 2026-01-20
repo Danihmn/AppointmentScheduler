@@ -9,6 +9,6 @@ public class Secretary : BaseEntity
     public DateTime HiringDate { get; set; }
     public bool Active { get; set; }
 
-    public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
-    public ICollection<Request> ProcessedRequests { get; set; } = new List<Request>();
+    public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    public virtual ICollection<Request> ProcessedRequests { get; set; } = new List<Request>();
 }
