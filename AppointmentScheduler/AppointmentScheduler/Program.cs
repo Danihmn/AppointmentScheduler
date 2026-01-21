@@ -1,5 +1,11 @@
 using System.Text.Json.Serialization;
+using AppointmentScheduler.Commands.Appointment;
+using AppointmentScheduler.Commands.AppointmentCommand;
+using AppointmentScheduler.Common;
 using AppointmentScheduler.Configurations;
+using AppointmentScheduler.Domain.Entities;
+using AppointmentScheduler.Domain.Interfaces;
+using AppointmentScheduler.Infraestructure.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace AppointmentScheduler;
@@ -11,6 +17,11 @@ public class Program
         var builder = WebApplication.CreateSlimBuilder(args);
 
         builder.Services.AddDatabaseConfiguration(builder.Configuration);
+
+        builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        builder.Services
+            .AddScoped<ICommandHandler<ScheduleAppointmentCommand, Appointment>, ScheduleAppointmentCommandHandler>();
 
         builder.Services.ConfigureHttpJsonOptions(options =>
         {
