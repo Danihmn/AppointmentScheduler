@@ -20,7 +20,7 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
         builder.Property(request => request.Description).IsRequired().HasMaxLength(1000);
         builder.Property(request => request.Notes).HasMaxLength(500);
         builder.Property(request => request.Priority).IsRequired().HasConversion<string>().HasMaxLength(20)
-            .HasDefaultValue("Medium");
+            .HasDefaultValue(EPriority.Medium);
 
         builder.HasOne(request => request.Patient).WithMany(patient => patient.Requests)
             .HasForeignKey(request => request.PatientId).OnDelete(DeleteBehavior.Restrict);
@@ -29,7 +29,7 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
         builder.HasOne(request => request.ProcessedBySecretary).WithMany()
             .HasForeignKey(request => request.ProcessedBySecretaryId).OnDelete(DeleteBehavior.SetNull);
         builder.HasOne(request => request.ResultingAppointment).WithOne()
-            .HasForeignKey<Request>(r => r.ResultingAppointmentId).OnDelete(DeleteBehavior.SetNull);
+            .HasForeignKey<Request>(request => request.ResultingAppointmentId).OnDelete(DeleteBehavior.SetNull);
 
         builder.HasIndex(request => request.PatientId);
         builder.HasIndex(request => request.SpecialtyId);
