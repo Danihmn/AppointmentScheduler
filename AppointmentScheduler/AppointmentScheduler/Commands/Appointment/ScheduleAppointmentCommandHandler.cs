@@ -1,4 +1,4 @@
-﻿using AppointmentScheduler.Commands.AppointmentCommand;
+﻿
 using AppointmentScheduler.Common;
 using AppointmentScheduler.Domain.Interfaces;
 

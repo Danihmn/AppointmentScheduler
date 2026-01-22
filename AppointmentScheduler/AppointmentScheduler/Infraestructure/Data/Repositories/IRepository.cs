@@ -1,6 +1,8 @@
-﻿namespace AppointmentScheduler.Infraestructure.Data.Repositories;
+﻿using AppointmentScheduler.Domain.Entities;
 
-public interface IRepository<T> where T : class
+namespace AppointmentScheduler.Infraestructure.Data.Repositories;
+
+public interface IRepository<T> where T : BaseEntity
 {
     Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default);

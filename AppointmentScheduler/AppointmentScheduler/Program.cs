@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using AppointmentScheduler.Commands.Appointment;
-using AppointmentScheduler.Commands.AppointmentCommand;
 using AppointmentScheduler.Common;
 using AppointmentScheduler.Configurations;
 using AppointmentScheduler.Domain.Entities;

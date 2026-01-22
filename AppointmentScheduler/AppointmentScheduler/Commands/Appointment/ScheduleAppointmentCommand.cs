@@ -1,6 +1,6 @@
 ﻿using AppointmentScheduler.Common;
 
-namespace AppointmentScheduler.Commands.AppointmentCommand;
+namespace AppointmentScheduler.Commands.Appointment;
 
 public record ScheduleAppointmentCommand(
     DateTime Date,
