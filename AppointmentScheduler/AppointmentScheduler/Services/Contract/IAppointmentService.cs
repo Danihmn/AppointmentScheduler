@@ -12,6 +12,4 @@ public interface IAppointmentService
         int secretaryId,
         string? notes = null,
         CancellationToken cancellationToken = default);
-
-    Task<Appointment?> GetAppointmentAsync(int id, CancellationToken cancellationToken = default);
 }

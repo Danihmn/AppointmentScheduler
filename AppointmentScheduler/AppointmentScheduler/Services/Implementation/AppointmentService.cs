@@ -22,9 +22,4 @@ public class AppointmentService(ICommandHandler<ScheduleAppointmentCommand, Appo
         var command = new ScheduleAppointmentCommand(date, patientId, doctorId, specialtyId, secretaryId, notes);
         return await commandHandler.Handle(command, cancellationToken);
     }
-
-    public Task<Appointment?> GetAppointmentAsync(int id, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
 }

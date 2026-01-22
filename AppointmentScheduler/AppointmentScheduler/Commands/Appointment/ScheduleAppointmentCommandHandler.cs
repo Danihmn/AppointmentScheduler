@@ -4,21 +4,15 @@ using AppointmentScheduler.Domain.Interfaces;
 namespace AppointmentScheduler.Commands.Appointment;
 
 public class
-    ScheduleAppointmentCommandHandler : ICommandHandler<ScheduleAppointmentCommand, Domain.Entities.Appointment>
+    ScheduleAppointmentCommandHandler(IUnitOfWork unitOfWork)
+    : ICommandHandler<ScheduleAppointmentCommand, Domain.Entities.Appointment>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public ScheduleAppointmentCommandHandler(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
-
     public async Task<Domain.Entities.Appointment> Handle(ScheduleAppointmentCommand command,
         CancellationToken cancellationToken = default)
     {
         try
         {
-            var appointmentRepository = _unitOfWork.GetRepository<Domain.Entities.Appointment>();
+            var appointmentRepository = unitOfWork.GetRepository<Domain.Entities.Appointment>();
             var appointment = new Domain.Entities.Appointment
             {
                 Date = command.Date,
@@ -30,13 +24,13 @@ public class
             };
 
             await appointmentRepository.AddAsync(appointment, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return appointment;
         }
         catch (Exception ex)
         {
-            throw;
+            throw new Exception("An error ocurred while creating a new appointment", ex);
         }
     }
 }

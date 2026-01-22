@@ -1,0 +1,31 @@
+﻿using AppointmentScheduler.Common;
+using AppointmentScheduler.Domain.Interfaces;
+
+namespace AppointmentScheduler.Commands.Specialty;
+
+public class CreateSpecialtyCommandHandler(IUnitOfWork unitOfWork)
+    : ICommandHandler<CreateSpecialtyCommand, Domain.Entities.Specialty>
+{
+    public async Task<Domain.Entities.Specialty> Handle(CreateSpecialtyCommand command,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var specialtyRepository = unitOfWork.GetRepository<Domain.Entities.Specialty>();
+            var specialty = new Domain.Entities.Specialty
+            {
+                Description = command.Description,
+                IsActive = command.IsActive
+            };
+
+            await specialtyRepository.AddAsync(specialty, cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return specialty;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occured while adding a new specialty", ex);
+        }
+    }
+}
