@@ -1,5 +1,4 @@
-﻿
-using AppointmentScheduler.Common;
+﻿using AppointmentScheduler.Common;
 using AppointmentScheduler.Domain.Interfaces;
 
 namespace AppointmentScheduler.Commands.Appointment;
