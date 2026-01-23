@@ -16,11 +16,13 @@ public class
             var appointment = new Domain.Entities.Appointment
             {
                 Date = command.Date,
-                DoctorId = command.DoctorId,
+                Status = command.Status,
+                RequestId = command.RequestId,
                 PatientId = command.PatientId,
+                DoctorId = command.DoctorId,
                 SpecialtyId = command.SpecialtyId,
-                Notes = command.Notes,
-                SecretaryId = command.SecretaryId
+                SecretaryId = command.SecretaryId,
+                Notes = command.Notes
             };
 
             await appointmentRepository.AddAsync(appointment, cancellationToken);

@@ -12,6 +12,5 @@ public record CreateRequestCommand(
     EPriority Priority,
     int PatientId,
     int SpecialtyId,
-    int ProcessedBySecretaryId,
-    int ResultingAppointmentId
+    int ProcessedBySecretaryId
 ) : ICommand<Domain.Entities.Request>;

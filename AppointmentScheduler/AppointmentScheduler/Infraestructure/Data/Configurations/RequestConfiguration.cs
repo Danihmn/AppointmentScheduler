@@ -28,8 +28,6 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
             .HasForeignKey(request => request.SpecialtyId).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(request => request.ProcessedBySecretary).WithMany()
             .HasForeignKey(request => request.ProcessedBySecretaryId).OnDelete(DeleteBehavior.SetNull);
-        builder.HasOne(request => request.ResultingAppointment).WithOne()
-            .HasForeignKey<Request>(request => request.ResultingAppointmentId).OnDelete(DeleteBehavior.SetNull);
 
         builder.HasIndex(request => request.PatientId);
         builder.HasIndex(request => request.SpecialtyId);
