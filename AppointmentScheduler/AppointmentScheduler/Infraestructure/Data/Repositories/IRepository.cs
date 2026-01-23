@@ -1,4 +1,5 @@
-﻿using AppointmentScheduler.Domain.Entities;
+﻿using AppointmentScheduler.Domain.Common;
+using AppointmentScheduler.Domain.Entities;
 
 namespace AppointmentScheduler.Infraestructure.Data.Repositories;
 

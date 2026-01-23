@@ -8,10 +8,16 @@ namespace AppointmentScheduler.Services.Implementation;
 
 public class PatientService(ICommandHandler<CreatePatientCommand, Patient> commandHandler) : IPatientService
 {
-    public async Task<Patient> CreatePatientAsync(string name, string cpf, string phoneNumber, string email,
+    public async Task<Patient> CreatePatientAsync
+    (
+        string name,
+        string cpf,
+        string phoneNumber,
+        string email,
         EGender gender,
         string? notes,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default
+    )
     {
         if (name == null || cpf == null || phoneNumber == null || email == null ||
             (gender != EGender.Male && gender != EGender.Female))

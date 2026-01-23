@@ -1,18 +1,18 @@
 ﻿using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Domain.Enums;
 
 namespace AppointmentScheduler.Services.Contract;
 
-public interface IPatientService
+public interface IDoctorService
 {
-    Task<Patient> CreatePatientAsync
+    Task<Doctor> CreateDoctorAsync
     (
         string name,
-        string cpf,
+        string crm,
         string phoneNumber,
         string email,
-        EGender gender,
-        string? notes,
+        DateTime hiringDate,
+        bool active,
+        int specialtyId,
         CancellationToken cancellationToken = default
     );
 }

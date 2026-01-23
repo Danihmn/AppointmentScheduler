@@ -4,7 +4,10 @@ namespace AppointmentScheduler.Services.Contract;
 
 public interface ISpecialtyService
 {
-    Task<Specialty> AddSpecialty(
-        string description, bool isActive, CancellationToken cancellationToken = default
+    Task<Specialty> AddSpecialtyAsync
+    (
+        string description,
+        bool isActive,
+        CancellationToken cancellationToken = default
     );
 }

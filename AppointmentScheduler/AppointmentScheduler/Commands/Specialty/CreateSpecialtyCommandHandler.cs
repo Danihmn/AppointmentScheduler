@@ -25,7 +25,7 @@ public class CreateSpecialtyCommandHandler(IUnitOfWork unitOfWork)
         }
         catch (Exception ex)
         {
-            throw new Exception("An error occured while adding a new specialty", ex);
+            throw new Exception("Error while creating new Specialty", ex);
         }
     }
 }

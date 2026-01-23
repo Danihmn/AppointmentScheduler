@@ -1,4 +1,5 @@
-﻿using AppointmentScheduler.Domain.Enums;
+﻿using AppointmentScheduler.Domain.Common;
+using AppointmentScheduler.Domain.Enums;
 
 namespace AppointmentScheduler.Domain.Entities;
 

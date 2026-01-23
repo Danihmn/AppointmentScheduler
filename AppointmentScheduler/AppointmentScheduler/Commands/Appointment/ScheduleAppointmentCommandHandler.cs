@@ -30,7 +30,7 @@ public class
         }
         catch (Exception ex)
         {
-            throw new Exception("An error ocurred while creating a new appointment", ex);
+            throw new Exception("Error while creating new Appointment", ex);
         }
     }
 }

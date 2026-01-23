@@ -28,7 +28,7 @@ public class CreatePatientCommandHandler(IUnitOfWork unitOfWork)
         }
         catch (Exception ex)
         {
-            throw new Exception("Error creating patient", ex);
+            throw new Exception("Error while creating new Patient", ex);
         }
     }
 }
