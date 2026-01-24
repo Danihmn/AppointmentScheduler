@@ -19,6 +19,7 @@ public class AppointmentService(ICommandHandler<ScheduleAppointmentCommand, Appo
 
         var command = new ScheduleAppointmentCommand(date, status, requestId, patientId, doctorId, specialtyId,
             secretaryId, notes);
+
         return await commandHandler.Handle(command, cancellationToken);
     }
 }

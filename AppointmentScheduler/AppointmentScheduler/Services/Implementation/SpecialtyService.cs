@@ -17,6 +17,7 @@ public class SpecialtyService(ICommandHandler<CreateSpecialtyCommand, Specialty>
         if (string.IsNullOrEmpty(description)) throw new Exception("Invalid data");
 
         var command = new CreateSpecialtyCommand(description, isActive);
+
         return await commandHandler.Handle(command, cancellationToken);
     }
 }

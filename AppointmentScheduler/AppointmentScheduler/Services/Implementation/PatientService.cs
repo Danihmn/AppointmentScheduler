@@ -24,6 +24,7 @@ public class PatientService(ICommandHandler<CreatePatientCommand, Patient> comma
             throw new Exception("Invalid parameters");
 
         var command = new CreatePatientCommand(name, cpf, phoneNumber, email, gender, notes);
+        
         return await commandHandler.Handle(command, cancellationToken);
     }
 }

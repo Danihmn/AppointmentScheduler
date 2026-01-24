@@ -35,6 +35,7 @@ public class RequestService(ICommandHandler<CreateRequestCommand, Request> comma
 
         var command = new CreateRequestCommand(status, type, desiredDate, description, notes, priority, patientId,
             specialtyId, processedBySecretaryId);
+        
         return await commandHandler.Handle(command, cancellationToken);
     }
 }

@@ -1,4 +1,6 @@
-﻿using AppointmentScheduler.Common;
+﻿using System.Text.Json.Serialization;
+using AppointmentScheduler.Commands.Patient;
+using AppointmentScheduler.Common;
 using AppointmentScheduler.Domain.Enums;
 
 namespace AppointmentScheduler.Commands.Appointment;

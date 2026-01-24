@@ -25,6 +25,7 @@ public class DoctorService(ICommandHandler<CreateDoctorCommand, Doctor> commandH
         // It needs to check if exists a Specialty with specialtyId before create
 
         var command = new CreateDoctorCommand(name, crm, phoneNumber, email, hiringDate, active, specialtyId);
+        
         return await commandHandler.Handle(command, cancellationToken);
     }
 }

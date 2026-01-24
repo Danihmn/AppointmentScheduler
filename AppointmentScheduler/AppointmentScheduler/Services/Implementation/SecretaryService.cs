@@ -23,6 +23,7 @@ public class SecretaryService(ICommandHandler<CreateSecretaryCommand, Secretary>
             throw new Exception("Invalid data");
 
         var command = new CreateSecretaryCommand(name, cpf, phoneNumber, email, hiringDate, active);
+        
         return await commandHandler.Handle(command, cancellationToken);
     }
 }
