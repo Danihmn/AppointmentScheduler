@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using AppointmentScheduler.Commands.Appointment;
 using AppointmentScheduler.Commands.Doctor;
 using AppointmentScheduler.Commands.Patient;
+using AppointmentScheduler.Commands.Request;
 using AppointmentScheduler.Commands.Secretary;
 using AppointmentScheduler.Commands.Specialty;
 using AppointmentScheduler.Common;
@@ -29,6 +30,7 @@ public class Program
         builder.Services.AddScoped<ICommandHandler<CreatePatientCommand, Patient>, CreatePatientCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<CreateDoctorCommand, Doctor>, CreateDoctorCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<CreateSecretaryCommand, Secretary>, CreateSecretaryCommandHandler>();
+        builder.Services.AddScoped<ICommandHandler<CreateRequestCommand, Request>, CreateRequestCommandHandler>();
 
         builder.Services.ConfigureHttpJsonOptions(options =>
         {

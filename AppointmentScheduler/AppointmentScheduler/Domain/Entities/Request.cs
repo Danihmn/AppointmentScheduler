@@ -1,9 +1,11 @@
-﻿using AppointmentScheduler.Domain.Common;
+﻿using AppointmentScheduler.Commands.Request;
+using AppointmentScheduler.Common;
+using AppointmentScheduler.Domain.Common;
 using AppointmentScheduler.Domain.Enums;
 
 namespace AppointmentScheduler.Domain.Entities;
 
-public class Request : BaseEntity
+public class Request : BaseEntity, ICommand<CreateRequestCommand>
 {
     public ERequestStatus Status { get; set; } = ERequestStatus.Pending;
     public ERequestType Type { get; set; }
