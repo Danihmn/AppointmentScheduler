@@ -7,7 +7,7 @@ namespace AppointmentScheduler.Infraestructure.Data.Configurations;
 
 public class RequestConfiguration : IEntityTypeConfiguration<Request>
 {
-    public void Configure(EntityTypeBuilder<Request> builder)
+    public void Configure (EntityTypeBuilder<Request> builder)
     {
         builder.ToTable("Requests");
 
@@ -17,7 +17,7 @@ public class RequestConfiguration : IEntityTypeConfiguration<Request>
             .HasDefaultValue(ERequestStatus.Pending);
         builder.Property(request => request.Type).IsRequired().HasConversion<string>().HasMaxLength(50);
         builder.Property(request => request.DesiredDate).IsRequired();
-        builder.Property(request => request.Description).IsRequired().HasMaxLength(1000);
+        builder.Property(request => request.Description).HasMaxLength(1000);
         builder.Property(request => request.Notes).HasMaxLength(500);
         builder.Property(request => request.Priority).IsRequired().HasConversion<string>().HasMaxLength(20)
             .HasDefaultValue(EPriority.Medium);

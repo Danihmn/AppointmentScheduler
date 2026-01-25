@@ -8,7 +8,7 @@ namespace AppointmentScheduler.Services.Implementation;
 
 public class RequestService(ICommandHandler<CreateRequestCommand, Request> commandHandler) : IRequestService
 {
-    public async Task<Request> AddRequestAsync
+    public async Task<Request> CreateRequestAsync
     (
         ERequestStatus status,
         ERequestType type,

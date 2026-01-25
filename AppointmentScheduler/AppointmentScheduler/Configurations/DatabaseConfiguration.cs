@@ -5,7 +5,7 @@ namespace AppointmentScheduler.Configurations;
 
 public static class DatabaseConfiguration
 {
-    public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services,
+    public static IServiceCollection AddDatabaseConfiguration (this IServiceCollection services,
         IConfiguration configuration)
     {
         var connectionString = configuration["ConnectionStrings:DefaultConnection"];

@@ -7,7 +7,7 @@ namespace AppointmentScheduler.Services.Implementation;
 
 public class SpecialtyService(ICommandHandler<CreateSpecialtyCommand, Specialty> commandHandler) : ISpecialtyService
 {
-    public async Task<Specialty> AddSpecialtyAsync
+    public async Task<Specialty> CreateSpecialtyAsync
     (
         string description,
         bool isActive,

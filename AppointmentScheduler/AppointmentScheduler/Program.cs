@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using AppointmentScheduler.Commands.Appointment;
 using AppointmentScheduler.Commands.Doctor;
 using AppointmentScheduler.Commands.Patient;
@@ -11,12 +10,15 @@ using AppointmentScheduler.Domain.Entities;
 using AppointmentScheduler.Domain.Interfaces;
 using AppointmentScheduler.Extensions;
 using AppointmentScheduler.Infraestructure.Data;
+using AppointmentScheduler.Services.Contract;
+using AppointmentScheduler.Services.Implementation;
+using System.Text.Json.Serialization;
 
 namespace AppointmentScheduler;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static void Main (string[] args)
     {
         var builder = WebApplication.CreateSlimBuilder(args);
 
@@ -31,6 +33,13 @@ public class Program
         builder.Services.AddScoped<ICommandHandler<CreateDoctorCommand, Doctor>, CreateDoctorCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<CreateSecretaryCommand, Secretary>, CreateSecretaryCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<CreateRequestCommand, Request>, CreateRequestCommandHandler>();
+
+        builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+        builder.Services.AddScoped<IDoctorService, DoctorService>();
+        builder.Services.AddScoped<IPatientService, PatientService>();
+        builder.Services.AddScoped<IRequestService, RequestService>();
+        builder.Services.AddScoped<ISecretaryService, SecretaryService>();
+        builder.Services.AddScoped<ISpecialtyService, SpecialtyService>();
 
         builder.Services.ConfigureHttpJsonOptions(options =>
         {
@@ -54,7 +63,18 @@ public class Program
     }
 }
 
-[JsonSerializable(typeof(Appointment[]))]
+[JsonSerializable(typeof(Appointment))]
+[JsonSerializable(typeof(Doctor))]
+[JsonSerializable(typeof(Patient))]
+[JsonSerializable(typeof(Request))]
+[JsonSerializable(typeof(Secretary))]
+[JsonSerializable(typeof(Specialty))]
+[JsonSerializable(typeof(ScheduleAppointmentCommand))]
+[JsonSerializable(typeof(CreateDoctorCommand))]
+[JsonSerializable(typeof(CreatePatientCommand))]
+[JsonSerializable(typeof(CreateRequestCommand))]
+[JsonSerializable(typeof(CreateSecretaryCommand))]
+[JsonSerializable(typeof(CreateSpecialtyCommand))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }

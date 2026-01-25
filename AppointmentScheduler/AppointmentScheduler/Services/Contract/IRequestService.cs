@@ -5,7 +5,7 @@ namespace AppointmentScheduler.Services.Contract;
 
 public interface IRequestService
 {
-    Task<Request> AddRequestAsync
+    Task<Request> CreateRequestAsync
     (
         ERequestStatus status,
         ERequestType type,
