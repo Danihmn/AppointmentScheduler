@@ -10,6 +10,7 @@ using AppointmentScheduler.Domain.Entities;
 using AppointmentScheduler.Domain.Interfaces;
 using AppointmentScheduler.Extensions;
 using AppointmentScheduler.Infraestructure.Data;
+using AppointmentScheduler.Queries.Appointment;
 using AppointmentScheduler.Services.Contract;
 using AppointmentScheduler.Services.Implementation;
 using System.Text.Json.Serialization;
@@ -33,6 +34,9 @@ public class Program
         builder.Services.AddScoped<ICommandHandler<CreateDoctorCommand, Doctor>, CreateDoctorCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<CreateSecretaryCommand, Secretary>, CreateSecretaryCommandHandler>();
         builder.Services.AddScoped<ICommandHandler<CreateRequestCommand, Request>, CreateRequestCommandHandler>();
+
+        builder.Services
+            .AddScoped<IQueryHandler<GetAppointmentsQuery, IEnumerable<Appointment>>, GetAppointmentsQueryHandler>();
 
         builder.Services.AddScoped<IAppointmentService, AppointmentService>();
         builder.Services.AddScoped<IDoctorService, DoctorService>();
@@ -69,6 +73,7 @@ public class Program
 [JsonSerializable(typeof(Request))]
 [JsonSerializable(typeof(Secretary))]
 [JsonSerializable(typeof(Specialty))]
+[JsonSerializable(typeof(GetAppointmentsQuery))]
 [JsonSerializable(typeof(ScheduleAppointmentCommand))]
 [JsonSerializable(typeof(CreateDoctorCommand))]
 [JsonSerializable(typeof(CreatePatientCommand))]

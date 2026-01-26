@@ -2,14 +2,24 @@
 using AppointmentScheduler.Common;
 using AppointmentScheduler.Domain.Entities;
 using AppointmentScheduler.Domain.Enums;
+using AppointmentScheduler.Queries.Appointment;
 using AppointmentScheduler.Services.Contract;
 
 namespace AppointmentScheduler.Services.Implementation;
 
-public class AppointmentService(ICommandHandler<ScheduleAppointmentCommand, Appointment> commandHandler)
+public class AppointmentService
+    (
+        ICommandHandler<ScheduleAppointmentCommand, Appointment> commandHandler,
+        IQueryHandler<GetAppointmentsQuery, IEnumerable<Appointment>> queryHandler
+    )
     : IAppointmentService
 {
-    public async Task<Appointment> ScheduleAppointmentAsync(DateTime date, EStatus status, int requestId, int patientId,
+    public async Task<IEnumerable<Appointment>> GetAppointmentsAsync (CancellationToken cancellationToken = default)
+    {
+        return await queryHandler.Handle(cancellationToken);
+    }
+
+    public async Task<Appointment> ScheduleAppointmentAsync (DateTime date, EStatus status, int requestId, int patientId,
         int doctorId,
         int specialtyId, int secretaryId, string? notes = null, CancellationToken cancellationToken = default)
     {

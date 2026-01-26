@@ -9,9 +9,12 @@ public static class AppointmentEndpoints
     {
         RouteGroupBuilder appointmentGroup = app.MapGroup("/api/appointments").WithTags("Appointments");
 
+        appointmentGroup.MapGet("/appointment", async (IAppointmentService service) =>
+            await service.GetAppointmentsAsync());
+
         appointmentGroup.MapPost("/appointment",
-            async (ScheduleAppointmentCommand command, IAppointmentService appointmentService) =>
-                await appointmentService.ScheduleAppointmentAsync(command.Date, command.Status, command.RequestId,
+            async (ScheduleAppointmentCommand command, IAppointmentService service) =>
+                await service.ScheduleAppointmentAsync(command.Date, command.Status, command.RequestId,
                     command.PatientId, command.DoctorId, command.SpecialtyId, command.SecretaryId));
 
         return Task.FromResult(app);
