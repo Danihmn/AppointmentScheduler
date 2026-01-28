@@ -6,7 +6,9 @@ namespace AppointmentScheduler.Queries.Appointment
     public class GetAppointmentsQueryHandler (IUnitOfWork unitOfWork)
         : IQueryHandler<GetAppointmentsQuery, IEnumerable<Domain.Entities.Appointment>>
     {
-        public async Task<IEnumerable<Domain.Entities.Appointment>> Handle (CancellationToken cancellationToken)
+        public async Task<IEnumerable<Domain.Entities.Appointment>> Handle (
+            GetAppointmentsQuery query,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -17,11 +19,6 @@ namespace AppointmentScheduler.Queries.Appointment
             {
                 throw new Exception("Error while getting Appointments", ex);
             }
-        }
-
-        public async Task<IEnumerable<Domain.Entities.Appointment>> Handle (GetAppointmentsQuery query, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
     }
 }

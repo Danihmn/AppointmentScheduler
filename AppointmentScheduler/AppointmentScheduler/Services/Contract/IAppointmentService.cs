@@ -5,11 +5,8 @@ namespace AppointmentScheduler.Services.Contract;
 
 public interface IAppointmentService
 {
-    Task<IEnumerable<Appointment>> GetAppointmentsAsync
-    (
-        CancellationToken cancellationToken = default
-    );
-
+    Task<IEnumerable<Appointment>> GetAppointmentsAsync (CancellationToken cancellationToken = default);
+    Task<Appointment> GetAppointmentByIdAsync (int id, CancellationToken cancellationToken = default);
     Task<Appointment> ScheduleAppointmentAsync
     (
         DateTime date,

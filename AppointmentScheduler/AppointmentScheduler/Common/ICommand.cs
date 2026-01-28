@@ -1,5 +1,3 @@
 ﻿namespace AppointmentScheduler.Common;
 
-public interface ICommand<TResponse>
-{
-}
+public interface ICommand<TResponse> { }

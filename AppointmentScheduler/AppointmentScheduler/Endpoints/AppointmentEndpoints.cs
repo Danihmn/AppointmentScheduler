@@ -12,6 +12,9 @@ public static class AppointmentEndpoints
         appointmentGroup.MapGet("/appointment", async (IAppointmentService service) =>
             await service.GetAppointmentsAsync());
 
+        appointmentGroup.MapGet("/appointment/{id}", async (IAppointmentService service, int id) =>
+            await service.GetAppointmentByIdAsync(id));
+
         appointmentGroup.MapPost("/appointment",
             async (ScheduleAppointmentCommand command, IAppointmentService service) =>
                 await service.ScheduleAppointmentAsync(command.Date, command.Status, command.RequestId,

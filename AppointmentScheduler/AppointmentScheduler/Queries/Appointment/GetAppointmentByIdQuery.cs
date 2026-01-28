@@ -2,5 +2,5 @@
 
 namespace AppointmentScheduler.Queries.Appointment
 {
-    public record GetAppointmentsQuery () : IQuery<IEnumerable<Domain.Entities.Appointment>>;
+    public record GetAppointmentByIdQuery (int Id) : IQuery<Domain.Entities.Appointment>;
 }

@@ -37,6 +37,7 @@ public class Program
 
         builder.Services
             .AddScoped<IQueryHandler<GetAppointmentsQuery, IEnumerable<Appointment>>, GetAppointmentsQueryHandler>();
+        builder.Services.AddScoped<IQueryHandler<GetAppointmentByIdQuery, Appointment>, GetAppointmentByIdQueryHandler>();
 
         builder.Services.AddScoped<IAppointmentService, AppointmentService>();
         builder.Services.AddScoped<IDoctorService, DoctorService>();
@@ -74,6 +75,7 @@ public class Program
 [JsonSerializable(typeof(Secretary))]
 [JsonSerializable(typeof(Specialty))]
 [JsonSerializable(typeof(GetAppointmentsQuery))]
+[JsonSerializable(typeof(GetAppointmentByIdQuery))]
 [JsonSerializable(typeof(ScheduleAppointmentCommand))]
 [JsonSerializable(typeof(CreateDoctorCommand))]
 [JsonSerializable(typeof(CreatePatientCommand))]

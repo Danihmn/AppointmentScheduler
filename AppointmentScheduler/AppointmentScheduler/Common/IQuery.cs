@@ -1,5 +1,3 @@
 ﻿namespace AppointmentScheduler.Common;
 
-public interface IQuery<TResponse>
-{
-}
+public interface IQuery<TResponse> { }
