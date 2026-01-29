@@ -1,12 +1,32 @@
 ﻿using AppointmentScheduler.Commands.Doctor;
 using AppointmentScheduler.Common;
 using AppointmentScheduler.Domain.Entities;
+using AppointmentScheduler.Queries.Doctor;
 using AppointmentScheduler.Services.Contract;
 
 namespace AppointmentScheduler.Services.Implementation;
 
-public class DoctorService(ICommandHandler<CreateDoctorCommand, Doctor> commandHandler) : IDoctorService
+public class DoctorService
+    (
+        IQueryHandler<GetDoctorsQuery, IEnumerable<Doctor>> queryHandlerGetAllDoctors,
+        IQueryHandler<GetDoctorByIdQuery, Doctor> queryHandlerGetDoctorById,
+        ICommandHandler<CreateDoctorCommand, Doctor> commandHandlerCreateDoctor
+    ) : IDoctorService
 {
+    public async Task<IEnumerable<Doctor>> GetDoctorsAsync (CancellationToken cancellationToken = default)
+    {
+        var query = new GetDoctorsQuery();
+        return await queryHandlerGetAllDoctors.Handle(query, cancellationToken);
+    }
+
+    public async Task<Doctor> GetDoctorByIdAsync (int id, CancellationToken cancellationToken = default)
+    {
+        if (id <= 0) throw new ArgumentOutOfRangeException("id");
+
+        var query = new GetDoctorByIdQuery(id);
+        return await queryHandlerGetDoctorById.Handle(query, cancellationToken);
+    }
+
     public async Task<Doctor> CreateDoctorAsync
     (
         string name,
@@ -25,7 +45,7 @@ public class DoctorService(ICommandHandler<CreateDoctorCommand, Doctor> commandH
         // It needs to check if exists a Specialty with specialtyId before create
 
         var command = new CreateDoctorCommand(name, crm, phoneNumber, email, hiringDate, active, specialtyId);
-        
-        return await commandHandler.Handle(command, cancellationToken);
+
+        return await commandHandlerCreateDoctor.Handle(command, cancellationToken);
     }
 }
