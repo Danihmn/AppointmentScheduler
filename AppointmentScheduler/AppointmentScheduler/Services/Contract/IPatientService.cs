@@ -6,6 +6,7 @@ namespace AppointmentScheduler.Services.Contract;
 public interface IPatientService
 {
     Task<IEnumerable<Patient>> GetPatientsAsync (CancellationToken cancellationToken = default);
+    Task<Patient> GetPatientByIdAsync (int id, CancellationToken cancellationToken = default);
     Task<Patient> CreatePatientAsync
     (
         string name,
