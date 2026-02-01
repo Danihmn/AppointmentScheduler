@@ -2,12 +2,31 @@
 using AppointmentScheduler.Common;
 using AppointmentScheduler.Domain.Entities;
 using AppointmentScheduler.Domain.Enums;
+using AppointmentScheduler.Queries.Request;
 using AppointmentScheduler.Services.Contract;
 
 namespace AppointmentScheduler.Services.Implementation;
 
-public class RequestService(ICommandHandler<CreateRequestCommand, Request> commandHandler) : IRequestService
+public class RequestService
+
+    (
+        IQueryHandler<GetRequestsQuery, IEnumerable<Request>> queryHandlerGetAllRequests,
+        IQueryHandler<GetRequestByIdQuery, Request> queryHandlerGetRequestById,
+        ICommandHandler<CreateRequestCommand, Request> commandHandlerCreateRequest
+    ) : IRequestService
 {
+    public async Task<IEnumerable<Request>> GetRequestsAsync (CancellationToken cancellationToken = default)
+    {
+        var query = new GetRequestsQuery();
+        return await queryHandlerGetAllRequests.Handle(query, cancellationToken);
+    }
+
+    public async Task<Request> GetRequestByIdAsync (int id, CancellationToken cancellationToken = default)
+    {
+        var query = new GetRequestByIdQuery(id);
+        return await queryHandlerGetRequestById.Handle(query, cancellationToken);
+    }
+
     public async Task<Request> CreateRequestAsync
     (
         ERequestStatus status,
@@ -35,7 +54,7 @@ public class RequestService(ICommandHandler<CreateRequestCommand, Request> comma
 
         var command = new CreateRequestCommand(status, type, desiredDate, description, notes, priority, patientId,
             specialtyId, processedBySecretaryId);
-        
-        return await commandHandler.Handle(command, cancellationToken);
+
+        return await commandHandlerCreateRequest.Handle(command, cancellationToken);
     }
 }

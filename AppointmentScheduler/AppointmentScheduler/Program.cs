@@ -13,6 +13,7 @@ using AppointmentScheduler.Infraestructure.Data;
 using AppointmentScheduler.Queries.Appointment;
 using AppointmentScheduler.Queries.Doctor;
 using AppointmentScheduler.Queries.Patient;
+using AppointmentScheduler.Queries.Request;
 using AppointmentScheduler.Services.Contract;
 using AppointmentScheduler.Services.Implementation;
 using System.Text.Json.Serialization;
@@ -44,6 +45,8 @@ public class Program
         builder.Services.AddScoped<IQueryHandler<GetDoctorByIdQuery, Doctor>, GetDoctorByIdQueryHandler>();
         builder.Services.AddScoped<IQueryHandler<GetPatientsQuery, IEnumerable<Patient>>, GetPatientsQueryHandler>();
         builder.Services.AddScoped<IQueryHandler<GetPatientByIdQuery, Patient>, GetPatientByIdQueryHandler>();
+        builder.Services.AddScoped<IQueryHandler<GetRequestsQuery, IEnumerable<Request>>, GetRequestsQueryHandler>();
+        builder.Services.AddScoped<IQueryHandler<GetRequestByIdQuery, Request>, GetRequestByIdQueryHandler>();
 
         builder.Services.AddScoped<IAppointmentService, AppointmentService>();
         builder.Services.AddScoped<IDoctorService, DoctorService>();
@@ -87,6 +90,8 @@ public class Program
 [JsonSerializable(typeof(GetDoctorByIdQuery))]
 [JsonSerializable(typeof(GetPatientsQuery))]
 [JsonSerializable(typeof(GetPatientByIdQuery))]
+[JsonSerializable(typeof(GetRequestsQuery))]
+[JsonSerializable(typeof(GetRequestByIdQuery))]
 [JsonSerializable(typeof(CreateDoctorCommand))]
 [JsonSerializable(typeof(CreatePatientCommand))]
 [JsonSerializable(typeof(CreateRequestCommand))]
