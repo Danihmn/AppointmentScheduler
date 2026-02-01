@@ -2,12 +2,23 @@
 using AppointmentScheduler.Common;
 using AppointmentScheduler.Domain.Entities;
 using AppointmentScheduler.Domain.Enums;
+using AppointmentScheduler.Queries.Patient;
 using AppointmentScheduler.Services.Contract;
 
 namespace AppointmentScheduler.Services.Implementation;
 
-public class PatientService(ICommandHandler<CreatePatientCommand, Patient> commandHandler) : IPatientService
+public class PatientService
+    (
+        IQueryHandler<GetPatientsQuery, IEnumerable<Patient>> queryHandlerGetAllPatients,
+        ICommandHandler<CreatePatientCommand, Patient> commandHandlerCreatePatients
+    ) : IPatientService
 {
+    public async Task<IEnumerable<Patient>> GetPatientsAsync (CancellationToken cancellationToken = default)
+    {
+        var query = new GetPatientsQuery();
+        return await queryHandlerGetAllPatients.Handle(query, cancellationToken);
+    }
+
     public async Task<Patient> CreatePatientAsync
     (
         string name,
@@ -24,7 +35,7 @@ public class PatientService(ICommandHandler<CreatePatientCommand, Patient> comma
             throw new Exception("Invalid parameters");
 
         var command = new CreatePatientCommand(name, cpf, phoneNumber, email, gender, notes);
-        
-        return await commandHandler.Handle(command, cancellationToken);
+
+        return await commandHandlerCreatePatients.Handle(command, cancellationToken);
     }
 }
