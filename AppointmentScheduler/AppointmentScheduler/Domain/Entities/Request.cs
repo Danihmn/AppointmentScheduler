@@ -1,9 +1,4 @@
-﻿using AppointmentScheduler.Commands.Request;
-using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Common;
-using AppointmentScheduler.Domain.Enums;
-
-namespace AppointmentScheduler.Domain.Entities;
+﻿namespace AppointmentScheduler.Domain.Entities;
 
 public class Request : BaseEntity, ICommand<CreateRequestCommand>
 {

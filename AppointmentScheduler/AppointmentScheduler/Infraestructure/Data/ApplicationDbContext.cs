@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace AppointmentScheduler.Infraestructure.Data;
+﻿namespace AppointmentScheduler.Infraestructure.Data;
 
 public class ApplicationDbContext (DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {

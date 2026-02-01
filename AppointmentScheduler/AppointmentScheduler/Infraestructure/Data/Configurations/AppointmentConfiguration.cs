@@ -1,12 +1,8 @@
-﻿using AppointmentScheduler.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace AppointmentScheduler.Infraestructure.Data.Configurations;
+﻿namespace AppointmentScheduler.Infraestructure.Data.Configurations;
 
 public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
 {
-    public void Configure(EntityTypeBuilder<Appointment> builder)
+    public void Configure (EntityTypeBuilder<Appointment> builder)
     {
         builder.ToTable("Appointments");
 

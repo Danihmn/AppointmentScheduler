@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Commands.Secretary;
-using AppointmentScheduler.Services.Contract;
-
-namespace AppointmentScheduler.Endpoints
+﻿namespace AppointmentScheduler.Endpoints
 {
     public static class SecretaryEndpoints
     {
@@ -9,9 +6,12 @@ namespace AppointmentScheduler.Endpoints
         {
             RouteGroupBuilder secretaryGroup = app.MapGroup("/api/secretaries").WithTags("Secretaries");
 
+            secretaryGroup.MapGet("/secretary", async (ISecretaryService service) =>
+                await service.GetSecretariesAsync()).WithDescription("Lista todas as secretárias");
+
             secretaryGroup.MapPost("/secretary", async (CreateSecretaryCommand command, ISecretaryService service) =>
                 await service.CreateSecretaryAsync(command.Name, command.Cpf, command.PhoneNumber, command.Email,
-                    command.HiringDate, command.Active));
+                    command.HiringDate, command.Active)).WithDescription("Cria nova secretária");
 
             return Task.FromResult(app);
         }

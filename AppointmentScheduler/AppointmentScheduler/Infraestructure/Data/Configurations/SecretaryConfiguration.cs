@@ -1,12 +1,8 @@
-﻿using AppointmentScheduler.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace AppointmentScheduler.Infraestructure.Data.Configurations;
+﻿namespace AppointmentScheduler.Infraestructure.Data.Configurations;
 
 public class SecretaryConfiguration : IEntityTypeConfiguration<Secretary>
 {
-    public void Configure(EntityTypeBuilder<Secretary> builder)
+    public void Configure (EntityTypeBuilder<Secretary> builder)
     {
         builder.ToTable("Secretaries");
 

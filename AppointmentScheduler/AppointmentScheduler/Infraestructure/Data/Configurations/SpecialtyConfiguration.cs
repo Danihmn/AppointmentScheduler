@@ -1,12 +1,8 @@
-﻿using AppointmentScheduler.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace AppointmentScheduler.Infraestructure.Data.Configurations;
+﻿namespace AppointmentScheduler.Infraestructure.Data.Configurations;
 
 public class SpecialtyConfiguration : IEntityTypeConfiguration<Specialty>
 {
-    public void Configure(EntityTypeBuilder<Specialty> builder)
+    public void Configure (EntityTypeBuilder<Specialty> builder)
     {
         builder.ToTable("Specialties");
 

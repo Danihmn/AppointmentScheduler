@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Domain.Enums;
-
-namespace AppointmentScheduler.Services.Contract;
+﻿namespace AppointmentScheduler.Services.Contract;
 
 public interface IPatientService
 {

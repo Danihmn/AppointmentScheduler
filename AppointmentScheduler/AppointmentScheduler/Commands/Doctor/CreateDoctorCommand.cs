@@ -1,8 +1,6 @@
-﻿using AppointmentScheduler.Common;
+﻿namespace AppointmentScheduler.Commands.Doctor;
 
-namespace AppointmentScheduler.Commands.Doctor;
-
-public record CreateDoctorCommand(
+public record CreateDoctorCommand (
     string Name,
     string Crm,
     string PhoneNumber,

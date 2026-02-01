@@ -1,12 +1,9 @@
-﻿using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Interfaces;
+﻿namespace AppointmentScheduler.Commands.Specialty;
 
-namespace AppointmentScheduler.Commands.Specialty;
-
-public class CreateSpecialtyCommandHandler(IUnitOfWork unitOfWork)
+public class CreateSpecialtyCommandHandler (IUnitOfWork unitOfWork)
     : ICommandHandler<CreateSpecialtyCommand, Domain.Entities.Specialty>
 {
-    public async Task<Domain.Entities.Specialty> Handle(CreateSpecialtyCommand command,
+    public async Task<Domain.Entities.Specialty> Handle (CreateSpecialtyCommand command,
         CancellationToken cancellationToken)
     {
         try

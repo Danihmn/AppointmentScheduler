@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Endpoints;
-
-namespace AppointmentScheduler.Extensions;
+﻿namespace AppointmentScheduler.Extensions;
 
 public static class EndpointExtension
 {

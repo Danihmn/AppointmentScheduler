@@ -1,10 +1,4 @@
-﻿using AppointmentScheduler.Commands.Doctor;
-using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Queries.Doctor;
-using AppointmentScheduler.Services.Contract;
-
-namespace AppointmentScheduler.Services.Implementation;
+﻿namespace AppointmentScheduler.Services.Implementation;
 
 public class DoctorService
     (

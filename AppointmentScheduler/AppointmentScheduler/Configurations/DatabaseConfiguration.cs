@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Infraestructure.Data;
-using Microsoft.EntityFrameworkCore;
-
-namespace AppointmentScheduler.Configurations;
+﻿namespace AppointmentScheduler.Configurations;
 
 public static class DatabaseConfiguration
 {

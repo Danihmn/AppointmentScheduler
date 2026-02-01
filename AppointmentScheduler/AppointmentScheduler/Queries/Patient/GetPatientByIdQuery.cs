@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Common;
-
-namespace AppointmentScheduler.Queries.Patient
+﻿namespace AppointmentScheduler.Queries.Patient
 {
     public record GetPatientByIdQuery (int Id) : IQuery<Domain.Entities.Patient>;
 }

@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Commands.Patient;
-using AppointmentScheduler.Services.Contract;
-
-namespace AppointmentScheduler.Endpoints;
+﻿namespace AppointmentScheduler.Endpoints;
 
 public static class PatientEndpoints
 {

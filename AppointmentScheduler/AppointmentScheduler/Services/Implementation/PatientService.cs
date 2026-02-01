@@ -1,11 +1,4 @@
-﻿using AppointmentScheduler.Commands.Patient;
-using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Domain.Enums;
-using AppointmentScheduler.Queries.Patient;
-using AppointmentScheduler.Services.Contract;
-
-namespace AppointmentScheduler.Services.Implementation;
+﻿namespace AppointmentScheduler.Services.Implementation;
 
 public class PatientService
     (

@@ -1,23 +1,3 @@
-using AppointmentScheduler.Commands.Appointment;
-using AppointmentScheduler.Commands.Doctor;
-using AppointmentScheduler.Commands.Patient;
-using AppointmentScheduler.Commands.Request;
-using AppointmentScheduler.Commands.Secretary;
-using AppointmentScheduler.Commands.Specialty;
-using AppointmentScheduler.Common;
-using AppointmentScheduler.Configurations;
-using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Domain.Interfaces;
-using AppointmentScheduler.Extensions;
-using AppointmentScheduler.Infraestructure.Data;
-using AppointmentScheduler.Queries.Appointment;
-using AppointmentScheduler.Queries.Doctor;
-using AppointmentScheduler.Queries.Patient;
-using AppointmentScheduler.Queries.Request;
-using AppointmentScheduler.Services.Contract;
-using AppointmentScheduler.Services.Implementation;
-using System.Text.Json.Serialization;
-
 namespace AppointmentScheduler;
 
 public class Program
@@ -47,6 +27,8 @@ public class Program
         builder.Services.AddScoped<IQueryHandler<GetPatientByIdQuery, Patient>, GetPatientByIdQueryHandler>();
         builder.Services.AddScoped<IQueryHandler<GetRequestsQuery, IEnumerable<Request>>, GetRequestsQueryHandler>();
         builder.Services.AddScoped<IQueryHandler<GetRequestByIdQuery, Request>, GetRequestByIdQueryHandler>();
+        builder.Services
+            .AddScoped<IQueryHandler<GetSecretariesQuery, IEnumerable<Secretary>>, GetSecretariesQueryHandler>();
 
         builder.Services.AddScoped<IAppointmentService, AppointmentService>();
         builder.Services.AddScoped<IDoctorService, DoctorService>();
@@ -92,11 +74,10 @@ public class Program
 [JsonSerializable(typeof(GetPatientByIdQuery))]
 [JsonSerializable(typeof(GetRequestsQuery))]
 [JsonSerializable(typeof(GetRequestByIdQuery))]
+[JsonSerializable(typeof(GetSecretariesQuery))]
 [JsonSerializable(typeof(CreateDoctorCommand))]
 [JsonSerializable(typeof(CreatePatientCommand))]
 [JsonSerializable(typeof(CreateRequestCommand))]
 [JsonSerializable(typeof(CreateSecretaryCommand))]
 [JsonSerializable(typeof(CreateSpecialtyCommand))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext
-{
-}
+internal partial class AppJsonSerializerContext : JsonSerializerContext { }

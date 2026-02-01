@@ -1,9 +1,4 @@
-﻿using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace AppointmentScheduler.Infraestructure.Data.Configurations;
+﻿namespace AppointmentScheduler.Infraestructure.Data.Configurations;
 
 public class RequestConfiguration : IEntityTypeConfiguration<Request>
 {

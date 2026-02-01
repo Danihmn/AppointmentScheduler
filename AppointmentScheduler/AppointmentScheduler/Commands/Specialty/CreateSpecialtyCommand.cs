@@ -1,7 +1,5 @@
-﻿using AppointmentScheduler.Common;
+﻿namespace AppointmentScheduler.Commands.Specialty;
 
-namespace AppointmentScheduler.Commands.Specialty;
-
-public record CreateSpecialtyCommand(
+public record CreateSpecialtyCommand (
     string Description,
     bool IsActive) : ICommand<Domain.Entities.Specialty>;

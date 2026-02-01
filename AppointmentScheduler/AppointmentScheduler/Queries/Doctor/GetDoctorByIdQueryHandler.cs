@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Interfaces;
-
-namespace AppointmentScheduler.Queries.Doctor
+﻿namespace AppointmentScheduler.Queries.Doctor
 {
     public class GetDoctorByIdQueryHandler (IUnitOfWork unitOfWork)
         : IQueryHandler<GetDoctorByIdQuery, Domain.Entities.Doctor>

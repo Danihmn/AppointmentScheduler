@@ -1,39 +1,35 @@
-﻿using AppointmentScheduler.Domain.Common;
-using AppointmentScheduler.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation;
+﻿namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation;
 
 public class RepositoryImplementation<T> : IRepository<T> where T : BaseEntity
 {
     private DbSet<T> _dbSet;
 
-    public RepositoryImplementation(ApplicationDbContext context)
+    public RepositoryImplementation (ApplicationDbContext context)
     {
         _dbSet = context.Set<T>();
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<T>> GetAllAsync (CancellationToken cancellationToken = default)
     {
         return await _dbSet.ToListAsync(cancellationToken);
     }
 
-    public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<T?> GetByIdAsync (int id, CancellationToken cancellationToken = default)
     {
         return await _dbSet.FindAsync([id], cancellationToken);
     }
 
-    public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
+    public async Task AddAsync (T entity, CancellationToken cancellationToken = default)
     {
         await _dbSet.AddAsync(entity, cancellationToken);
     }
 
-    public void Update(T entity)
+    public void Update (T entity)
     {
         _dbSet.Update(entity);
     }
 
-    public void Remove(T entity)
+    public void Remove (T entity)
     {
         _dbSet.Remove(entity);
     }

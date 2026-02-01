@@ -1,12 +1,9 @@
-﻿using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Interfaces;
+﻿namespace AppointmentScheduler.Commands.Secretary;
 
-namespace AppointmentScheduler.Commands.Secretary;
-
-public class CreateSecretaryCommandHandler(IUnitOfWork unitOfWork)
+public class CreateSecretaryCommandHandler (IUnitOfWork unitOfWork)
     : ICommandHandler<CreateSecretaryCommand, Domain.Entities.Secretary>
 {
-    public async Task<Domain.Entities.Secretary> Handle(CreateSecretaryCommand command,
+    public async Task<Domain.Entities.Secretary> Handle (CreateSecretaryCommand command,
         CancellationToken cancellationToken)
     {
         try

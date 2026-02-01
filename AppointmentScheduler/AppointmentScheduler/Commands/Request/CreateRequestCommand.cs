@@ -1,9 +1,6 @@
-﻿using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Enums;
+﻿namespace AppointmentScheduler.Commands.Request;
 
-namespace AppointmentScheduler.Commands.Request;
-
-public record CreateRequestCommand(
+public record CreateRequestCommand (
     ERequestStatus Status,
     ERequestType Type,
     DateTime DesiredDate,

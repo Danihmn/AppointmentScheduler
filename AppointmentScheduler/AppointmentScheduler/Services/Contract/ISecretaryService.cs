@@ -1,9 +1,8 @@
-﻿using AppointmentScheduler.Domain.Entities;
-
-namespace AppointmentScheduler.Services.Contract;
+﻿namespace AppointmentScheduler.Services.Contract;
 
 public interface ISecretaryService
 {
+    Task<IEnumerable<Secretary>> GetSecretariesAsync (CancellationToken cancellationToken = default);
     Task<Secretary> CreateSecretaryAsync
     (
         string name,

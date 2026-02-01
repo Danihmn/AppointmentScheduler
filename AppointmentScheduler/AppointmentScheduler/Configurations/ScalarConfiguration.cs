@@ -1,6 +1,4 @@
-﻿using Scalar.AspNetCore;
-
-namespace AppointmentScheduler.Configurations;
+﻿namespace AppointmentScheduler.Configurations;
 
 public static class ScalarConfiguration
 {

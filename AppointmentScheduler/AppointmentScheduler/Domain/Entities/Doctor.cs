@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Domain.Common;
-
-namespace AppointmentScheduler.Domain.Entities;
+﻿namespace AppointmentScheduler.Domain.Entities;
 
 public class Doctor : BaseEntity
 {

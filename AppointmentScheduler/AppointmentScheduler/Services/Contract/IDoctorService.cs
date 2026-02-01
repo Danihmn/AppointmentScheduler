@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Domain.Entities;
-
-namespace AppointmentScheduler.Services.Contract;
+﻿namespace AppointmentScheduler.Services.Contract;
 
 public interface IDoctorService
 {

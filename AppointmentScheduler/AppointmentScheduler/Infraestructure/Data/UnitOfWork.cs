@@ -1,37 +1,32 @@
-﻿using AppointmentScheduler.Domain.Common;
-using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Domain.Interfaces;
-using AppointmentScheduler.Infraestructure.Data.Repositories;
-using AppointmentScheduler.Infraestructure.Data.Repositories.Implementation;
+﻿namespace AppointmentScheduler.Infraestructure.Data;
 
-namespace AppointmentScheduler.Infraestructure.Data;
-
-public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
+public class UnitOfWork (ApplicationDbContext context) : IUnitOfWork
 {
     private bool _disposed = false;
-    private readonly Dictionary<Type, object> _repositories = new();
+    private readonly Dictionary<Type, object> _repositories = [];
 
-    public IRepository<T> GetRepository<T>() where T : BaseEntity
+    public IRepository<T> GetRepository<T> () where T : BaseEntity
     {
         var type = typeof(T);
 
-        if (!_repositories.ContainsKey(type))
+        if (!_repositories.TryGetValue(type, out object? value))
         {
             var repositoryType = typeof(RepositoryImplementation<>).MakeGenericType(type);
             var repositoryInstance = Activator.CreateInstance(repositoryType, context);
 
-            _repositories[type] = repositoryInstance!;
+            value = repositoryInstance!;
+            _repositories[type] = value;
         }
 
-        return (IRepository<T>)_repositories[type];
+        return (IRepository<T>)value;
     }
 
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync (CancellationToken cancellationToken = default)
     {
         return await context.SaveChangesAsync(cancellationToken);
     }
 
-    protected virtual void Dispose(bool disposing)
+    protected virtual void Dispose (bool disposing)
     {
         if (_disposed) return;
         if (disposing) context.Dispose();
@@ -39,7 +34,7 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
         _disposed = true;
     }
 
-    public void Dispose()
+    public void Dispose ()
     {
         Dispose(true);
         GC.SuppressFinalize(this);

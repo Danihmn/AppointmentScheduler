@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Domain.Common;
-using AppointmentScheduler.Domain.Enums;
-
-namespace AppointmentScheduler.Domain.Entities;
+﻿namespace AppointmentScheduler.Domain.Entities;
 
 public class Appointment : BaseEntity
 {

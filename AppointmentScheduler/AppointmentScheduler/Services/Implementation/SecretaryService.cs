@@ -1,12 +1,17 @@
-﻿using AppointmentScheduler.Commands.Secretary;
-using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Services.Contract;
+﻿namespace AppointmentScheduler.Services.Implementation;
 
-namespace AppointmentScheduler.Services.Implementation;
-
-public class SecretaryService(ICommandHandler<CreateSecretaryCommand, Secretary> commandHandler) : ISecretaryService
+public class SecretaryService
+    (
+        IQueryHandler<GetSecretariesQuery, IEnumerable<Secretary>> queryHandlerGetAllSecretaries,
+        ICommandHandler<CreateSecretaryCommand, Secretary> commandHandlerCreateSecretary
+    ) : ISecretaryService
 {
+    public async Task<IEnumerable<Secretary>> GetSecretariesAsync (CancellationToken cancellationToken = default)
+    {
+        var query = new GetSecretariesQuery();
+        return await queryHandlerGetAllSecretaries.Handle(query, cancellationToken);
+    }
+
     public async Task<Secretary> CreateSecretaryAsync
     (
         string name,
@@ -23,7 +28,7 @@ public class SecretaryService(ICommandHandler<CreateSecretaryCommand, Secretary>
             throw new Exception("Invalid data");
 
         var command = new CreateSecretaryCommand(name, cpf, phoneNumber, email, hiringDate, active);
-        
-        return await commandHandler.Handle(command, cancellationToken);
+
+        return await commandHandlerCreateSecretary.Handle(command, cancellationToken);
     }
 }

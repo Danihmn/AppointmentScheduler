@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Common;
-
-namespace AppointmentScheduler.Queries.Appointment
+﻿namespace AppointmentScheduler.Queries.Appointment
 {
     public record GetAppointmentsQuery () : IQuery<IEnumerable<Domain.Entities.Appointment>>;
 }

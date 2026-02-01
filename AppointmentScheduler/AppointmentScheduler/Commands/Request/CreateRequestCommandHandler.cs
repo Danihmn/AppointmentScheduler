@@ -1,12 +1,9 @@
-﻿using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Interfaces;
+﻿namespace AppointmentScheduler.Commands.Request;
 
-namespace AppointmentScheduler.Commands.Request;
-
-public class CreateRequestCommandHandler(IUnitOfWork unitOfWork)
+public class CreateRequestCommandHandler (IUnitOfWork unitOfWork)
     : ICommandHandler<CreateRequestCommand, Domain.Entities.Request>
 {
-    public async Task<Domain.Entities.Request> Handle(CreateRequestCommand command, CancellationToken cancellationToken)
+    public async Task<Domain.Entities.Request> Handle (CreateRequestCommand command, CancellationToken cancellationToken)
     {
         try
         {

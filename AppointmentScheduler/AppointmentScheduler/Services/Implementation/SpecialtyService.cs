@@ -1,11 +1,6 @@
-﻿using AppointmentScheduler.Commands.Specialty;
-using AppointmentScheduler.Common;
-using AppointmentScheduler.Domain.Entities;
-using AppointmentScheduler.Services.Contract;
+﻿namespace AppointmentScheduler.Services.Implementation;
 
-namespace AppointmentScheduler.Services.Implementation;
-
-public class SpecialtyService(ICommandHandler<CreateSpecialtyCommand, Specialty> commandHandler) : ISpecialtyService
+public class SpecialtyService (ICommandHandler<CreateSpecialtyCommand, Specialty> commandHandler) : ISpecialtyService
 {
     public async Task<Specialty> CreateSpecialtyAsync
     (
