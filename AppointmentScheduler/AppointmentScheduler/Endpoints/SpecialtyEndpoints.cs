@@ -10,7 +10,7 @@
                 await service.GetSpecialtiesAsync()).WithDescription("Lista todas as especialidades");
 
             specialtyGroup.MapGet("/specialty/{id}", async (ISpecialtyService service, int id) =>
-               await service.GetSecretaryByIdAsync(id)).WithDescription("Busca secretária pelo Id");
+               await service.GetSpecialtyByIdAsync(id)).WithDescription("Busca especialidade pelo Id");
 
             specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ISpecialtyService service) =>
                 await service.CreateSpecialtyAsync(command.Description, command.IsActive))
