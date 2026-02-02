@@ -1,4 +1,7 @@
-﻿namespace AppointmentScheduler.Domain.Entities;
+﻿using AppointmentScheduler.Application.Commands.Request;
+using AppointmentScheduler.Application.Common;
+
+namespace AppointmentScheduler.Domain.Entities;
 
 public class Request : BaseEntity, ICommand<CreateRequestCommand>
 {

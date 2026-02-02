@@ -1,4 +1,7 @@
-﻿namespace AppointmentScheduler.Endpoints;
+﻿using AppointmentScheduler.Application.Commands.Appointment;
+using AppointmentScheduler.Infraestructure.Services.Contract;
+
+namespace AppointmentScheduler.Endpoints;
 
 public static class AppointmentEndpoints
 {
