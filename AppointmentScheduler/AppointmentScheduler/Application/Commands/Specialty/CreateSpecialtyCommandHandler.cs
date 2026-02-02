@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Application.Common;
-
-namespace AppointmentScheduler.Application.Commands.Specialty;
+﻿namespace AppointmentScheduler.Application.Commands.Specialty;
 
 public class CreateSpecialtyCommandHandler (IUnitOfWork unitOfWork)
     : ICommandHandler<CreateSpecialtyCommand, Domain.Entities.Specialty>

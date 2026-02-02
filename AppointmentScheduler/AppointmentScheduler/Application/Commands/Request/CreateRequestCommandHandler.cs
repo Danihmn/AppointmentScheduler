@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Application.Common;
-
-namespace AppointmentScheduler.Application.Commands.Request;
+﻿namespace AppointmentScheduler.Application.Commands.Request;
 
 public class CreateRequestCommandHandler (IUnitOfWork unitOfWork)
     : ICommandHandler<CreateRequestCommand, Domain.Entities.Request>

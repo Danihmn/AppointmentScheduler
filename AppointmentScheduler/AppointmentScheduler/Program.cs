@@ -1,18 +1,4 @@
-using AppointmentScheduler.Application.Commands.Appointment;
-using AppointmentScheduler.Application.Commands.Doctor;
-using AppointmentScheduler.Application.Commands.Patient;
-using AppointmentScheduler.Application.Commands.Request;
-using AppointmentScheduler.Application.Commands.Secretary;
-using AppointmentScheduler.Application.Commands.Specialty;
-using AppointmentScheduler.Application.Common;
-using AppointmentScheduler.Application.Queries.Appointment;
-using AppointmentScheduler.Application.Queries.Doctor;
-using AppointmentScheduler.Application.Queries.Patient;
-using AppointmentScheduler.Application.Queries.Request;
-using AppointmentScheduler.Application.Queries.Secretary;
-using AppointmentScheduler.Infraestructure.Extensions;
-using AppointmentScheduler.Infraestructure.Services.Contract;
-using AppointmentScheduler.Infraestructure.Services.Implementation;
+using AppointmentScheduler.Application.Queries.Specialty;
 
 namespace AppointmentScheduler;
 
@@ -46,6 +32,9 @@ public class Program
         builder.Services
             .AddScoped<IQueryHandler<GetSecretariesQuery, IEnumerable<Secretary>>, GetSecretariesQueryHandler>();
         builder.Services.AddScoped<IQueryHandler<GetSecretaryByIdQuery, Secretary>, GetSecretaryByIdQueryHandler>();
+        builder.Services
+            .AddScoped<IQueryHandler<GetSpecialtiesQuery, IEnumerable<Specialty>>, GetSpecialtiesQueryHandler>();
+        builder.Services.AddScoped<IQueryHandler<GetSpecialtyByIdQuery, Specialty>, GetSpecialtyByIdQueryHandler>();
 
         builder.Services.AddScoped<IAppointmentService, AppointmentService>();
         builder.Services.AddScoped<IDoctorService, DoctorService>();
@@ -93,6 +82,8 @@ public class Program
 [JsonSerializable(typeof(GetRequestByIdQuery))]
 [JsonSerializable(typeof(GetSecretariesQuery))]
 [JsonSerializable(typeof(GetSecretaryByIdQuery))]
+[JsonSerializable(typeof(GetSecretariesQuery))]
+[JsonSerializable(typeof(GetSpecialtyByIdQuery))]
 [JsonSerializable(typeof(CreateDoctorCommand))]
 [JsonSerializable(typeof(CreatePatientCommand))]
 [JsonSerializable(typeof(CreateRequestCommand))]

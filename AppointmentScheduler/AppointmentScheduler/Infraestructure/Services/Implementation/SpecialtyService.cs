@@ -1,11 +1,28 @@
-﻿using AppointmentScheduler.Application.Commands.Specialty;
-using AppointmentScheduler.Application.Common;
-using AppointmentScheduler.Infraestructure.Services.Contract;
+﻿using AppointmentScheduler.Application.Queries.Specialty;
 
 namespace AppointmentScheduler.Infraestructure.Services.Implementation;
 
-public class SpecialtyService (ICommandHandler<CreateSpecialtyCommand, Specialty> commandHandler) : ISpecialtyService
+public class SpecialtyService
+    (
+        IQueryHandler<GetSpecialtiesQuery, IEnumerable<Specialty>> queryHandlerGetAllSpecialties,
+        IQueryHandler<GetSpecialtyByIdQuery, Specialty> queryHandlerGetSpecialtyById,
+        ICommandHandler<CreateSpecialtyCommand, Specialty> commandHandlerCreateSpecialty
+    ) : ISpecialtyService
 {
+    public async Task<IEnumerable<Specialty>> GetSpecialtiesAsync (CancellationToken cancellationToken = default)
+    {
+        var query = new GetSpecialtiesQuery();
+        return await queryHandlerGetAllSpecialties.Handle(query, cancellationToken);
+    }
+
+    public async Task<Specialty> GetSpecialtyByIdAsync (int id, CancellationToken cancellationToken = default)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
+
+        var query = new GetSpecialtyByIdQuery(id);
+        return await queryHandlerGetSpecialtyById.Handle(query, cancellationToken);
+    }
+
     public async Task<Specialty> CreateSpecialtyAsync
     (
         string description,
@@ -17,6 +34,6 @@ public class SpecialtyService (ICommandHandler<CreateSpecialtyCommand, Specialty
 
         var command = new CreateSpecialtyCommand(description, isActive);
 
-        return await commandHandler.Handle(command, cancellationToken);
+        return await commandHandlerCreateSpecialty.Handle(command, cancellationToken);
     }
 }

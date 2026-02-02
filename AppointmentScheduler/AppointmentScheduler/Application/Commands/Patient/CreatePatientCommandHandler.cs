@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Application.Common;
-
-namespace AppointmentScheduler.Application.Commands.Patient;
+﻿namespace AppointmentScheduler.Application.Commands.Patient;
 
 public class CreatePatientCommandHandler (IUnitOfWork unitOfWork)
     : ICommandHandler<CreatePatientCommand, Domain.Entities.Patient>

@@ -1,9 +1,4 @@
-﻿using AppointmentScheduler.Application.Commands.Secretary;
-using AppointmentScheduler.Application.Common;
-using AppointmentScheduler.Application.Queries.Secretary;
-using AppointmentScheduler.Infraestructure.Services.Contract;
-
-namespace AppointmentScheduler.Infraestructure.Services.Implementation;
+﻿namespace AppointmentScheduler.Infraestructure.Services.Implementation;
 
 public class SecretaryService
     (

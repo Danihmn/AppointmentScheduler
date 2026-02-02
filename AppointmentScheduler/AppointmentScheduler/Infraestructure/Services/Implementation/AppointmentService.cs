@@ -1,9 +1,4 @@
-﻿using AppointmentScheduler.Application.Commands.Appointment;
-using AppointmentScheduler.Application.Common;
-using AppointmentScheduler.Application.Queries.Appointment;
-using AppointmentScheduler.Infraestructure.Services.Contract;
-
-namespace AppointmentScheduler.Infraestructure.Services.Implementation;
+﻿namespace AppointmentScheduler.Infraestructure.Services.Implementation;
 
 public class AppointmentService
     (

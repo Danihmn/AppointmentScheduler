@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Application.Common;
-
-namespace AppointmentScheduler.Application.Commands.Appointment;
+﻿namespace AppointmentScheduler.Application.Commands.Appointment;
 
 public class
     ScheduleAppointmentCommandHandler (IUnitOfWork unitOfWork)

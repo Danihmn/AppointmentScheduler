@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Application.Common;
-
-namespace AppointmentScheduler.Application.Commands.Secretary;
+﻿namespace AppointmentScheduler.Application.Commands.Secretary;
 
 public class CreateSecretaryCommandHandler (IUnitOfWork unitOfWork)
     : ICommandHandler<CreateSecretaryCommand, Domain.Entities.Secretary>

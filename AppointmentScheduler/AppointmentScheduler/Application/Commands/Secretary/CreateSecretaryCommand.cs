@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Application.Common;
-
-namespace AppointmentScheduler.Application.Commands.Secretary;
+﻿namespace AppointmentScheduler.Application.Commands.Secretary;
 
 public record CreateSecretaryCommand (
     string Name,

@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Application.Common;
-
-namespace AppointmentScheduler.Application.Queries.Appointment
+﻿namespace AppointmentScheduler.Application.Queries.Appointment
 {
     public class GetAppointmentsQueryHandler (IUnitOfWork unitOfWork)
         : IQueryHandler<GetAppointmentsQuery, IEnumerable<Domain.Entities.Appointment>>
