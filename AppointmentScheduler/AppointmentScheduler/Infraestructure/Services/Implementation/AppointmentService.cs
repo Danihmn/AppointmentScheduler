@@ -2,13 +2,13 @@
 
 public class AppointmentService
     (
-        IQueryHandler<GetAppointmentsQuery, IEnumerable<Appointment>> queryHandlerGetAllAppointments,
+        IQueryHandler<GetAppointmentsQuery, IEnumerable<AppointmentResponseDTO>> queryHandlerGetAllAppointments,
         IQueryHandler<GetAppointmentByIdQuery, Appointment> queryHandlerGetAppointmentById,
         ICommandHandler<ScheduleAppointmentCommand, Appointment> commandHandlerCreateAppointment
     )
     : IAppointmentService
 {
-    public async Task<IEnumerable<Appointment>> GetAppointmentsAsync (CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<AppointmentResponseDTO>> GetAppointmentsAsync (CancellationToken cancellationToken = default)
     {
         var query = new GetAppointmentsQuery();
         return await queryHandlerGetAllAppointments.Handle(query, cancellationToken);

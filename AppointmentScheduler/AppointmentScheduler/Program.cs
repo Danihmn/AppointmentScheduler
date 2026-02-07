@@ -1,5 +1,3 @@
-using AppointmentScheduler.Application.Queries.Specialty;
-
 namespace AppointmentScheduler;
 
 public class Program
@@ -8,33 +6,16 @@ public class Program
     {
         var builder = WebApplication.CreateSlimBuilder(args);
 
+        builder.Services.AddMapster();
+
+        builder.Services.AddScoped<IMapper, ServiceMapper>();
+
         builder.Services.AddDatabaseConfiguration(builder.Configuration);
 
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        builder.Services
-            .AddScoped<ICommandHandler<ScheduleAppointmentCommand, Appointment>, ScheduleAppointmentCommandHandler>();
-        builder.Services.AddScoped<ICommandHandler<CreateSpecialtyCommand, Specialty>, CreateSpecialtyCommandHandler>();
-        builder.Services.AddScoped<ICommandHandler<CreatePatientCommand, Patient>, CreatePatientCommandHandler>();
-        builder.Services.AddScoped<ICommandHandler<CreateDoctorCommand, Doctor>, CreateDoctorCommandHandler>();
-        builder.Services.AddScoped<ICommandHandler<CreateSecretaryCommand, Secretary>, CreateSecretaryCommandHandler>();
-        builder.Services.AddScoped<ICommandHandler<CreateRequestCommand, Request>, CreateRequestCommandHandler>();
-
-        builder.Services
-            .AddScoped<IQueryHandler<GetAppointmentsQuery, IEnumerable<Appointment>>, GetAppointmentsQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetAppointmentByIdQuery, Appointment>, GetAppointmentByIdQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetDoctorsQuery, IEnumerable<Doctor>>, GetDoctorsQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetDoctorByIdQuery, Doctor>, GetDoctorByIdQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetPatientsQuery, IEnumerable<Patient>>, GetPatientsQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetPatientByIdQuery, Patient>, GetPatientByIdQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetRequestsQuery, IEnumerable<Request>>, GetRequestsQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetRequestByIdQuery, Request>, GetRequestByIdQueryHandler>();
-        builder.Services
-            .AddScoped<IQueryHandler<GetSecretariesQuery, IEnumerable<Secretary>>, GetSecretariesQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetSecretaryByIdQuery, Secretary>, GetSecretaryByIdQueryHandler>();
-        builder.Services
-            .AddScoped<IQueryHandler<GetSpecialtiesQuery, IEnumerable<Specialty>>, GetSpecialtiesQueryHandler>();
-        builder.Services.AddScoped<IQueryHandler<GetSpecialtyByIdQuery, Specialty>, GetSpecialtyByIdQueryHandler>();
+        builder.Services.MapCommandHandlers();
+        builder.Services.MapQueryHandlers();
 
         builder.Services.AddScoped<IAppointmentService, AppointmentService>();
         builder.Services.AddScoped<IDoctorService, DoctorService>();
@@ -66,6 +47,7 @@ public class Program
 }
 
 [JsonSerializable(typeof(Appointment))]
+[JsonSerializable(typeof(AppointmentResponseDTO))]
 [JsonSerializable(typeof(Doctor))]
 [JsonSerializable(typeof(Patient))]
 [JsonSerializable(typeof(Request))]

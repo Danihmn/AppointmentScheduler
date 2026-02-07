@@ -1,16 +1,18 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Appointment
 {
     public class GetAppointmentsQueryHandler (IUnitOfWork unitOfWork)
-        : IQueryHandler<GetAppointmentsQuery, IEnumerable<Domain.Entities.Appointment>>
+        : IQueryHandler<GetAppointmentsQuery, IEnumerable<AppointmentResponseDTO>>
     {
-        public async Task<IEnumerable<Domain.Entities.Appointment>> Handle (
+        public async Task<IEnumerable<AppointmentResponseDTO>> Handle (
             GetAppointmentsQuery query,
             CancellationToken cancellationToken)
         {
             try
             {
                 var appointmentRepository = unitOfWork.GetRepository<Domain.Entities.Appointment>();
-                return await appointmentRepository.GetAllAsync(cancellationToken);
+                var entity = await appointmentRepository.GetAllAsync(cancellationToken);
+
+                return entity.Adapt<IEnumerable<AppointmentResponseDTO>>();
             }
             catch (Exception ex)
             {
