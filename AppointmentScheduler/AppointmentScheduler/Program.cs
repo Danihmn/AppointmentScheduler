@@ -27,10 +27,7 @@ public class Program
 
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
+        if (app.Environment.IsDevelopment()) app.MapOpenApi();
 
         app.UseHttpsRedirection();
 
@@ -45,9 +42,9 @@ public class Program
 [JsonSerializable(typeof(AppointmentResponseDTO))]
 [JsonSerializable(typeof(DoctorResponseDTO))]
 [JsonSerializable(typeof(PatientResponseDTO))]
-[JsonSerializable(typeof(Request))]
-[JsonSerializable(typeof(Secretary))]
-[JsonSerializable(typeof(Specialty))]
+[JsonSerializable(typeof(RequestResponseDTO))]
+[JsonSerializable(typeof(SecretaryResponseDTO))]
+[JsonSerializable(typeof(SpecialtyResponseDTO))]
 [JsonSerializable(typeof(GetAppointmentsQuery))]
 [JsonSerializable(typeof(GetAppointmentByIdQuery))]
 [JsonSerializable(typeof(ScheduleAppointmentCommand))]

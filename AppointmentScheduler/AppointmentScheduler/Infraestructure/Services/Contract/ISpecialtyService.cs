@@ -2,8 +2,8 @@
 
 public interface ISpecialtyService
 {
-    Task<IEnumerable<Specialty>> GetSpecialtiesAsync (CancellationToken cancellationToken = default);
-    Task<Specialty> GetSpecialtyByIdAsync (int id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<SpecialtyResponseDTO>> GetSpecialtiesAsync (CancellationToken cancellationToken = default);
+    Task<SpecialtyResponseDTO> GetSpecialtyByIdAsync (int id, CancellationToken cancellationToken = default);
     Task<Specialty> CreateSpecialtyAsync
     (
         string description,

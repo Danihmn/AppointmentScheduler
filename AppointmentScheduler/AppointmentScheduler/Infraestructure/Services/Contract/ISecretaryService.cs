@@ -2,8 +2,8 @@
 
 public interface ISecretaryService
 {
-    Task<IEnumerable<Secretary>> GetSecretariesAsync (CancellationToken cancellationToken = default);
-    Task<Secretary> GetSecretaryByIdAsync (int id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<SecretaryResponseDTO>> GetSecretariesAsync (CancellationToken cancellationToken = default);
+    Task<SecretaryResponseDTO> GetSecretaryByIdAsync (int id, CancellationToken cancellationToken = default);
     Task<Secretary> CreateSecretaryAsync
     (
         string name,

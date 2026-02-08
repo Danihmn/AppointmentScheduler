@@ -1,15 +1,18 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Specialty
 {
-    public class GetSpecialtyByIdQueryHandler (IUnitOfWork unitOfWork)
-        : IQueryHandler<GetSpecialtyByIdQuery, Domain.Entities.Specialty>
+    public class GetSpecialtyByIdQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
+        : IQueryHandler<GetSpecialtyByIdQuery, SpecialtyResponseDTO>
     {
-        public async Task<Domain.Entities.Specialty> Handle
+        public async Task<SpecialtyResponseDTO> Handle
             (GetSpecialtyByIdQuery query, CancellationToken cancellationToken)
         {
             try
             {
-                var specialtyRepoitory = unitOfWork.GetRepository<Domain.Entities.Specialty>();
-                return await specialtyRepoitory.GetByIdAsync(query.Id, cancellationToken);
+                var specialtyRepoitory
+                    = await unitOfWork.SpecialtyRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
+
+                return specialtyRepoitory == null ? throw new Exception()
+                    : mapper.Map<SpecialtyResponseDTO>(specialtyRepoitory);
             }
             catch (Exception ex)
             {

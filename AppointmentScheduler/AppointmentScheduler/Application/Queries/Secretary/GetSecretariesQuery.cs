@@ -1,4 +1,4 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Secretary
 {
-    public record GetSecretariesQuery () : IQuery<IEnumerable<Domain.Entities.Secretary>>;
+    public record GetSecretariesQuery () : IQuery<IEnumerable<SecretaryResponseDTO>>;
 }

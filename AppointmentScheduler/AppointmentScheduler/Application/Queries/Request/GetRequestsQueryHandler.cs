@@ -8,7 +8,8 @@
         {
             try
             {
-                var requestRepository = await unitOfWork.RequestRepository.GetAllWithDetailAsync(cancellationToken);
+                var requestRepository
+                    = await unitOfWork.RequestRepository.GetAllWithDetailAsync(cancellationToken);
 
                 return mapper.Map<IEnumerable<RequestResponseDTO>>(requestRepository);
             }

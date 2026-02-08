@@ -17,11 +17,12 @@
                 .AddScoped<IQueryHandler<GetRequestsQuery, IEnumerable<RequestResponseDTO>>, GetRequestsQueryHandler>();
             services.AddScoped<IQueryHandler<GetRequestByIdQuery, RequestResponseDTO>, GetRequestByIdQueryHandler>();
             services
-                .AddScoped<IQueryHandler<GetSecretariesQuery, IEnumerable<Secretary>>, GetSecretariesQueryHandler>();
-            services.AddScoped<IQueryHandler<GetSecretaryByIdQuery, Secretary>, GetSecretaryByIdQueryHandler>();
+                .AddScoped<IQueryHandler<GetSecretariesQuery, IEnumerable<SecretaryResponseDTO>>, GetSecretariesQueryHandler>();
             services
-                .AddScoped<IQueryHandler<GetSpecialtiesQuery, IEnumerable<Specialty>>, GetSpecialtiesQueryHandler>();
-            services.AddScoped<IQueryHandler<GetSpecialtyByIdQuery, Specialty>, GetSpecialtyByIdQueryHandler>();
+                .AddScoped<IQueryHandler<GetSecretaryByIdQuery, SecretaryResponseDTO>, GetSecretaryByIdQueryHandler>();
+            services
+                .AddScoped<IQueryHandler<GetSpecialtiesQuery, IEnumerable<SpecialtyResponseDTO>>, GetSpecialtiesQueryHandler>();
+            services.AddScoped<IQueryHandler<GetSpecialtyByIdQuery, SpecialtyResponseDTO>, GetSpecialtyByIdQueryHandler>();
 
             return services;
         }

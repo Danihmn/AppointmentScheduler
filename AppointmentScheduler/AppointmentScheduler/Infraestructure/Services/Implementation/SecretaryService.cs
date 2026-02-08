@@ -2,18 +2,18 @@
 
 public class SecretaryService
     (
-        IQueryHandler<GetSecretariesQuery, IEnumerable<Secretary>> queryHandlerGetAllSecretaries,
-        IQueryHandler<GetSecretaryByIdQuery, Secretary> queryHandlerGetSecretaryById,
+        IQueryHandler<GetSecretariesQuery, IEnumerable<SecretaryResponseDTO>> queryHandlerGetAllSecretaries,
+        IQueryHandler<GetSecretaryByIdQuery, SecretaryResponseDTO> queryHandlerGetSecretaryById,
         ICommandHandler<CreateSecretaryCommand, Secretary> commandHandlerCreateSecretary
     ) : ISecretaryService
 {
-    public async Task<IEnumerable<Secretary>> GetSecretariesAsync (CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<SecretaryResponseDTO>> GetSecretariesAsync (CancellationToken cancellationToken = default)
     {
         var query = new GetSecretariesQuery();
         return await queryHandlerGetAllSecretaries.Handle(query, cancellationToken);
     }
 
-    public async Task<Secretary> GetSecretaryByIdAsync (int id, CancellationToken cancellationToken = default)
+    public async Task<SecretaryResponseDTO> GetSecretaryByIdAsync (int id, CancellationToken cancellationToken = default)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 

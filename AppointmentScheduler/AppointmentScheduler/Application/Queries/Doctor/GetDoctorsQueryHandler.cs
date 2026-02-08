@@ -8,7 +8,8 @@
         {
             try
             {
-                var doctorRepository = await unitOfWork.DoctorRepository.GetAllWithDetailAsync(cancellationToken);
+                var doctorRepository
+                    = await unitOfWork.DoctorRepository.GetAllWithDetailAsync(cancellationToken);
 
                 return mapper.Map<IEnumerable<DoctorResponseDTO>>(doctorRepository);
             }

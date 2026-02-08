@@ -1,15 +1,17 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Secretary
 {
-    public class GetSecretariesQueryHandler (IUnitOfWork unitOfWork)
-        : IQueryHandler<GetSecretariesQuery, IEnumerable<Domain.Entities.Secretary>>
+    public class GetSecretariesQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
+        : IQueryHandler<GetSecretariesQuery, IEnumerable<SecretaryResponseDTO>>
     {
-        public async Task<IEnumerable<Domain.Entities.Secretary>> Handle
+        public async Task<IEnumerable<SecretaryResponseDTO>> Handle
             (GetSecretariesQuery query, CancellationToken cancellationToken)
         {
             try
             {
-                var secretaryRepository = unitOfWork.GetRepository<Domain.Entities.Secretary>();
-                return await secretaryRepository.GetAllAsync(cancellationToken);
+                var secretaryRepository
+                    = await unitOfWork.SecretaryRepository.GetAllWithDetailAsync(cancellationToken);
+
+                return mapper.Map<IEnumerable<SecretaryResponseDTO>>(secretaryRepository);
             }
             catch (Exception ex)
             {

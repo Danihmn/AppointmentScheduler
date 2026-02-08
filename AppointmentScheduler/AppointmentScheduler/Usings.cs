@@ -23,7 +23,6 @@ global using AppointmentScheduler.Infraestructure.Data.Repositories.Contract;
 global using AppointmentScheduler.Infraestructure.Data.Repositories.Contract.Generic;
 global using AppointmentScheduler.Infraestructure.Data.Repositories.Implementation;
 global using AppointmentScheduler.Infraestructure.Data.Repositories.Implementation.Generic;
-global using AppointmentScheduler.Infraestructure.Extensions;
 global using AppointmentScheduler.Infraestructure.Services.Contract;
 global using AppointmentScheduler.Infraestructure.Services.Implementation;
 global using Mapster;

@@ -1,6 +1,6 @@
-﻿namespace AppointmentScheduler.Infraestructure.Extensions;
+﻿namespace AppointmentScheduler.Configurations;
 
-public static class EndpointExtension
+public static class EndpointConfiguration
 {
     public static WebApplication MapEndpoints (this WebApplication app)
     {

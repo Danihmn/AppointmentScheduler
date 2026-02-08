@@ -8,11 +8,15 @@ public class UnitOfWork (ApplicationDbContext context) : IUnitOfWork
     private IDoctorRepository? _doctorRepository;
     private IPatientRepository? _patientRepository;
     private IRequestRepository? _requestRepository;
+    private ISecretaryRepository? _secretaryRepository;
+    private ISpecialtyRepository? _specialtyRepository;
 
     public IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(context);
     public IDoctorRepository DoctorRepository => _doctorRepository ??= new DoctorRepository(context);
     public IPatientRepository PatientRepository => _patientRepository ??= new PatientRepository(context);
     public IRequestRepository RequestRepository => _requestRepository ??= new RequestRepository(context);
+    public ISecretaryRepository SecretaryRepository => _secretaryRepository ??= new SecretaryRepository(context);
+    public ISpecialtyRepository SpecialtyRepository => _specialtyRepository ??= new SpecialtyRepository(context);
 
     public IRepository<T> GetRepository<T> () where T : BaseEntity
     => typeof(T).Name switch
@@ -21,6 +25,8 @@ public class UnitOfWork (ApplicationDbContext context) : IUnitOfWork
         nameof(Doctor) => (IRepository<T>)DoctorRepository,
         nameof(Patient) => (IRepository<T>)PatientRepository,
         nameof(Request) => (IRepository<T>)RequestRepository,
+        nameof(Secretary) => (IRepository<T>)SecretaryRepository,
+        nameof(Specialty) => (IRepository<T>)SpecialtyRepository,
         _ => throw new ArgumentException($"No repository found for type {typeof(T).Name}")
     };
 

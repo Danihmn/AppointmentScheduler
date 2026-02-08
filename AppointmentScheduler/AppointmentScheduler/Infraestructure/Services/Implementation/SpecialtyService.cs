@@ -1,21 +1,21 @@
-﻿using AppointmentScheduler.Application.Queries.Specialty;
-
-namespace AppointmentScheduler.Infraestructure.Services.Implementation;
+﻿namespace AppointmentScheduler.Infraestructure.Services.Implementation;
 
 public class SpecialtyService
     (
-        IQueryHandler<GetSpecialtiesQuery, IEnumerable<Specialty>> queryHandlerGetAllSpecialties,
-        IQueryHandler<GetSpecialtyByIdQuery, Specialty> queryHandlerGetSpecialtyById,
+        IQueryHandler<GetSpecialtiesQuery, IEnumerable<SpecialtyResponseDTO>> queryHandlerGetAllSpecialties,
+        IQueryHandler<GetSpecialtyByIdQuery, SpecialtyResponseDTO> queryHandlerGetSpecialtyById,
         ICommandHandler<CreateSpecialtyCommand, Specialty> commandHandlerCreateSpecialty
     ) : ISpecialtyService
 {
-    public async Task<IEnumerable<Specialty>> GetSpecialtiesAsync (CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<SpecialtyResponseDTO>> GetSpecialtiesAsync
+        (CancellationToken cancellationToken = default)
     {
         var query = new GetSpecialtiesQuery();
         return await queryHandlerGetAllSpecialties.Handle(query, cancellationToken);
     }
 
-    public async Task<Specialty> GetSpecialtyByIdAsync (int id, CancellationToken cancellationToken = default)
+    public async Task<SpecialtyResponseDTO> GetSpecialtyByIdAsync
+        (int id, CancellationToken cancellationToken = default)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 
