@@ -1,16 +1,21 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Appointment
 {
-    public class GetAppointmentByIdQueryHandler (IUnitOfWork unitOfWork)
-        : IQueryHandler<GetAppointmentByIdQuery, Domain.Entities.Appointment>
+    public class GetAppointmentByIdQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
+        : IQueryHandler<GetAppointmentByIdQuery, AppointmentResponseDTO>
     {
-        public async Task<Domain.Entities.Appointment> Handle (
-            GetAppointmentByIdQuery query,
-            CancellationToken cancellationToken)
+        public async Task<AppointmentResponseDTO> Handle
+            (
+                GetAppointmentByIdQuery query,
+                CancellationToken cancellationToken
+            )
         {
             try
             {
-                var appointmentRepository = unitOfWork.GetRepository<Domain.Entities.Appointment>();
-                return await appointmentRepository.GetByIdAsync(query.Id, cancellationToken);
+                var appointmentRepository
+                    = await unitOfWork.AppointmentRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
+
+                return appointmentRepository == null ? throw new Exception()
+                    : mapper.Map<AppointmentResponseDTO>(appointmentRepository);
             }
             catch (Exception ex)
             {

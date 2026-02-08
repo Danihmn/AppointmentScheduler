@@ -32,6 +32,8 @@ public class Program
             app.MapOpenApi();
         }
 
+        app.UseHttpsRedirection();
+
         app.MapEndpoints();
 
         app.UseScalarDocumentation();
@@ -41,8 +43,8 @@ public class Program
 }
 
 [JsonSerializable(typeof(AppointmentResponseDTO))]
-[JsonSerializable(typeof(Doctor))]
-[JsonSerializable(typeof(Patient))]
+[JsonSerializable(typeof(DoctorResponseDTO))]
+[JsonSerializable(typeof(PatientResponseDTO))]
 [JsonSerializable(typeof(Request))]
 [JsonSerializable(typeof(Secretary))]
 [JsonSerializable(typeof(Specialty))]

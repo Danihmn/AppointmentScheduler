@@ -11,6 +11,10 @@
                 .Map(dest => dest.Doctor, src => src.Doctor != null ? src.Doctor.Adapt<DoctorResponseDTO>() : null)
                 .Map(dest => dest.Specialty, src => src.Specialty != null ? src.Specialty.Adapt<SpecialtyResponseDTO>() : null)
                 .Map(dest => dest.Secretary, src => src.Secretary != null ? src.Secretary.Adapt<SecretaryResponseDTO>() : null);
+
+            config.NewConfig<Doctor, DoctorResponseDTO>()
+                .Map(dest => dest.Specialty, src => src.Specialty != null ? src.Specialty.Adapt<SpecialtyResponseDTO>() : null)
+                .Map(dest => dest.Appointments, src => src.Appointments != null ? src.Appointments.Adapt<IEnumerable<AppointmentResponseDTO>>() : null);
         }
     }
 }

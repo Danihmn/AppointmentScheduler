@@ -3,7 +3,7 @@
 public class AppointmentService
     (
         IQueryHandler<GetAppointmentsQuery, IEnumerable<AppointmentResponseDTO>> queryHandlerGetAllAppointments,
-        IQueryHandler<GetAppointmentByIdQuery, Appointment> queryHandlerGetAppointmentById,
+        IQueryHandler<GetAppointmentByIdQuery, AppointmentResponseDTO> queryHandlerGetAppointmentById,
         ICommandHandler<ScheduleAppointmentCommand, Appointment> commandHandlerCreateAppointment
     )
     : IAppointmentService
@@ -14,7 +14,7 @@ public class AppointmentService
         return await queryHandlerGetAllAppointments.Handle(query, cancellationToken);
     }
 
-    public async Task<Appointment> GetAppointmentByIdAsync (int id, CancellationToken cancellationToken = default)
+    public async Task<AppointmentResponseDTO> GetAppointmentByIdAsync (int id, CancellationToken cancellationToken = default)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 

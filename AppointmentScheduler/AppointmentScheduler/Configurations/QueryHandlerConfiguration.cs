@@ -5,14 +5,17 @@
         public static IServiceCollection MapQueryHandlers (this IServiceCollection services)
         {
             services
-            .AddScoped<IQueryHandler<GetAppointmentsQuery, IEnumerable<AppointmentResponseDTO>>, GetAppointmentsQueryHandler>();
-            services.AddScoped<IQueryHandler<GetAppointmentByIdQuery, Appointment>, GetAppointmentByIdQueryHandler>();
-            services.AddScoped<IQueryHandler<GetDoctorsQuery, IEnumerable<Doctor>>, GetDoctorsQueryHandler>();
-            services.AddScoped<IQueryHandler<GetDoctorByIdQuery, Doctor>, GetDoctorByIdQueryHandler>();
-            services.AddScoped<IQueryHandler<GetPatientsQuery, IEnumerable<Patient>>, GetPatientsQueryHandler>();
-            services.AddScoped<IQueryHandler<GetPatientByIdQuery, Patient>, GetPatientByIdQueryHandler>();
-            services.AddScoped<IQueryHandler<GetRequestsQuery, IEnumerable<Request>>, GetRequestsQueryHandler>();
-            services.AddScoped<IQueryHandler<GetRequestByIdQuery, Request>, GetRequestByIdQueryHandler>();
+                .AddScoped<IQueryHandler<GetAppointmentsQuery, IEnumerable<AppointmentResponseDTO>>, GetAppointmentsQueryHandler>();
+            services
+                .AddScoped<IQueryHandler<GetAppointmentByIdQuery, AppointmentResponseDTO>, GetAppointmentByIdQueryHandler>();
+            services.AddScoped<IQueryHandler<GetDoctorsQuery, IEnumerable<DoctorResponseDTO>>, GetDoctorsQueryHandler>();
+            services.AddScoped<IQueryHandler<GetDoctorByIdQuery, DoctorResponseDTO>, GetDoctorByIdQueryHandler>();
+            services
+                .AddScoped<IQueryHandler<GetPatientsQuery, IEnumerable<PatientResponseDTO>>, GetPatientsQueryHandler>();
+            services.AddScoped<IQueryHandler<GetPatientByIdQuery, PatientResponseDTO>, GetPatientByIdQueryHandler>();
+            services
+                .AddScoped<IQueryHandler<GetRequestsQuery, IEnumerable<RequestResponseDTO>>, GetRequestsQueryHandler>();
+            services.AddScoped<IQueryHandler<GetRequestByIdQuery, RequestResponseDTO>, GetRequestByIdQueryHandler>();
             services
                 .AddScoped<IQueryHandler<GetSecretariesQuery, IEnumerable<Secretary>>, GetSecretariesQueryHandler>();
             services.AddScoped<IQueryHandler<GetSecretaryByIdQuery, Secretary>, GetSecretaryByIdQueryHandler>();

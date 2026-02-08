@@ -1,15 +1,16 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Request
 {
-    public class GetRequestsQueryHandler (IUnitOfWork unitOfWork) :
-        IQueryHandler<GetRequestsQuery, IEnumerable<Domain.Entities.Request>>
+    public class GetRequestsQueryHandler (IUnitOfWork unitOfWork, IMapper mapper) :
+        IQueryHandler<GetRequestsQuery, IEnumerable<RequestResponseDTO>>
     {
-        public async Task<IEnumerable<Domain.Entities.Request>> Handle
+        public async Task<IEnumerable<RequestResponseDTO>> Handle
             (GetRequestsQuery query, CancellationToken cancellationToken)
         {
             try
             {
-                var requestRepository = unitOfWork.GetRepository<Domain.Entities.Request>();
-                return await requestRepository.GetAllAsync(cancellationToken);
+                var requestRepository = await unitOfWork.RequestRepository.GetAllWithDetailAsync(cancellationToken);
+
+                return mapper.Map<IEnumerable<RequestResponseDTO>>(requestRepository);
             }
             catch (Exception ex)
             {

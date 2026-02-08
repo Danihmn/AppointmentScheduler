@@ -3,18 +3,18 @@
 public class RequestService
 
     (
-        IQueryHandler<GetRequestsQuery, IEnumerable<Request>> queryHandlerGetAllRequests,
-        IQueryHandler<GetRequestByIdQuery, Request> queryHandlerGetRequestById,
+        IQueryHandler<GetRequestsQuery, IEnumerable<RequestResponseDTO>> queryHandlerGetAllRequests,
+        IQueryHandler<GetRequestByIdQuery, RequestResponseDTO> queryHandlerGetRequestById,
         ICommandHandler<CreateRequestCommand, Request> commandHandlerCreateRequest
     ) : IRequestService
 {
-    public async Task<IEnumerable<Request>> GetRequestsAsync (CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<RequestResponseDTO>> GetRequestsAsync (CancellationToken cancellationToken = default)
     {
         var query = new GetRequestsQuery();
         return await queryHandlerGetAllRequests.Handle(query, cancellationToken);
     }
 
-    public async Task<Request> GetRequestByIdAsync (int id, CancellationToken cancellationToken = default)
+    public async Task<RequestResponseDTO> GetRequestByIdAsync (int id, CancellationToken cancellationToken = default)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 

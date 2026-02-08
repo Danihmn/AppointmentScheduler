@@ -1,4 +1,4 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Patient
 {
-    public record GetPatientsQuery () : IQuery<IEnumerable<Domain.Entities.Patient>>;
+    public record GetPatientsQuery () : IQuery<IEnumerable<PatientResponseDTO>>;
 }

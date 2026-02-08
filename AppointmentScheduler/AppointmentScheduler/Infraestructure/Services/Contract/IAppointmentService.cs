@@ -3,7 +3,7 @@
 public interface IAppointmentService
 {
     Task<IEnumerable<AppointmentResponseDTO>> GetAppointmentsAsync (CancellationToken cancellationToken = default);
-    Task<Appointment> GetAppointmentByIdAsync (int id, CancellationToken cancellationToken = default);
+    Task<AppointmentResponseDTO> GetAppointmentByIdAsync (int id, CancellationToken cancellationToken = default);
     Task<Appointment> ScheduleAppointmentAsync
     (
         DateTime date,

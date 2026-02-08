@@ -2,18 +2,18 @@
 
 public class DoctorService
     (
-        IQueryHandler<GetDoctorsQuery, IEnumerable<Doctor>> queryHandlerGetAllDoctors,
-        IQueryHandler<GetDoctorByIdQuery, Doctor> queryHandlerGetDoctorById,
+        IQueryHandler<GetDoctorsQuery, IEnumerable<DoctorResponseDTO>> queryHandlerGetAllDoctors,
+        IQueryHandler<GetDoctorByIdQuery, DoctorResponseDTO> queryHandlerGetDoctorById,
         ICommandHandler<CreateDoctorCommand, Doctor> commandHandlerCreateDoctor
     ) : IDoctorService
 {
-    public async Task<IEnumerable<Doctor>> GetDoctorsAsync (CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<DoctorResponseDTO>> GetDoctorsAsync (CancellationToken cancellationToken = default)
     {
         var query = new GetDoctorsQuery();
         return await queryHandlerGetAllDoctors.Handle(query, cancellationToken);
     }
 
-    public async Task<Doctor> GetDoctorByIdAsync (int id, CancellationToken cancellationToken = default)
+    public async Task<DoctorResponseDTO> GetDoctorByIdAsync (int id, CancellationToken cancellationToken = default)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 

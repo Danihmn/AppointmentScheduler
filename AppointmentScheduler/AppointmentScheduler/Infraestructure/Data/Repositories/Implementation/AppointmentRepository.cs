@@ -1,33 +1,26 @@
 ﻿namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation
 {
-    public class AppointmentRepository : Repository<Appointment>, IAppointmentRepository
+    public class AppointmentRepository (ApplicationDbContext context)
+        : Repository<Appointment>(context), IAppointmentRepository
     {
-        private readonly DbSet<Appointment> _dbSet;
-
-        public AppointmentRepository (ApplicationDbContext context) : base(context)
-        {
-            _dbSet = context.Set<Appointment>();
-        }
+        private readonly DbSet<Appointment> _dbSet = context.Set<Appointment>();
 
         public async Task<IEnumerable<Appointment>> GetAllWithDetailAsync (CancellationToken cancellationToken = default)
-        {
-            IQueryable<Appointment> query = _dbSet;
+        => await _dbSet
+            .Include(appointment => appointment.Request)
+            .Include(appointment => appointment.Patient)
+            .Include(appointment => appointment.Doctor)
+            .Include(appointment => appointment.Specialty)
+            .Include(appointment => appointment.Secretary)
+            .ToListAsync(cancellationToken);
 
-            {
-                query = query
-                    .Include(appointment => (appointment).Patient)
-                    .Include(appointment => (appointment).Doctor)
-                    .Include(appointment => (appointment).Specialty)
-                    .Include(appointment => (appointment).Secretary)
-                    .Include(appointment => (appointment).Request);
-            }
-
-            return await query.ToListAsync(cancellationToken);
-        }
-
-        public Task<Appointment?> GetByIdWithDetailsAsync (int id, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Appointment?> GetByIdWithDetailsAsync (int id, CancellationToken cancellationToken = default)
+        => await _dbSet
+            .Include(appointment => appointment.Request)
+            .Include(appointment => appointment.Patient)
+            .Include(appointment => appointment.Doctor)
+            .Include(appointment => appointment.Specialty)
+            .Include(appointment => appointment.Secretary)
+            .FirstOrDefaultAsync(appointment => appointment.Id == id, cancellationToken);
     }
 }

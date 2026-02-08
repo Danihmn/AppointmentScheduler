@@ -1,14 +1,17 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Doctor
 {
-    public class GetDoctorByIdQueryHandler (IUnitOfWork unitOfWork)
-        : IQueryHandler<GetDoctorByIdQuery, Domain.Entities.Doctor>
+    public class GetDoctorByIdQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
+        : IQueryHandler<GetDoctorByIdQuery, DoctorResponseDTO>
     {
-        public async Task<Domain.Entities.Doctor> Handle (GetDoctorByIdQuery query, CancellationToken cancellationToken)
+        public async Task<DoctorResponseDTO> Handle (GetDoctorByIdQuery query, CancellationToken cancellationToken)
         {
             try
             {
-                var doctorRepository = unitOfWork.GetRepository<Domain.Entities.Doctor>();
-                return await doctorRepository.GetByIdAsync(query.Id, cancellationToken);
+                var doctorRepository
+                    = await unitOfWork.DoctorRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
+
+                return doctorRepository == null ? throw new Exception()
+                    : mapper.Map<DoctorResponseDTO>(doctorRepository);
             }
             catch (Exception ex)
             {

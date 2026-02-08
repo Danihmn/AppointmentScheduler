@@ -2,8 +2,8 @@
 
 public interface IRequestService
 {
-    Task<IEnumerable<Request>> GetRequestsAsync (CancellationToken cancellationToken = default);
-    Task<Request> GetRequestByIdAsync (int id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<RequestResponseDTO>> GetRequestsAsync (CancellationToken cancellationToken = default);
+    Task<RequestResponseDTO> GetRequestByIdAsync (int id, CancellationToken cancellationToken = default);
     Task<Request> CreateRequestAsync
     (
         ERequestStatus status,

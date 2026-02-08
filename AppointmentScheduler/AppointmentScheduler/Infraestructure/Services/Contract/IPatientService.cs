@@ -2,8 +2,8 @@
 
 public interface IPatientService
 {
-    Task<IEnumerable<Patient>> GetPatientsAsync (CancellationToken cancellationToken = default);
-    Task<Patient> GetPatientByIdAsync (int id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<PatientResponseDTO>> GetPatientsAsync (CancellationToken cancellationToken = default);
+    Task<PatientResponseDTO> GetPatientByIdAsync (int id, CancellationToken cancellationToken = default);
     Task<Patient> CreatePatientAsync
     (
         string name,

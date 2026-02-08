@@ -1,3 +1,3 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Request;
 
-public record GetRequestsQuery () : IQuery<IEnumerable<Domain.Entities.Request>>;
+public record GetRequestsQuery () : IQuery<IEnumerable<RequestResponseDTO>>;
