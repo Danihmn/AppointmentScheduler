@@ -1,10 +1,10 @@
 ﻿namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation;
 
-public class RepositoryImplementation<T> : IRepository<T> where T : BaseEntity
+public class Repository<T> : IRepository<T> where T : BaseEntity
 {
     private DbSet<T> _dbSet;
 
-    public RepositoryImplementation (ApplicationDbContext context)
+    public Repository (ApplicationDbContext context)
     {
         _dbSet = context.Set<T>();
     }

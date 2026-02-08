@@ -9,7 +9,7 @@
         public string? Email { get; set; }
         public string? Gender { get; set; }
         public string? Notes { get; set; }
-        public ICollection<Appointment> Appointments { get; set; } = [];
-        public ICollection<Request> Requests { get; set; } = [];
+        public ICollection<AppointmentResponseDTO> Appointments { get; set; } = [];
+        public ICollection<RequestResponseDTO> Requests { get; set; } = [];
     }
 }

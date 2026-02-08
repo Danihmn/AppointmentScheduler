@@ -3,22 +3,19 @@
 public class UnitOfWork (ApplicationDbContext context) : IUnitOfWork
 {
     private bool _disposed = false;
-    private readonly Dictionary<Type, object> _repositories = [];
+
+    private IAppointmentRepository? _appointmentRepository;
+
+    public IAppointmentRepository AppointmentRepository
+        => _appointmentRepository ??= new AppointmentRepository(context);
 
     public IRepository<T> GetRepository<T> () where T : BaseEntity
     {
-        var type = typeof(T);
-
-        if (!_repositories.TryGetValue(type, out object? value))
+        return typeof(T).Name switch
         {
-            var repositoryType = typeof(RepositoryImplementation<>).MakeGenericType(type);
-            var repositoryInstance = Activator.CreateInstance(repositoryType, context);
-
-            value = repositoryInstance!;
-            _repositories[type] = value;
-        }
-
-        return (IRepository<T>)value;
+            nameof(Appointment) => (IRepository<T>)AppointmentRepository,
+            _ => throw new ArgumentException($"No repository found for type {typeof(T).Name}")
+        };
     }
 
     public async Task<int> SaveChangesAsync (CancellationToken cancellationToken = default)

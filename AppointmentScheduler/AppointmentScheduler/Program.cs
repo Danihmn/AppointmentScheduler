@@ -6,9 +6,7 @@ public class Program
     {
         var builder = WebApplication.CreateSlimBuilder(args);
 
-        builder.Services.AddMapster();
-
-        builder.Services.AddScoped<IMapper, ServiceMapper>();
+        builder.Services.AddMapsterConfiguration();
 
         builder.Services.AddDatabaseConfiguration(builder.Configuration);
 
@@ -17,15 +15,11 @@ public class Program
         builder.Services.MapCommandHandlers();
         builder.Services.MapQueryHandlers();
 
-        builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-        builder.Services.AddScoped<IDoctorService, DoctorService>();
-        builder.Services.AddScoped<IPatientService, PatientService>();
-        builder.Services.AddScoped<IRequestService, RequestService>();
-        builder.Services.AddScoped<ISecretaryService, SecretaryService>();
-        builder.Services.AddScoped<ISpecialtyService, SpecialtyService>();
+        builder.Services.MapServices();
 
         builder.Services.ConfigureHttpJsonOptions(options =>
         {
+            options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
         });
 
@@ -46,7 +40,6 @@ public class Program
     }
 }
 
-[JsonSerializable(typeof(Appointment))]
 [JsonSerializable(typeof(AppointmentResponseDTO))]
 [JsonSerializable(typeof(Doctor))]
 [JsonSerializable(typeof(Patient))]

@@ -9,7 +9,7 @@
         public string? Description { get; set; }
         public string? Notes { get; set; }
         public string? Priority { get; set; }
-        public Patient? Patient { get; set; }
+        public PatientResponseDTO? Patient { get; set; }
         public SpecialtyResponseDTO? Specialty { get; set; }
         public SecretaryResponseDTO? ProcessedBySecretary { get; set; }
         public AppointmentResponseDTO? ResultingAppointment { get; set; }

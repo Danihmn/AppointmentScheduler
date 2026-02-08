@@ -1,6 +1,6 @@
 ﻿namespace AppointmentScheduler.Application.Queries.Appointment
 {
-    public class GetAppointmentsQueryHandler (IUnitOfWork unitOfWork)
+    public class GetAppointmentsQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
         : IQueryHandler<GetAppointmentsQuery, IEnumerable<AppointmentResponseDTO>>
     {
         public async Task<IEnumerable<AppointmentResponseDTO>> Handle (
@@ -9,10 +9,10 @@
         {
             try
             {
-                var appointmentRepository = unitOfWork.GetRepository<Domain.Entities.Appointment>();
-                var entity = await appointmentRepository.GetAllAsync(cancellationToken);
+                var appointmentRepository
+                    = await unitOfWork.AppointmentRepository.GetAllWithDetailAsync(cancellationToken);
 
-                return entity.Adapt<IEnumerable<AppointmentResponseDTO>>();
+                return mapper.Map<IEnumerable<AppointmentResponseDTO>>(appointmentRepository);
             }
             catch (Exception ex)
             {

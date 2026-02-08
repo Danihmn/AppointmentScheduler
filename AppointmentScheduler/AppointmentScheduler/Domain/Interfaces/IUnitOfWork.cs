@@ -2,6 +2,8 @@
 
 public interface IUnitOfWork : IDisposable
 {
-    Task<int> SaveChangesAsync (CancellationToken cancellationToken = default);
+    IAppointmentRepository AppointmentRepository { get; }
+
     IRepository<T> GetRepository<T> () where T : BaseEntity;
+    Task<int> SaveChangesAsync (CancellationToken cancellationToken = default);
 }
