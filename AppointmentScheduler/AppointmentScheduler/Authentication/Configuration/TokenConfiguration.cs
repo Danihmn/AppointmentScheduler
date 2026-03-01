@@ -1,0 +1,7 @@
+﻿namespace AppointmentScheduler.Authentication.Configuration
+{
+    public class TokenConfiguration
+    {
+        public static string PrivateKey { get; set; } = @"MIICXQIBAAKBgQDU7Qy3V2F5aRyu5cM2LZK2aLavyyY7gRenXx9P6cGdc2LB9KRX\r\n3akELtY88bCAeZJglORzBtXzpIW0S4HKtrv97s69rFZypm7Pu4DkYgGVWeOit/jb\r\nCj3i/19pnVfDaUNeE6QKVoh1Sh5sliS/lcObHNg7u47U1J3ALLsHVBEBJQIDAQAB\r\nAoGBAMoDRUdFLgOkiEQfVUA3qLRLUNgkY1edOLXg97I30yvw50ehNbLvaIXBch1M\r\nKOsbbJcZbEz9tUt9UiUmZjPPfzbGo0exGf2NO6N2oAZbI5J+rzQ0Vs5w0AY0LZX3\r\nfMbh1DQu9xE93Z1Ij6eeg3tphoVTEl1ZAsxnckqiSbZD6EmZAkEA+iLt4XR/Y5LO\r\npZLVB0+l0MWYHyI3saYEERajcTjzoI2QAvtJx5+cOq69VLXnaj5IKx5hc488YWhI\r\nbRr0UhcFCwJBANnq0fTjQb8lFxILnhXBuxbqVXMnTrjzV8UneTec0DOUjeXLOpar\r\nzScQsQiWEtHU7DR71mWst+vGQNjlMzB9kI8CQDPXr3Pt4EUz9S5t60cTo+tMOMYj\r\nImXoYallBsT9p8jb7kAf8t+z3f5vnwACn47uj6iYKFx6EGqj4XbzgjXNXZcCQCDr\r\n/e4+SxeClfqu8KIe05IBswkjnhwI/3CUpxaExVuVjN5zlpVevS6ysdw3N/6laU4A\r\ni4Ju1pZzLCbYcaRYw/cCQQCH1kAP57puQJcB1kPl8lNbLyPPLwkV0z2tbjYpQaba\r\nK3DWaQH30edMig13CDhK7RqFpq3BDEqJFhUdi58c5gX5";
+    }
+}

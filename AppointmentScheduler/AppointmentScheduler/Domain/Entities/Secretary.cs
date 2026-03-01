@@ -2,6 +2,8 @@
 
 public class Secretary : BaseEntity
 {
+    public string Username { get; set; }
+    public string HashedPassword { get; set; }
     public string Name { get; set; } = null!;
     public string Cpf { get; set; } = null!;
     public string PhoneNumber { get; set; } = null!;

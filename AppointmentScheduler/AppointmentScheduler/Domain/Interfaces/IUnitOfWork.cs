@@ -8,6 +8,7 @@ public interface IUnitOfWork : IDisposable
     IRequestRepository RequestRepository { get; }
     ISecretaryRepository SecretaryRepository { get; }
     ISpecialtyRepository SpecialtyRepository { get; }
+    ILoginRepository LoginRepository { get; }
 
     IRepository<T> GetRepository<T> () where T : BaseEntity;
     Task<int> SaveChangesAsync (CancellationToken cancellationToken = default);

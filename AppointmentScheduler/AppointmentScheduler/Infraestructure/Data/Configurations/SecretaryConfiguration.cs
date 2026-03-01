@@ -8,6 +8,8 @@ public class SecretaryConfiguration : IEntityTypeConfiguration<Secretary>
 
         builder.HasKey(secretary => secretary.Id);
 
+        builder.Property(secretary => secretary.Username).HasMaxLength(40).IsRequired();
+        builder.Property(secretary => secretary.HashedPassword).HasMaxLength(200).IsRequired();
         builder.Property(secretary => secretary.Name).HasMaxLength(200).IsRequired();
         builder.Property(secretary => secretary.Cpf).HasMaxLength(11).IsFixedLength().IsUnicode(false).IsRequired();
         builder.Property(secretary => secretary.PhoneNumber).HasMaxLength(20).IsRequired();
@@ -20,6 +22,7 @@ public class SecretaryConfiguration : IEntityTypeConfiguration<Secretary>
         builder.HasMany(secretary => secretary.ProcessedRequests).WithOne(request => request.ProcessedBySecretary)
             .HasForeignKey(request => request.ProcessedBySecretaryId).OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasIndex(secretary => secretary.Username).IsUnique();
         builder.HasIndex(secretary => secretary.Cpf).IsUnique();
         builder.HasIndex(secretary => secretary.PhoneNumber).IsUnique();
         builder.HasIndex(secretary => secretary.Email).IsUnique();

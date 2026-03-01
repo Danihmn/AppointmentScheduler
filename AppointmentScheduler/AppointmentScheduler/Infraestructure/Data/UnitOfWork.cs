@@ -10,6 +10,7 @@ public class UnitOfWork (ApplicationDbContext context) : IUnitOfWork
     private IRequestRepository? _requestRepository;
     private ISecretaryRepository? _secretaryRepository;
     private ISpecialtyRepository? _specialtyRepository;
+    private ILoginRepository? _loginRepository;
 
     public IAppointmentRepository AppointmentRepository => _appointmentRepository ??= new AppointmentRepository(context);
     public IDoctorRepository DoctorRepository => _doctorRepository ??= new DoctorRepository(context);
@@ -17,6 +18,7 @@ public class UnitOfWork (ApplicationDbContext context) : IUnitOfWork
     public IRequestRepository RequestRepository => _requestRepository ??= new RequestRepository(context);
     public ISecretaryRepository SecretaryRepository => _secretaryRepository ??= new SecretaryRepository(context);
     public ISpecialtyRepository SpecialtyRepository => _specialtyRepository ??= new SpecialtyRepository(context);
+    public ILoginRepository LoginRepository => _loginRepository ??= new LoginRepository(context);
 
     public IRepository<T> GetRepository<T> () where T : BaseEntity
     => typeof(T).Name switch
