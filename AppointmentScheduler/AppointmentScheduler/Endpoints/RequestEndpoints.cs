@@ -2,9 +2,9 @@
 {
     public static class RequestEndpoints
     {
-        public static Task<WebApplication> MapRequestEndpoints (this WebApplication app)
+        public static WebApplication MapRequestEndpoints (this WebApplication app)
         {
-            RouteGroupBuilder requestGroup = app.MapGroup("/api/requests").WithTags("Requests");
+            RouteGroupBuilder requestGroup = app.MapGroup("/api/requests").WithTags("Requests").RequireAuthorization();
 
             requestGroup.MapGet("/request", async (IRequestService service) =>
                 await service.GetRequestsAsync()).WithDescription("Lista todas as solicitações");
@@ -18,7 +18,7 @@
                         command.Description, command.Notes, command.Priority, command.PatientId, command.SpecialtyId,
                         command.ProcessedBySecretaryId)).WithDescription("Cria nova solicitação");
 
-            return Task.FromResult(app);
+            return app;
         }
     }
 }

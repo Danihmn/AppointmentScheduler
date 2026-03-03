@@ -2,9 +2,9 @@
 {
     public static class DoctorEndpoints
     {
-        public static Task<WebApplication> MapDoctorEndpoints (this WebApplication app)
+        public static WebApplication MapDoctorEndpoints (this WebApplication app)
         {
-            RouteGroupBuilder doctorGroup = app.MapGroup("/api/doctors").WithTags("Doctors");
+            RouteGroupBuilder doctorGroup = app.MapGroup("/api/doctors").WithTags("Doctors").RequireAuthorization();
 
             doctorGroup.MapGet("/doctor", async (IDoctorService service) =>
                 await service.GetDoctorsAsync()).WithDescription("Lista todos os médicos");
@@ -16,7 +16,7 @@
                 await service.CreateDoctorAsync(command.Name, command.Crm, command.PhoneNumber, command.Email,
                     command.HiringDate, command.Active, command.SpecialtyId)).WithDescription("Cria novo médico");
 
-            return Task.FromResult(app);
+            return app;
         }
     }
 }

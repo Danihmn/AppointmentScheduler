@@ -2,9 +2,9 @@
 {
     public static class SpecialtyEndpoints
     {
-        public static Task<WebApplication> MapSpecialtyEndpoints (this WebApplication app)
+        public static WebApplication MapSpecialtyEndpoints (this WebApplication app)
         {
-            RouteGroupBuilder specialtyGroup = app.MapGroup("/api/specialties").WithTags("Specialties");
+            RouteGroupBuilder specialtyGroup = app.MapGroup("/api/specialties").WithTags("Specialties").RequireAuthorization();
 
             specialtyGroup.MapGet("/specialty", async (ISpecialtyService service) =>
                 await service.GetSpecialtiesAsync()).WithDescription("Lista todas as especialidades");
@@ -16,7 +16,7 @@
                 await service.CreateSpecialtyAsync(command.Description, command.IsActive))
                 .WithDescription("Cria nova especialidade");
 
-            return Task.FromResult(app);
+            return app;
         }
     }
 }

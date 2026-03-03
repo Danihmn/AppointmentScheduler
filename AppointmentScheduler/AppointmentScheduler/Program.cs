@@ -10,7 +10,15 @@ public class Program
 
         builder.Services.AddDatabaseConfiguration(builder.Configuration);
 
+        builder.Services.AddAuthenticationConfiguration();
+
+        builder.Services.AddAuthorization();
+
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        builder.Services.AddScoped<TokenConfiguration>();
+        builder.Services.AddScoped<TokenService>();
+        builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 
         builder.Services.MapCommandHandlers();
         builder.Services.MapQueryHandlers();
@@ -31,6 +39,10 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
+
+        app.UseAuthorization();
+
         app.MapEndpoints();
 
         app.UseScalarDocumentation();
@@ -45,6 +57,7 @@ public class Program
 [JsonSerializable(typeof(RequestResponseDTO))]
 [JsonSerializable(typeof(SecretaryResponseDTO))]
 [JsonSerializable(typeof(SpecialtyResponseDTO))]
+[JsonSerializable(typeof(LoginSecretaryResponseDTO))]
 [JsonSerializable(typeof(GetAppointmentsQuery))]
 [JsonSerializable(typeof(GetAppointmentByIdQuery))]
 [JsonSerializable(typeof(ScheduleAppointmentCommand))]

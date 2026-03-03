@@ -23,6 +23,8 @@
             services
                 .AddScoped<IQueryHandler<GetSpecialtiesQuery, IEnumerable<SpecialtyResponseDTO>>, GetSpecialtiesQueryHandler>();
             services.AddScoped<IQueryHandler<GetSpecialtyByIdQuery, SpecialtyResponseDTO>, GetSpecialtyByIdQueryHandler>();
+            services
+                .AddScoped<IQueryHandler<AuthenticateUserQuery, LoginSecretaryResponseDTO>, AuthenticateUserQueryHandler>();
 
             return services;
         }

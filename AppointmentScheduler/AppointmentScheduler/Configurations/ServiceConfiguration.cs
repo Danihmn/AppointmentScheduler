@@ -10,6 +10,7 @@
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<ISecretaryService, SecretaryService>();
             services.AddScoped<ISpecialtyService, SpecialtyService>();
+            services.AddScoped<ILoginService, LoginService>();
 
             return services;
         }

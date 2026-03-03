@@ -1,11 +1,8 @@
-﻿using AppointmentScheduler.Authentication.Services.Contract;
-
-namespace AppointmentScheduler.Application.Queries.Login
+﻿namespace AppointmentScheduler.Application.Queries.Login
 {
     public class AuthenticateUserQueryHandler (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService)
         : IQueryHandler<AuthenticateUserQuery, LoginSecretaryResponseDTO>
     {
-
         public async Task<LoginSecretaryResponseDTO> Handle
             (AuthenticateUserQuery query, CancellationToken cancellationToken)
         {

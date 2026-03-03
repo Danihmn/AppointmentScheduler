@@ -10,6 +10,7 @@ public static class EndpointConfiguration
         app.MapRequestEndpoints();
         app.MapSecretaryEndpoints();
         app.MapSpecialtyEndpoints();
+        app.MapLoginEndpoints();
 
         return app;
     }

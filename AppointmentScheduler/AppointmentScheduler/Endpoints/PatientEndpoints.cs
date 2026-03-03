@@ -2,9 +2,9 @@
 
 public static class PatientEndpoints
 {
-    public static Task<WebApplication> MapPatientEndpoints (this WebApplication app)
+    public static WebApplication MapPatientEndpoints (this WebApplication app)
     {
-        RouteGroupBuilder patientGroup = app.MapGroup("/api/patients").WithTags("Patients");
+        RouteGroupBuilder patientGroup = app.MapGroup("/api/patients").WithTags("Patients").RequireAuthorization();
 
         patientGroup.MapGet("/patient", async (IPatientService service) =>
                 await service.GetPatientsAsync()).WithDescription("Lista todos os pacientes");
@@ -17,6 +17,6 @@ public static class PatientEndpoints
                 await service.CreatePatientAsync(command.Name, command.Cpf, command.PhoneNumber, command.Email,
                     command.Gender, command.Notes)).WithDescription("Cria novo paciente");
 
-        return Task.FromResult(app);
+        return app;
     }
 }

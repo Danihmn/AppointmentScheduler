@@ -2,6 +2,6 @@
 {
     public interface ITokenService
     {
-        public string Generate (LoginSecretaryResponseDTO secretary);
+        public string Generate (LoginSecretaryResponseDTO secretary, IEnumerable<Claim>? additionalClaims = null);
     }
 }
