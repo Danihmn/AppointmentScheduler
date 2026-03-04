@@ -1,6 +1,6 @@
 ﻿namespace AppointmentScheduler.Application.Commands.Secretary;
 
-public class CreateSecretaryCommandHandler (IUnitOfWork unitOfWork)
+public class CreateSecretaryCommandHandler (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService)
     : ICommandHandler<CreateSecretaryCommand, Domain.Entities.Secretary>
 {
     public async Task<Domain.Entities.Secretary> Handle (CreateSecretaryCommand command,
@@ -11,12 +11,15 @@ public class CreateSecretaryCommandHandler (IUnitOfWork unitOfWork)
             var secretaryRepository = unitOfWork.GetRepository<Domain.Entities.Secretary>();
             var secretary = new Domain.Entities.Secretary
             {
+                Username = command.Username,
+                HashedPassword = passwordHasherService.Hash(command.Password),
                 Name = command.Name,
                 Cpf = command.Cpf,
                 PhoneNumber = command.PhoneNumber,
                 Email = command.Email,
                 HiringDate = command.HiringDate,
-                Active = command.Active
+                Active = command.Active,
+                Role = command.Role,
             };
 
             await secretaryRepository.AddAsync(secretary, cancellationToken);

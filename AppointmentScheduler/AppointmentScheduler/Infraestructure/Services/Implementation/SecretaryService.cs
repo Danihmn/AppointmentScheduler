@@ -23,12 +23,15 @@ public class SecretaryService
 
     public async Task<Secretary> CreateSecretaryAsync
     (
+        string username,
+        string password,
         string name,
         string cpf,
         string phoneNumber,
         string email,
         DateTime hiringDate,
         bool active,
+        ERole role,
         CancellationToken cancellationToken = default
     )
     {
@@ -36,7 +39,8 @@ public class SecretaryService
             string.IsNullOrEmpty(email) || hiringDate == DateTime.MinValue)
             throw new Exception("Invalid data");
 
-        var command = new CreateSecretaryCommand(name, cpf, phoneNumber, email, hiringDate, active);
+        var command =
+            new CreateSecretaryCommand(username, password, name, cpf, phoneNumber, email, hiringDate, active, role);
 
         return await commandHandlerCreateSecretary.Handle(command, cancellationToken);
     }

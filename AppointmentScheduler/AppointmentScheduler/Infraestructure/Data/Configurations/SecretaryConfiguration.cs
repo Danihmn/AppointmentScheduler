@@ -16,6 +16,7 @@ public class SecretaryConfiguration : IEntityTypeConfiguration<Secretary>
         builder.Property(secretary => secretary.Email).HasMaxLength(200).IsRequired();
         builder.Property(secretary => secretary.HiringDate).IsRequired();
         builder.Property(secretary => secretary.Active).IsRequired().HasDefaultValue(true);
+        builder.Property(secretary => secretary.Role).HasConversion<string>().HasMaxLength(20);
 
         builder.HasMany(secretary => secretary.Appointments).WithOne(appointment => appointment.Secretary)
             .HasForeignKey(appointment => appointment.SecretaryId).OnDelete(DeleteBehavior.Restrict);

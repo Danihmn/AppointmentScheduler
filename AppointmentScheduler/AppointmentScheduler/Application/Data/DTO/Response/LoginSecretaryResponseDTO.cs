@@ -6,6 +6,6 @@
         public string Username { get; set; }
         public string Name { get; set; }
         public string? AccessToken { get; set; }
-        public IEnumerable<string> Roles { get; set; } = [];
+        public string? Role { get; set; }
     }
 }

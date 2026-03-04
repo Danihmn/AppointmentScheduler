@@ -7,7 +7,9 @@ public static class AppointmentEndpoints
         RouteGroupBuilder appointmentGroup = app.MapGroup("/api/appointments").WithTags("Appointments").RequireAuthorization();
 
         appointmentGroup.MapGet("/appointment", async (IAppointmentService service) =>
-            await service.GetAppointmentsAsync()).WithDescription("Lista todas as consultas");
+            await service.GetAppointmentsAsync())
+            .WithDescription("Lista todas as consultas")
+            .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         appointmentGroup.MapGet("/appointment/{id}", async (IAppointmentService service, int id) =>
             await service.GetAppointmentByIdAsync(id)).WithDescription("Exibe consulta por Id");
@@ -15,7 +17,9 @@ public static class AppointmentEndpoints
         appointmentGroup.MapPost("/appointment",
             async (ScheduleAppointmentCommand command, IAppointmentService service) =>
                 await service.ScheduleAppointmentAsync(command.Date, command.Status, command.RequestId,
-                    command.PatientId, command.DoctorId, command.SpecialtyId, command.SecretaryId)).WithDescription("Cria nova consulta");
+                    command.PatientId, command.DoctorId, command.SpecialtyId, command.SecretaryId))
+            .WithDescription("Cria nova consulta")
+            .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;
     }

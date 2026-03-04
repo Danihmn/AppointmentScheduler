@@ -2,7 +2,7 @@
 {
     public class LoginService
         (
-            TokenService tokenService,
+            ITokenService tokenService,
             TokenConfiguration tokenConfiguration,
             IQueryHandler<AuthenticateUserQuery, LoginSecretaryResponseDTO> queryHandlerAuthenticateUser
         ) : ILoginService

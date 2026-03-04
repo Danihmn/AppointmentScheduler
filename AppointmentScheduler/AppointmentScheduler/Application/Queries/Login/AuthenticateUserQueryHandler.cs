@@ -21,6 +21,7 @@
                 {
                     Username = user.Username,
                     Name = user.Name,
+                    Role = user.Role.ToString(),
                 };
             }
             catch (Exception ex)

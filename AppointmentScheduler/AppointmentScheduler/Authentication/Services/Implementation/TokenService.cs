@@ -31,10 +31,11 @@
         {
             var claimsIdentity = new ClaimsIdentity();
 
-            foreach (var role in secretary.Roles)
-                claimsIdentity.AddClaim(new(ClaimTypes.Role, role));
+            if (secretary.Role != null && !string.IsNullOrEmpty(secretary.Role))
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, secretary.Role));
 
             return claimsIdentity;
+
         }
     }
 }
