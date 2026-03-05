@@ -14,8 +14,11 @@ public static class PatientEndpoints
 
         patientGroup.MapPost("/patient",
             async (CreatePatientCommand command, IPatientService service) =>
-                await service.CreatePatientAsync(command.Name, command.Cpf, command.PhoneNumber, command.Email,
-                    command.Gender, command.Notes)).WithDescription("Cria novo paciente");
+                await service
+                .CreatePatientAsync(command.Name, command.Cpf, command.PhoneNumber, command.Email,
+                    command.Gender, command.Notes))
+                .WithDescription("Cria novo paciente")
+                .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;
     }

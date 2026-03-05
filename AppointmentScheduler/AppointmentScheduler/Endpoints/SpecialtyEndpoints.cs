@@ -13,8 +13,10 @@
                await service.GetSpecialtyByIdAsync(id)).WithDescription("Busca especialidade pelo Id");
 
             specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ISpecialtyService service) =>
-                await service.CreateSpecialtyAsync(command.Description, command.IsActive))
-                .WithDescription("Cria nova especialidade");
+                await service
+                .CreateSpecialtyAsync(command.Description, command.IsActive))
+                .WithDescription("Cria nova especialidade")
+                .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
             return app;
         }

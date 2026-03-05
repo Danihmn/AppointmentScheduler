@@ -14,9 +14,12 @@
 
             requestGroup.MapPost("/request",
                 async (CreateRequestCommand command, IRequestService service) =>
-                    await service.CreateRequestAsync(command.Status, command.Type, command.DesiredDate,
+                    await service
+                    .CreateRequestAsync(command.Status, command.Type, command.DesiredDate,
                         command.Description, command.Notes, command.Priority, command.PatientId, command.SpecialtyId,
-                        command.ProcessedBySecretaryId)).WithDescription("Cria nova solicitação");
+                        command.ProcessedBySecretaryId))
+                    .WithDescription("Cria nova solicitação")
+                    .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
             return app;
         }

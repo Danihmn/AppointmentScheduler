@@ -8,8 +8,7 @@ public static class AppointmentEndpoints
 
         appointmentGroup.MapGet("/appointment", async (IAppointmentService service) =>
             await service.GetAppointmentsAsync())
-            .WithDescription("Lista todas as consultas")
-            .RequireAuthorization(policy => policy.RequireRole("Admin"));
+            .WithDescription("Lista todas as consultas");
 
         appointmentGroup.MapGet("/appointment/{id}", async (IAppointmentService service, int id) =>
             await service.GetAppointmentByIdAsync(id)).WithDescription("Exibe consulta por Id");

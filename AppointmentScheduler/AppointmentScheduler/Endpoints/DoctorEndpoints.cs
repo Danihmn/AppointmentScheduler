@@ -13,8 +13,11 @@
                 await service.GetDoctorByIdAsync(id)).WithDescription("Busca médico pelo Id");
 
             doctorGroup.MapPost("/doctor", async (CreateDoctorCommand command, IDoctorService service) =>
-                await service.CreateDoctorAsync(command.Name, command.Crm, command.PhoneNumber, command.Email,
-                    command.HiringDate, command.Active, command.SpecialtyId)).WithDescription("Cria novo médico");
+                await service
+                .CreateDoctorAsync(command.Name, command.Crm, command.PhoneNumber, command.Email,
+                    command.HiringDate, command.Active, command.SpecialtyId))
+                .WithDescription("Cria novo médico")
+                .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
             return app;
         }
