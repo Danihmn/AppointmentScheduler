@@ -35,11 +35,12 @@ public class Program
         builder.Services.AddOpenApi();
 
         var app = builder.Build();
+        var isDevelopment = app.Environment.IsDevelopment();
 
-        if (app.Environment.IsDevelopment())
+        if (isDevelopment)
             app.MapOpenApi();
 
-        if (!app.Environment.IsDevelopment())
+        if (!isDevelopment)
             app.UseHttpsRedirection();
 
         app.UseAuthentication();

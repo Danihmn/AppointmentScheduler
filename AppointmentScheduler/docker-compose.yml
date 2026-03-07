@@ -1,0 +1,6 @@
+services:
+  appointmentscheduler:
+    image: ${DOCKER_REGISTRY-}appointmentscheduler
+    build:
+      context: .
+      dockerfile: AppointmentScheduler/Dockerfile
