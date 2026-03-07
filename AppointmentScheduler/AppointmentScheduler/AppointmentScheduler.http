@@ -1,4 +1,4 @@
-@AppointmentScheduler_HostAddress = http://localhost:5246
+@AppointmentScheduler_HostAddress = http://localhost:8080
 
 GET {{AppointmentScheduler_HostAddress}}/todos/
 Accept: application/json

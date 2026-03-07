@@ -36,9 +36,11 @@ public class Program
 
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment()) app.MapOpenApi();
+        if (app.Environment.IsDevelopment())
+            app.MapOpenApi();
 
-        app.UseHttpsRedirection();
+        if (!app.Environment.IsDevelopment())
+            app.UseHttpsRedirection();
 
         app.UseAuthentication();
 
@@ -48,7 +50,9 @@ public class Program
 
         app.UseScalarDocumentation();
 
-        app.Run();
+        var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+
+        app.Run($"http://*:{port}");
     }
 }
 
