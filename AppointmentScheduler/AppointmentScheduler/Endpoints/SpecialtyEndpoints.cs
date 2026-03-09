@@ -1,24 +1,23 @@
-﻿namespace AppointmentScheduler.Endpoints
+﻿namespace AppointmentScheduler.Endpoints;
+
+public static class SpecialtyEndpoints
 {
-    public static class SpecialtyEndpoints
+    public static WebApplication MapSpecialtyEndpoints (this WebApplication app)
     {
-        public static WebApplication MapSpecialtyEndpoints (this WebApplication app)
-        {
-            RouteGroupBuilder specialtyGroup = app.MapGroup("/api/specialties").WithTags("Specialties").RequireAuthorization();
+        RouteGroupBuilder specialtyGroup = app.MapGroup("/api/specialties").WithTags("Specialties").RequireAuthorization();
 
-            specialtyGroup.MapGet("/specialty", async (ISpecialtyService service) =>
-                await service.GetSpecialtiesAsync()).WithDescription("Lista todas as especialidades");
+        specialtyGroup.MapGet("/specialty", async (ISpecialtyService service) =>
+            await service.GetSpecialtiesAsync()).WithDescription("Lista todas as especialidades");
 
-            specialtyGroup.MapGet("/specialty/{id}", async (ISpecialtyService service, int id) =>
-               await service.GetSpecialtyByIdAsync(id)).WithDescription("Busca especialidade pelo Id");
+        specialtyGroup.MapGet("/specialty/{id}", async (ISpecialtyService service, int id) =>
+           await service.GetSpecialtyByIdAsync(id)).WithDescription("Busca especialidade pelo Id");
 
-            specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ISpecialtyService service) =>
-                await service
-                .CreateSpecialtyAsync(command.Description, command.IsActive))
-                .WithDescription("Cria nova especialidade")
-                .RequireAuthorization(policy => policy.RequireRole("Admin"));
+        specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ISpecialtyService service) =>
+            await service
+            .CreateSpecialtyAsync(command.Description, command.IsActive))
+            .WithDescription("Cria nova especialidade")
+            .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
-            return app;
-        }
+        return app;
     }
 }

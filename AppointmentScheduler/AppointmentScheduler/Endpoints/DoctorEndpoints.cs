@@ -1,25 +1,24 @@
-﻿namespace AppointmentScheduler.Endpoints
+﻿namespace AppointmentScheduler.Endpoints;
+
+public static class DoctorEndpoints
 {
-    public static class DoctorEndpoints
+    public static WebApplication MapDoctorEndpoints (this WebApplication app)
     {
-        public static WebApplication MapDoctorEndpoints (this WebApplication app)
-        {
-            RouteGroupBuilder doctorGroup = app.MapGroup("/api/doctors").WithTags("Doctors").RequireAuthorization();
+        RouteGroupBuilder doctorGroup = app.MapGroup("/api/doctors").WithTags("Doctors").RequireAuthorization();
 
-            doctorGroup.MapGet("/doctor", async (IDoctorService service) =>
-                await service.GetDoctorsAsync()).WithDescription("Lista todos os médicos");
+        doctorGroup.MapGet("/doctor", async (IDoctorService service) =>
+            await service.GetDoctorsAsync()).WithDescription("Lista todos os médicos");
 
-            doctorGroup.MapGet("/doctor/{id}", async (IDoctorService service, int id) =>
-                await service.GetDoctorByIdAsync(id)).WithDescription("Busca médico pelo Id");
+        doctorGroup.MapGet("/doctor/{id}", async (IDoctorService service, int id) =>
+            await service.GetDoctorByIdAsync(id)).WithDescription("Busca médico pelo Id");
 
-            doctorGroup.MapPost("/doctor", async (CreateDoctorCommand command, IDoctorService service) =>
-                await service
-                .CreateDoctorAsync(command.Name, command.Crm, command.PhoneNumber, command.Email,
-                    command.HiringDate, command.Active, command.SpecialtyId))
-                .WithDescription("Cria novo médico")
-                .RequireAuthorization(policy => policy.RequireRole("Admin"));
+        doctorGroup.MapPost("/doctor", async (CreateDoctorCommand command, IDoctorService service) =>
+            await service
+            .CreateDoctorAsync(command.Name, command.Crm, command.PhoneNumber, command.Email,
+                command.HiringDate, command.Active, command.SpecialtyId))
+            .WithDescription("Cria novo médico")
+            .RequireAuthorization(policy => policy.RequireRole("Admin"));
 
-            return app;
-        }
+        return app;
     }
 }

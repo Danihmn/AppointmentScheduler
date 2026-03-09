@@ -1,25 +1,24 @@
-﻿namespace AppointmentScheduler.Endpoints
+﻿namespace AppointmentScheduler.Endpoints;
+
+public static class AutheticationEndpoints
 {
-    public static class AutheticationEndpoints
+    public static WebApplication MapLoginEndpoints (this WebApplication app)
     {
-        public static WebApplication MapLoginEndpoints (this WebApplication app)
+        RouteGroupBuilder loginGroup = app.MapGroup("/api/authentication").WithTags("Authentication");
+
+        loginGroup.MapPost("/login", async (string username, string password, ILoginService loginService) =>
         {
-            RouteGroupBuilder loginGroup = app.MapGroup("/api/authentication").WithTags("Authentication");
-
-            loginGroup.MapPost("/login", async (string username, string password, ILoginService loginService) =>
+            try
             {
-                try
-                {
-                    var response = await loginService.AuthenticateUserAsync(username, password);
-                    return Results.Ok(response);
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    return Results.Unauthorized();
-                }
-            }).WithDescription("Autentica usuário");
+                var response = await loginService.AuthenticateUserAsync(username, password);
+                return Results.Ok(response);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Results.Unauthorized();
+            }
+        }).WithDescription("Autentica usuário");
 
-            return app;
-        }
+        return app;
     }
 }
