@@ -6,12 +6,10 @@ services:
       dockerfile: AppointmentScheduler/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8443
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=AppointmentSchedulerDB;User Id=sa;Password=Admin1234;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=AppointmentSchedulerDB;User Id=sa;Password=Admin1234;TrustServerCertificate=True;
     ports:
-      - "8080"
-      - "8443"
+      - "8080:8080"
+      - "8443:8443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
