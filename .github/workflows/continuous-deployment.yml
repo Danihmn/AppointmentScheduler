@@ -10,7 +10,7 @@ jobs:
     steps:
     - name: Create SQL Server Container
       run: |
-        docker run -d --name appointmentScheduler_sqlserver -e "ACCEPT_EULA=Y" -e "Password=Admin1234" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
+        docker run -d --name appointmentScheduler_sqlserver -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Admin1234" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
 
     - name: Wait for SQL Server to be ready
       run: |
