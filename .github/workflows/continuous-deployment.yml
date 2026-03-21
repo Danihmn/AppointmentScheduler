@@ -1,42 +1,54 @@
 name: Continuous Integration, Delivery and Deployment with GitHub Actions and .NET 10
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Create SQL Server Container
-      run: |
-        docker run -d --name appointmentScheduler_sqlserver -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Admin1234" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
+      - name: Create SQL Server Container
+        run: |
+          docker run -d --name appointmentScheduler_sqlserver -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Admin1234" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
 
-    - name: Wait for SQL Server to be ready
-      run: |
-        for i in {1..30}; do
-          docker exec appointmentScheduler_sqlserver \
-            /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa \
-            -P "Admin1234" \
-            -No -Q "SELECT 1" && break
-          echo "Aguardando SQL Server... ($i)"
-          sleep 2
-        done
+      - name: Wait for SQL Server to be ready
+        run: |
+          for i in {1..30}; do
+            docker exec appointmentScheduler_sqlserver \
+              /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa \
+              -P "Admin1234" \
+              -No -Q "SELECT 1" && break
+            echo "Aguardando SQL Server... ($i)"
+            sleep 2
+          done
 
-    - name: Create SQL Server Database
-      run: docker exec appointmentScheduler_sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "Admin1234" -No -Q "IF DB_ID('appointment_scheduler_sqlserver_container') IS NULL CREATE DATABASE [appointment_scheduler_sqlserver_container] -c"
+      - name: Create SQL Server Database
+        run: docker exec appointmentScheduler_sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P "Admin1234" -No -Q "IF DB_ID('appointment_scheduler_sqlserver_container') IS NULL CREATE DATABASE [appointment_scheduler_sqlserver_container] -c"
 
-    - name: Checkout Repository Code
-      uses: actions/checkout@v4
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v4
-      with:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v5
-      with:
-        dotnet-version: | 
-          10.0.x
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            10.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore AppointmentScheduler.slnx
+        working-directory: AppointmentScheduler
+
+      - name: Build Solution
+        run: dotnet build AppointmentScheduler.slnx --configuration Release --no-restore
+        working-directory: AppointmentScheduler
+
+      - name: Docker Compose Build
+        run: docker compose build
+        working-directory: AppointmentScheduler
