@@ -52,3 +52,9 @@ jobs:
       - name: Docker Compose Build
         run: docker compose build
         working-directory: AppointmentScheduler
+
+      - name: Push to Docker Hub Container Registry
+        run: docker tag ${{ secrets.DOCKER_USERNAME }}/appointment-scheduler:latest ${{ secrets.DOCKER_USERNAME }}/appointment-scheduler:${{ github.run_id }}
+
+      - name: Push to Docker Hub
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/appointment-scheduler:latest && docker push ${{ secrets.DOCKER_USERNAME }}/appointment-scheduler:${{ github.run_id }}
