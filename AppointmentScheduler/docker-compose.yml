@@ -17,7 +17,21 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     networks:
       - appointment-scheduler_network
+  portainer: 
+    image: portainer/portainer-ce:latest
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+      - portainer_data:/data
+    networks:
+      - appointment-scheduler_network
+    
   
 networks:
   appointment-scheduler_network: 
     driver: bridge
+
+volumes:
+  portainer_data:
