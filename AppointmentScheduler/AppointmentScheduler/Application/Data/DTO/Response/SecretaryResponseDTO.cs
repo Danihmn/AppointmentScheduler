@@ -9,7 +9,5 @@
         public string? Email { get; set; }
         public DateTime HiringDate { get; set; }
         public bool Active { get; set; }
-        public ICollection<AppointmentResponseDTO> Appointments { get; set; } = [];
-        public ICollection<RequestResponseDTO> ProcessedRequests { get; set; } = [];
     }
 }

@@ -28,7 +28,6 @@ public class Program
 
         builder.Services.ConfigureHttpJsonOptions(options =>
         {
-            options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
         });
 

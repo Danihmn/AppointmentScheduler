@@ -12,6 +12,5 @@
         public PatientResponseDTO? Patient { get; set; }
         public SpecialtyResponseDTO? Specialty { get; set; }
         public SecretaryResponseDTO? ProcessedBySecretary { get; set; }
-        public AppointmentResponseDTO? ResultingAppointment { get; set; }
     }
 }

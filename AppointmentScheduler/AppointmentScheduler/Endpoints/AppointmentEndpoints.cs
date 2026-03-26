@@ -7,8 +7,7 @@ public static class AppointmentEndpoints
         RouteGroupBuilder appointmentGroup = app.MapGroup("/api/appointments").WithTags("Appointments").RequireAuthorization();
 
         appointmentGroup.MapGet("/appointment", async (IAppointmentService service) =>
-            await service.GetAppointmentsAsync())
-            .WithDescription("Lista todas as consultas");
+            await service.GetAppointmentsAsync()).WithDescription("Lista todas as consultas");
 
         appointmentGroup.MapGet("/appointment/{id}", async (IAppointmentService service, int id) =>
             await service.GetAppointmentByIdAsync(id)).WithDescription("Exibe consulta por Id");

@@ -2,9 +2,15 @@
 {
     public class PasswordHasherService : IPasswordHasherService
     {
-        public string Hash (string password) =>
-            Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password))).ToLower();
+        private readonly PasswordHasher<object> _hasher = new();
 
-        public bool Verify (string password, string hashedPassword) => Hash(password) == hashedPassword;
+        public string Hash (string password) =>
+            _hasher.HashPassword(null!, password);
+
+        public bool Verify (string password, string hashedPassword)
+        {
+            var result = _hasher.VerifyHashedPassword(null!, hashedPassword, password);
+            return result != PasswordVerificationResult.Failed;
+        }
     }
 }

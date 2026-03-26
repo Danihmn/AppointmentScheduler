@@ -10,6 +10,5 @@
         public DateTime HiringDate { get; set; }
         public bool Active { get; set; }
         public SpecialtyResponseDTO? Specialty { get; set; }
-        public ICollection<AppointmentResponseDTO> Appointments { get; set; } = [];
     }
 }
