@@ -2,7 +2,7 @@ namespace AppointmentScheduler;
 
 public class Program
 {
-    public static void Main (string[] args)
+    public static async Task Main (string[] args)
     {
         var builder = WebApplication.CreateSlimBuilder(args);
 
@@ -35,6 +35,8 @@ public class Program
 
         var app = builder.Build();
         var isDevelopment = app.Environment.IsDevelopment();
+
+        await app.SeedDatabaseAsync();
 
         if (isDevelopment)
             app.MapOpenApi();

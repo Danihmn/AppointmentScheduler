@@ -19,6 +19,7 @@
 
                 return new LoginSecretaryResponseDTO()
                 {
+                    Id = user.Id,
                     Username = user.Username,
                     Name = user.Name,
                     Role = user.Role.ToString(),

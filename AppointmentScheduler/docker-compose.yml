@@ -7,6 +7,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=AppointmentSchedulerDB;User Id=sa;Password=Admin1234;TrustServerCertificate=True;
+      - JWT_PRIVATE_KEY=8sxS4rjguFDhQBdqiDhefAYX6R/DfVsNPxHYS0twKh0wLmZ0/1vDCw4E1JawgKHS63/RRDc3Q2Xnex2JO97vuA==
     ports:
       - "8080:8080"
       - "8443:8443"

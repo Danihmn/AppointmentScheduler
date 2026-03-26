@@ -5,6 +5,7 @@ global using AppointmentScheduler.Application.Commands.Request;
 global using AppointmentScheduler.Application.Commands.Secretary;
 global using AppointmentScheduler.Application.Commands.Specialty;
 global using AppointmentScheduler.Application.Common;
+global using AppointmentScheduler.Application.Data.DTO;
 global using AppointmentScheduler.Application.Data.DTO.Response;
 global using AppointmentScheduler.Application.Queries.Appointment;
 global using AppointmentScheduler.Application.Queries.Doctor;

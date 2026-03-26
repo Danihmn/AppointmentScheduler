@@ -58,3 +58,6 @@ nunit-*.xml
 
 # Jetbrains
 .idea
+
+# User-specific files
+[Pp]roperties/

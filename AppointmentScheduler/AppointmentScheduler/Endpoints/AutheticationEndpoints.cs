@@ -6,11 +6,11 @@ public static class AutheticationEndpoints
     {
         RouteGroupBuilder loginGroup = app.MapGroup("/api/authentication").WithTags("Authentication");
 
-        loginGroup.MapPost("/login", async (string username, string password, ILoginService loginService) =>
+        loginGroup.MapPost("/login", async (LoginCredentialsDTO credentials, ILoginService loginService) =>
         {
             try
             {
-                var response = await loginService.AuthenticateUserAsync(username, password);
+                var response = await loginService.AuthenticateUserAsync(credentials.Username, credentials.Password);
                 return Results.Ok(response);
             }
             catch (UnauthorizedAccessException)
