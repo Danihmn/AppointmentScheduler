@@ -1,4 +1,6 @@
-﻿namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation
+﻿using AppointmentScheduler.Infraestructure.Persistence.ApplicationDbContext;
+
+namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation
 {
     public class DoctorRepository (ApplicationDbContext context)
         : Repository<Doctor>(context), IDoctorRepository

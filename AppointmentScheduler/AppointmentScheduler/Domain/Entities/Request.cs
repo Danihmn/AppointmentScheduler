@@ -1,5 +1,5 @@
-﻿using AppointmentScheduler.Application.Commands.Request;
-using AppointmentScheduler.Application.Common;
+﻿using AppointmentScheduler.Features.Common.CQRS;
+using AppointmentScheduler.Features.Request.Create;
 
 namespace AppointmentScheduler.Domain.Entities;
 

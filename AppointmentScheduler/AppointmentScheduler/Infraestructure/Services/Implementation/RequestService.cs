@@ -1,4 +1,10 @@
-﻿namespace AppointmentScheduler.Infraestructure.Services.Implementation;
+﻿using AppointmentScheduler.Features.Common.CQRS;
+using AppointmentScheduler.Features.Request.Create;
+using AppointmentScheduler.Features.Request.Get;
+using AppointmentScheduler.Features.Request.Get.GetAll;
+using AppointmentScheduler.Features.Request.Get.GetById;
+
+namespace AppointmentScheduler.Infraestructure.Services.Implementation;
 
 public class RequestService
 

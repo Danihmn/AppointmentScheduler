@@ -1,4 +1,6 @@
-﻿namespace AppointmentScheduler.Infraestructure.Services.Contract
+﻿using AppointmentScheduler.Features.Secretary.Authenticate;
+
+namespace AppointmentScheduler.Infraestructure.Services.Contract
 {
     public interface ILoginService
     {

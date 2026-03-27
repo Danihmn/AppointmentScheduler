@@ -1,4 +1,10 @@
-﻿namespace AppointmentScheduler.Infraestructure.Services.Implementation;
+﻿using AppointmentScheduler.Features.Common.CQRS;
+using AppointmentScheduler.Features.Doctor.Create;
+using AppointmentScheduler.Features.Doctor.Get;
+using AppointmentScheduler.Features.Doctor.Get.GetAll;
+using AppointmentScheduler.Features.Doctor.Get.GetById;
+
+namespace AppointmentScheduler.Infraestructure.Services.Implementation;
 
 public class DoctorService
     (

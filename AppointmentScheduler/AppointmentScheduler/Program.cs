@@ -1,3 +1,34 @@
+using AppointmentScheduler.Features.Appointment.Create;
+using AppointmentScheduler.Features.Appointment.Get;
+using AppointmentScheduler.Features.Appointment.Get.GetAll;
+using AppointmentScheduler.Features.Appointment.Get.GetById;
+using AppointmentScheduler.Features.Doctor.Create;
+using AppointmentScheduler.Features.Doctor.Get;
+using AppointmentScheduler.Features.Doctor.Get.GetAll;
+using AppointmentScheduler.Features.Doctor.Get.GetById;
+using AppointmentScheduler.Features.Patient.Create;
+using AppointmentScheduler.Features.Patient.Get;
+using AppointmentScheduler.Features.Patient.Get.GetAll;
+using AppointmentScheduler.Features.Patient.Get.GetById;
+using AppointmentScheduler.Features.Request.Create;
+using AppointmentScheduler.Features.Request.Get;
+using AppointmentScheduler.Features.Request.Get.GetAll;
+using AppointmentScheduler.Features.Request.Get.GetById;
+using AppointmentScheduler.Features.Secretary.Authenticate;
+using AppointmentScheduler.Features.Secretary.Create;
+using AppointmentScheduler.Features.Secretary.Get;
+using AppointmentScheduler.Features.Secretary.Get.GetAll;
+using AppointmentScheduler.Features.Secretary.Get.GetById;
+using AppointmentScheduler.Features.Specialty.Create;
+using AppointmentScheduler.Features.Specialty.Get;
+using AppointmentScheduler.Features.Specialty.Get.GetAll;
+using AppointmentScheduler.Features.Specialty.Get.GetById;
+using AppointmentScheduler.Infraestructure.Authentication.Configuration;
+using AppointmentScheduler.Infraestructure.Authentication.Services.Contract;
+using AppointmentScheduler.Infraestructure.Authentication.Services.Implementation;
+using AppointmentScheduler.Infraestructure.Persistence.Configurations;
+using AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
+
 namespace AppointmentScheduler;
 
 public class Program

@@ -1,4 +1,6 @@
-﻿namespace AppointmentScheduler.Infraestructure.Services.Contract;
+﻿using AppointmentScheduler.Features.Appointment.Get;
+
+namespace AppointmentScheduler.Infraestructure.Services.Contract;
 
 public interface IAppointmentService
 {

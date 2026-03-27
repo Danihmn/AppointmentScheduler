@@ -1,4 +1,10 @@
-﻿namespace AppointmentScheduler.Infraestructure.Services.Implementation;
+﻿using AppointmentScheduler.Features.Common.CQRS;
+using AppointmentScheduler.Features.Secretary.Create;
+using AppointmentScheduler.Features.Secretary.Get;
+using AppointmentScheduler.Features.Secretary.Get.GetAll;
+using AppointmentScheduler.Features.Secretary.Get.GetById;
+
+namespace AppointmentScheduler.Infraestructure.Services.Implementation;
 
 public class SecretaryService
     (

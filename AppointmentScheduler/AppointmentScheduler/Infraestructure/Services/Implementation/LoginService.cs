@@ -1,16 +1,21 @@
-﻿namespace AppointmentScheduler.Infraestructure.Services.Implementation
+﻿using AppointmentScheduler.Features.Common.CQRS;
+using AppointmentScheduler.Features.Secretary.Authenticate;
+using AppointmentScheduler.Infraestructure.Authentication.Configuration;
+using AppointmentScheduler.Infraestructure.Authentication.Services.Contract;
+
+namespace AppointmentScheduler.Infraestructure.Services.Implementation
 {
     public class LoginService
         (
             ITokenService tokenService,
             TokenConfiguration tokenConfiguration,
-            IQueryHandler<AuthenticateUserQuery, LoginSecretaryResponseDTO> queryHandlerAuthenticateUser
+            IQueryHandler<AuthenticateSecretaryQuery, LoginSecretaryResponseDTO> queryHandlerAuthenticateUser
         ) : ILoginService
     {
         public async Task<LoginSecretaryResponseDTO> AuthenticateUserAsync
             (string username, string password, CancellationToken cancellationToken = default)
         {
-            var query = new AuthenticateUserQuery(username, password);
+            var query = new AuthenticateSecretaryQuery(username, password);
             var response = await queryHandlerAuthenticateUser.Handle(query, cancellationToken)
                 ?? throw new UnauthorizedAccessException("Usuário ou senha inválidos");
 
