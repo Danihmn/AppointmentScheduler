@@ -2,7 +2,7 @@
 
 namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation
 {
-    public class LoginRepository (ApplicationDbContext context) : Repository<Secretary>(context), ILoginRepository
+    public class LoginRepository (AppDbContext context) : Repository<Secretary>(context), ILoginRepository
     {
         private readonly DbSet<Secretary> _dbSet = context.Set<Secretary>();
 

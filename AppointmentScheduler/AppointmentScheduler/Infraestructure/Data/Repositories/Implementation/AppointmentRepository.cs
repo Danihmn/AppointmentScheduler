@@ -2,7 +2,7 @@
 
 namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation
 {
-    public class AppointmentRepository (ApplicationDbContext context)
+    public class AppointmentRepository (AppDbContext context)
         : Repository<Appointment>(context), IAppointmentRepository
     {
         private readonly DbSet<Appointment> _dbSet = context.Set<Appointment>();

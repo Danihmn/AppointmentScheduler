@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppointmentScheduler.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20260304015921_AdicionaColunaDeRoleEmSecretarias")]
     partial class AdicionaColunaDeRoleEmSecretarias
     {

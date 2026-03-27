@@ -2,7 +2,7 @@
 
 namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation.Generic;
 
-public class Repository<T> (ApplicationDbContext context) : IRepository<T> where T : BaseEntity
+public class Repository<T> (AppDbContext context) : IRepository<T> where T : BaseEntity
 {
     private readonly DbSet<T> _dbSet = context.Set<T>();
 

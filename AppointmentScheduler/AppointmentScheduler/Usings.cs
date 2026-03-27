@@ -1,11 +1,6 @@
-﻿global using AppointmentScheduler.Authentication.Configuration;
-global using AppointmentScheduler.Authentication.Services.Contract;
-global using AppointmentScheduler.Authentication.Services.Implementation;
-global using AppointmentScheduler.Domain.Common;
+﻿global using AppointmentScheduler.Domain.Common;
 global using AppointmentScheduler.Domain.Entities;
 global using AppointmentScheduler.Domain.Enums;
-global using AppointmentScheduler.Domain.Interfaces;
-global using AppointmentScheduler.Infraestructure.Data;
 global using AppointmentScheduler.Infraestructure.Data.Repositories.Contract;
 global using AppointmentScheduler.Infraestructure.Data.Repositories.Contract.Generic;
 global using AppointmentScheduler.Infraestructure.Data.Repositories.Implementation;

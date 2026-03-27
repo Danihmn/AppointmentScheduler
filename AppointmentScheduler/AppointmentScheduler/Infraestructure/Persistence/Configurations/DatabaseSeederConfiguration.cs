@@ -1,4 +1,5 @@
 using AppointmentScheduler.Infraestructure.Authentication.Services.Contract;
+using AppointmentScheduler.Infraestructure.Persistence.ApplicationDbContext;
 
 namespace AppointmentScheduler.Infraestructure.Persistence.Configurations;
 
@@ -7,7 +8,7 @@ public static class DatabaseSeederConfiguration
     public static async Task SeedDatabaseAsync (this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasherService>();
 
         var hasAdmin = await context.Secretaries.AnyAsync(secretary => secretary.Role == ERole.Admin);

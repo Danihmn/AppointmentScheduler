@@ -1,4 +1,6 @@
-﻿namespace AppointmentScheduler.Infraestructure.Persistence.Configurations;
+﻿using AppointmentScheduler.Infraestructure.Persistence.ApplicationDbContext;
+
+namespace AppointmentScheduler.Infraestructure.Persistence.Configurations;
 
 public static class DatabaseConfiguration
 {
@@ -10,7 +12,7 @@ public static class DatabaseConfiguration
         if (string.IsNullOrEmpty(connectionString))
             throw new Exception("No connection string found in the configuration file");
 
-        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+        services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
         return services;
     }
