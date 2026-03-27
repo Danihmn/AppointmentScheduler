@@ -1,4 +1,4 @@
-﻿namespace AppointmentScheduler.Infraestructure.Data.Repositories.Contract.Generic;
+﻿namespace AppointmentScheduler.Infraestructure.Persistence.Repositories.Contract.Generic;
 
 public interface IRepository<T> where T : BaseEntity
 {

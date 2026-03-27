@@ -1,4 +1,7 @@
-﻿namespace AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
+﻿using AppointmentScheduler.Infraestructure.Persistence.Repositories.Contract;
+using AppointmentScheduler.Infraestructure.Persistence.Repositories.Contract.Generic;
+
+namespace AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
 
 public interface IUnitOfWork : IDisposable
 {

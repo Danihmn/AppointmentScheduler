@@ -1,6 +1,7 @@
 ﻿using AppointmentScheduler.Infraestructure.Persistence.ApplicationDbContext;
+using AppointmentScheduler.Infraestructure.Persistence.Repositories.Contract.Generic;
 
-namespace AppointmentScheduler.Infraestructure.Data.Repositories.Implementation.Generic;
+namespace AppointmentScheduler.Infraestructure.Persistence.Repositories.Implementation.Generic;
 
 public class Repository<T> (AppDbContext context) : IRepository<T> where T : BaseEntity
 {

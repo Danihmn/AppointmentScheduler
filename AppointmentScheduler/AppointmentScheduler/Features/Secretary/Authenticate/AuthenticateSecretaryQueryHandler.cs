@@ -13,13 +13,11 @@ namespace AppointmentScheduler.Features.Secretary.Authenticate
             try
             {
                 var secretaryRepository = unitOfWork.LoginRepository;
-                var user = await secretaryRepository.GetByUsername(query.Username, cancellationToken);
-
-                if (user == null) return null;
-
+                var user = await secretaryRepository.GetByUsername(query.Username, cancellationToken)
+                    ?? throw new KeyNotFoundException("Usuário não existe");
                 var authenticatedUser = passwordHasherService.Verify(query.Password, user.HashedPassword);
 
-                if (authenticatedUser == false) return null;
+                if (authenticatedUser == false) throw new UnauthorizedAccessException("Usuário ou senha inválidos");
 
                 return new LoginSecretaryResponseDTO()
                 {

@@ -1,4 +1,6 @@
-﻿namespace AppointmentScheduler.Infraestructure.Data.Repositories.Contract
+﻿using AppointmentScheduler.Infraestructure.Persistence.Repositories.Contract.Generic;
+
+namespace AppointmentScheduler.Infraestructure.Persistence.Repositories.Contract
 {
     public interface IDoctorRepository : IRepository<Doctor>
     {

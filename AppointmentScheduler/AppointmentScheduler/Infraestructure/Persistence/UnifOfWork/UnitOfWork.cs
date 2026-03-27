@@ -1,4 +1,7 @@
 ﻿using AppointmentScheduler.Infraestructure.Persistence.ApplicationDbContext;
+using AppointmentScheduler.Infraestructure.Persistence.Repositories.Contract;
+using AppointmentScheduler.Infraestructure.Persistence.Repositories.Contract.Generic;
+using AppointmentScheduler.Infraestructure.Persistence.Repositories.Implementation;
 
 namespace AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
 
