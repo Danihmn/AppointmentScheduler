@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Infraestructure.Authentication.Configuration;
-
-namespace AppointmentScheduler.Infraestructure.Persistence.Configurations
+﻿namespace AppointmentScheduler.Infraestructure.Persistence.Configurations
 {
     public static class AuthenticationConfiguration
     {

@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.API.Endpoints;
-
-namespace AppointmentScheduler.Infraestructure.Persistence.Configurations;
+﻿namespace AppointmentScheduler.Infraestructure.Persistence.Configurations;
 
 public static class EndpointConfiguration
 {

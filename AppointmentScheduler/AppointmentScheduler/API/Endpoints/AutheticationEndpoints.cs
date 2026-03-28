@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Secretary.Authenticate;
-
-namespace AppointmentScheduler.API.Endpoints;
+﻿namespace AppointmentScheduler.API.Endpoints;
 
 public static class AutheticationEndpoints
 {
@@ -8,18 +6,9 @@ public static class AutheticationEndpoints
     {
         RouteGroupBuilder loginGroup = app.MapGroup("/api/authentication").WithTags("Authentication");
 
-        loginGroup.MapPost("/login", async (LoginCredentialsDTO credentials, ILoginService loginService) =>
-        {
-            try
-            {
-                var response = await loginService.AuthenticateUserAsync(credentials.Username, credentials.Password);
-                return Results.Ok(response);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Results.Unauthorized();
-            }
-        }).WithDescription("Autentica usuário");
+        loginGroup.MapPost("/login", async (LoginCredentialsDTO credentials, IQueryHandler<AuthenticateSecretaryQuery, LoginSecretaryResponseDTO> queryHandlerAuthenticateUser, CancellationToken cancellationToken = default) =>
+            await queryHandlerAuthenticateUser.Handle(new AuthenticateSecretaryQuery(credentials.Username, credentials.Password), cancellationToken)
+                ?? throw new UnauthorizedAccessException("Usuário ou senha inválidos")).WithDescription("Autentica usuário");
 
         return app;
     }

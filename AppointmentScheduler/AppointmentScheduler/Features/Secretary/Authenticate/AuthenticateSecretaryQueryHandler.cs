@@ -1,10 +1,6 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infraestructure.Authentication.Services.Contract;
-using AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
-
-namespace AppointmentScheduler.Features.Secretary.Authenticate
+﻿namespace AppointmentScheduler.Features.Secretary.Authenticate
 {
-    public class AuthenticateSecretaryQueryHandler (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService)
+    public class AuthenticateSecretaryQueryHandler (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService, ITokenService tokenService)
         : IQueryHandler<AuthenticateSecretaryQuery, LoginSecretaryResponseDTO>
     {
         public async Task<LoginSecretaryResponseDTO> Handle
@@ -19,18 +15,31 @@ namespace AppointmentScheduler.Features.Secretary.Authenticate
 
                 if (authenticatedUser == false) throw new UnauthorizedAccessException("Usuário ou senha inválidos");
 
-                return new LoginSecretaryResponseDTO()
+                return GenerateToken(new LoginSecretaryResponseDTO()
                 {
                     Id = user.Id,
                     Username = user.Username,
                     Name = user.Name,
                     Role = user.Role.ToString(),
-                };
+                });
             }
             catch (Exception ex)
             {
                 throw new Exception("Error while authenticating Secretary", ex);
             }
+        }
+
+        private LoginSecretaryResponseDTO GenerateToken (LoginSecretaryResponseDTO user)
+        {
+            var additionalClaims = new List<Claim>
+            {
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
+                new(JwtRegisteredClaimNames.UniqueName, user.Name),
+            };
+
+            user.AccessToken = tokenService.Generate(user, additionalClaims);
+
+            return user;
         }
     }
 }

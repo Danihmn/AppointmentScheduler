@@ -1,36 +1,23 @@
-﻿using AppointmentScheduler.Features.Secretary.Create;
-
-namespace AppointmentScheduler.API.Endpoints;
+﻿namespace AppointmentScheduler.API.Endpoints;
 
 public static class SecretaryEndpoints
 {
     public static WebApplication MapSecretaryEndpoints (this WebApplication app)
     {
-        RouteGroupBuilder secretaryGroup = app
-            .MapGroup("/api/secretaries")
-            .WithTags("Secretaries")
-            .RequireAuthorization();
+        RouteGroupBuilder secretaryGroup = app.MapGroup("/api/secretaries").WithTags("Secretaries").RequireAuthorization();
 
-        secretaryGroup.MapGet("/secretary", async (ISecretaryService service) =>
-            await service.GetSecretariesAsync()).WithDescription("Lista todas as secretárias");
+        secretaryGroup.MapGet("/secretary", async (IQueryHandler<GetSecretariesQuery, IEnumerable<SecretaryResponseDTO>> queryHandlerGetAllSecretaries, CancellationToken cancellationToken = default) =>
+        await queryHandlerGetAllSecretaries.Handle(new GetSecretariesQuery(), cancellationToken)).WithDescription("Lista todas as secretárias");
 
-        secretaryGroup.MapGet("/secretary/{id}", async (ISecretaryService service, int id) =>
-           await service.GetSecretaryByIdAsync(id)).WithDescription("Busca secretária pelo Id");
+        secretaryGroup.MapGet("/secretary/{id}", async (int id, IQueryHandler<GetSecretaryByIdQuery, SecretaryResponseDTO> queryHandlerGetSecretaryById, CancellationToken cancellationToken = default) =>
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 
-        secretaryGroup.MapPost("/secretary", async (CreateSecretaryCommand command, ISecretaryService service) =>
-            await service
-            .CreateSecretaryAsync(
-                command.Username,
-                command.Password,
-                command.Name,
-                command.Cpf,
-                command.PhoneNumber,
-                command.Email,
-                command.HiringDate,
-                command.Active,
-                command.Role))
-            .WithDescription("Cria nova secretária")
-            .RequireAuthorization(policy => policy.RequireRole("Admin"));
+            return await queryHandlerGetSecretaryById.Handle(new GetSecretaryByIdQuery(id), cancellationToken);
+        }).WithDescription("Busca secretária pelo Id");
+
+        secretaryGroup.MapPost("/secretary", async (CreateSecretaryCommand command, ICommandHandler<CreateSecretaryCommand, Secretary> commandHandlerCreateSecretary, CancellationToken cancellationToken = default) =>
+            await commandHandlerCreateSecretary.Handle(command, cancellationToken)).WithDescription("Cria nova secretária").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;
     }

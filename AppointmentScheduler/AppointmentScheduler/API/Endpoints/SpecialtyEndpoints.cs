@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Specialty.Create;
-
-namespace AppointmentScheduler.API.Endpoints;
+﻿namespace AppointmentScheduler.API.Endpoints;
 
 public static class SpecialtyEndpoints
 {
@@ -8,17 +6,18 @@ public static class SpecialtyEndpoints
     {
         RouteGroupBuilder specialtyGroup = app.MapGroup("/api/specialties").WithTags("Specialties").RequireAuthorization();
 
-        specialtyGroup.MapGet("/specialty", async (ISpecialtyService service) =>
-            await service.GetSpecialtiesAsync()).WithDescription("Lista todas as especialidades");
+        specialtyGroup.MapGet("/specialty", async (IQueryHandler<GetSpecialtiesQuery, IEnumerable<SpecialtyResponseDTO>> queryHandlerGetAllSpecialties, CancellationToken cancellationToken = default) =>
+            await queryHandlerGetAllSpecialties.Handle(new GetSpecialtiesQuery(), cancellationToken)).WithDescription("Lista todas as especialidades").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
-        specialtyGroup.MapGet("/specialty/{id}", async (ISpecialtyService service, int id) =>
-           await service.GetSpecialtyByIdAsync(id)).WithDescription("Busca especialidade pelo Id");
+        specialtyGroup.MapGet("/specialty/{id}", async (int id, IQueryHandler<GetSpecialtyByIdQuery, SpecialtyResponseDTO> queryHandlerGetSpecialtyById, CancellationToken cancellationToken = default) =>
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 
-        specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ISpecialtyService service) =>
-            await service
-            .CreateSpecialtyAsync(command.Description, command.IsActive))
-            .WithDescription("Cria nova especialidade")
-            .RequireAuthorization(policy => policy.RequireRole("Admin"));
+            return await queryHandlerGetSpecialtyById.Handle(new GetSpecialtyByIdQuery(id), cancellationToken);
+        }).WithDescription("Busca especialidade pelo Id").RequireAuthorization();
+
+        specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ICommandHandler<CreateSpecialtyCommand, Specialty> commandHandlerCreateSpecialty, CancellationToken cancellationToken = default) =>
+           await commandHandlerCreateSpecialty.Handle(command, cancellationToken)).WithDescription("Cria nova especialidade").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;
     }

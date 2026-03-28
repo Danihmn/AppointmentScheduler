@@ -1,6 +1,3 @@
-using AppointmentScheduler.Infraestructure.Authentication.Services.Contract;
-using AppointmentScheduler.Infraestructure.Persistence.ApplicationDbContext;
-
 namespace AppointmentScheduler.Infraestructure.Persistence.Configurations;
 
 public static class DatabaseSeederConfiguration

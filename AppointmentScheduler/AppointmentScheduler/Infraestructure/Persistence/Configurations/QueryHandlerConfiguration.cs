@@ -1,25 +1,4 @@
-﻿using AppointmentScheduler.Features.Appointment.Get;
-using AppointmentScheduler.Features.Appointment.Get.GetAll;
-using AppointmentScheduler.Features.Appointment.Get.GetById;
-using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Features.Doctor.Get;
-using AppointmentScheduler.Features.Doctor.Get.GetAll;
-using AppointmentScheduler.Features.Doctor.Get.GetById;
-using AppointmentScheduler.Features.Patient.Get;
-using AppointmentScheduler.Features.Patient.Get.GetAll;
-using AppointmentScheduler.Features.Patient.Get.GetById;
-using AppointmentScheduler.Features.Request.Get;
-using AppointmentScheduler.Features.Request.Get.GetAll;
-using AppointmentScheduler.Features.Request.Get.GetById;
-using AppointmentScheduler.Features.Secretary.Authenticate;
-using AppointmentScheduler.Features.Secretary.Get;
-using AppointmentScheduler.Features.Secretary.Get.GetAll;
-using AppointmentScheduler.Features.Secretary.Get.GetById;
-using AppointmentScheduler.Features.Specialty.Get;
-using AppointmentScheduler.Features.Specialty.Get.GetAll;
-using AppointmentScheduler.Features.Specialty.Get.GetById;
-
-namespace AppointmentScheduler.Infraestructure.Persistence.Configurations
+﻿namespace AppointmentScheduler.Infraestructure.Persistence.Configurations
 {
     public static class QueryHandlerConfiguration
     {

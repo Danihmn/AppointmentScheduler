@@ -1,12 +1,4 @@
-﻿using AppointmentScheduler.Features.Appointment.Create;
-using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Features.Doctor.Create;
-using AppointmentScheduler.Features.Patient.Create;
-using AppointmentScheduler.Features.Request.Create;
-using AppointmentScheduler.Features.Secretary.Create;
-using AppointmentScheduler.Features.Specialty.Create;
-
-namespace AppointmentScheduler.Infraestructure.Persistence.Configurations
+﻿namespace AppointmentScheduler.Infraestructure.Persistence.Configurations
 {
     public static class CommandHandlerConfiguration
     {

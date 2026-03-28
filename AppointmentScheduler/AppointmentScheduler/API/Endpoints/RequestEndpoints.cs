@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Request.Create;
-
-namespace AppointmentScheduler.API.Endpoints;
+﻿namespace AppointmentScheduler.API.Endpoints;
 
 public static class RequestEndpoints
 {
@@ -8,20 +6,18 @@ public static class RequestEndpoints
     {
         RouteGroupBuilder requestGroup = app.MapGroup("/api/requests").WithTags("Requests").RequireAuthorization();
 
-        requestGroup.MapGet("/request", async (IRequestService service) =>
-            await service.GetRequestsAsync()).WithDescription("Lista todas as solicitações");
+        requestGroup.MapGet("/request", async (IQueryHandler<GetRequestsQuery, IEnumerable<RequestResponseDTO>> queryHandlerGetAllRequests, CancellationToken cancellationToken = default) =>
+            await queryHandlerGetAllRequests.Handle(new GetRequestsQuery(), cancellationToken)).WithDescription("Lista todas as solicitações").RequireAuthorization();
 
-        requestGroup.MapGet("/request/{id}", async (IRequestService service, int id) =>
-            await service.GetRequestByIdAsync(id)).WithDescription("Busca solicitação pelo Id");
+        requestGroup.MapGet("/request/{id}", async (int id, IQueryHandler<GetRequestByIdQuery, RequestResponseDTO> queryHandlerGetRequestById, CancellationToken cancellationToken = default) =>
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 
-        requestGroup.MapPost("/request",
-            async (CreateRequestCommand command, IRequestService service) =>
-                await service
-                .CreateRequestAsync(command.Status, command.Type, command.DesiredDate,
-                    command.Description, command.Notes, command.Priority, command.PatientId, command.SpecialtyId,
-                    command.ProcessedBySecretaryId))
-                .WithDescription("Cria nova solicitação")
-                .RequireAuthorization(policy => policy.RequireRole("Admin"));
+            return await queryHandlerGetRequestById.Handle(new GetRequestByIdQuery(id), cancellationToken);
+        }).WithDescription("Busca solicitação pelo Id").RequireAuthorization();
+
+        requestGroup.MapPost("/request", async (CreateRequestCommand command, ICommandHandler<CreateRequestCommand, Request> commandHandlerCreateRequest, CancellationToken cancellationToken = default) =>
+            await commandHandlerCreateRequest.Handle(command, cancellationToken)).WithDescription("Cria nova solicitação").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;
     }

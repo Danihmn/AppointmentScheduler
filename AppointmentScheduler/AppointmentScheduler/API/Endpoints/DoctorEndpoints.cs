@@ -1,25 +1,23 @@
-﻿using AppointmentScheduler.Features.Doctor.Create;
-
-namespace AppointmentScheduler.API.Endpoints;
+﻿namespace AppointmentScheduler.API.Endpoints;
 
 public static class DoctorEndpoints
 {
     public static WebApplication MapDoctorEndpoints (this WebApplication app)
     {
-        RouteGroupBuilder doctorGroup = app.MapGroup("/api/doctors").WithTags("Doctors").RequireAuthorization();
+        RouteGroupBuilder doctorGroup = app.MapGroup("/api/doctors").WithTags("Doctors");
 
-        doctorGroup.MapGet("/doctor", async (IDoctorService service) =>
-            await service.GetDoctorsAsync()).WithDescription("Lista todos os médicos");
+        doctorGroup.MapGet("/doctor", async (IQueryHandler<GetDoctorsQuery, IEnumerable<DoctorResponseDTO>> queryHandlerGetAllDoctors, CancellationToken cancellationToken = default) =>
+            await queryHandlerGetAllDoctors.Handle(new GetDoctorsQuery(), cancellationToken)).WithDescription("Lista todos os médicos").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
-        doctorGroup.MapGet("/doctor/{id}", async (IDoctorService service, int id) =>
-            await service.GetDoctorByIdAsync(id)).WithDescription("Busca médico pelo Id");
+        doctorGroup.MapGet("/doctor/{id}", async (int id, IQueryHandler<GetDoctorByIdQuery, DoctorResponseDTO> queryHandlerGetDoctorById, CancellationToken cancellationToken = default) =>
+        {
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
 
-        doctorGroup.MapPost("/doctor", async (CreateDoctorCommand command, IDoctorService service) =>
-            await service
-            .CreateDoctorAsync(command.Name, command.Crm, command.PhoneNumber, command.Email,
-                command.HiringDate, command.Active, command.SpecialtyId))
-            .WithDescription("Cria novo médico")
-            .RequireAuthorization(policy => policy.RequireRole("Admin"));
+            return await queryHandlerGetDoctorById.Handle(new GetDoctorByIdQuery(id), cancellationToken);
+        }).WithDescription("Busca médico pelo Id").RequireAuthorization();
+
+        doctorGroup.MapPost("/doctor", async (CreateDoctorCommand command, ICommandHandler<CreateDoctorCommand, Doctor> commandHandlerCreateDoctor, CancellationToken cancellationToken = default) =>
+            await commandHandlerCreateDoctor.Handle(command, cancellationToken)).WithDescription("Cria novo médico").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;
     }
