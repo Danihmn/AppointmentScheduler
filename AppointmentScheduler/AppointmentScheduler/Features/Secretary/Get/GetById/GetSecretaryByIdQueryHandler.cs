@@ -1,26 +1,16 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
-
-namespace AppointmentScheduler.Features.Secretary.Get.GetById
+﻿namespace AppointmentScheduler.Features.Secretary.Get.GetById
 {
     public class GetSecretaryByIdQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
-        : IQueryHandler<GetSecretaryByIdQuery, SecretaryResponseDTO>
+        : IQueryHandler<GetSecretaryByIdQuery, ApiResponse<SecretaryResponseDTO>>
     {
-        public async Task<SecretaryResponseDTO> Handle
+        public async Task<ApiResponse<SecretaryResponseDTO>> Handle
             (GetSecretaryByIdQuery query, CancellationToken cancellationToken)
         {
-            try
-            {
-                var secretaryRepository
-                    = unitOfWork.SecretaryRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
+            var secretaryRepository = await unitOfWork.SecretaryRepository.GetAllWithDetailAsync(cancellationToken);
 
-                return secretaryRepository == null ? throw new Exception()
-                    : mapper.Map<SecretaryResponseDTO>(secretaryRepository);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error while getting Secretary", ex);
-            }
+            return secretaryRepository is null ?
+                throw new NotFoundException(nameof(SecretaryResponseDTO), query.Id)
+                : ApiResponse<SecretaryResponseDTO>.Ok(mapper.Map<SecretaryResponseDTO>(secretaryRepository));
         }
     }
 }
