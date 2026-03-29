@@ -1,25 +1,16 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
-
-namespace AppointmentScheduler.Features.Patient.Get.GetAll
+﻿namespace AppointmentScheduler.Features.Patient.Get.GetAll
 {
     public class GetPatientsQueryHandler (IUnitOfWork unitOfWork, IMapper mapper) :
-        IQueryHandler<GetPatientsQuery, IEnumerable<PatientResponseDTO>>
+        IQueryHandler<GetPatientsQuery, ApiResponse<IEnumerable<PatientResponseDTO>>>
     {
-        public async Task<IEnumerable<PatientResponseDTO>> Handle
+        public async Task<ApiResponse<IEnumerable<PatientResponseDTO>>> Handle
             (GetPatientsQuery query, CancellationToken cancellationToken)
         {
-            try
-            {
-                var patientRepository
-                    = await unitOfWork.PatientRepository.GetAllWithDetailAsync(cancellationToken);
+            var patientRepository = await unitOfWork.PatientRepository.GetAllWithDetailAsync(cancellationToken);
 
-                return mapper.Map<IEnumerable<PatientResponseDTO>>(patientRepository);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error while getting Patients", ex);
-            }
+            return patientRepository is null ?
+                throw new NotFoundException(nameof(Patient), null)
+                : ApiResponse<IEnumerable<PatientResponseDTO>>.Ok(mapper.Map<IEnumerable<PatientResponseDTO>>(patientRepository));
         }
     }
 }

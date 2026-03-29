@@ -6,18 +6,14 @@ public static class PatientEndpoints
     {
         RouteGroupBuilder patientGroup = app.MapGroup("/api/patients").WithTags("Patients");
 
-        patientGroup.MapGet("/patient", async (IQueryHandler<GetPatientsQuery, IEnumerable<PatientResponseDTO>> queryHandlerGetAllPatients, CancellationToken cancellationToken = default) =>
-            await queryHandlerGetAllPatients.Handle(new GetPatientsQuery(), cancellationToken)).WithDescription("Lista todos os pacientes").RequireAuthorization(policy => policy.RequireRole("Admin"));
+        patientGroup.MapGet("/patient", async (IQueryHandler<GetPatientsQuery, ApiResponse<IEnumerable<PatientResponseDTO>>> queryHandlerGetAllPatients, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await queryHandlerGetAllPatients.Handle(new GetPatientsQuery(), cancellationToken))).WithDescription("Lista todos os pacientes").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
-        patientGroup.MapGet("/patient/{id}", async (int id, IQueryHandler<GetPatientByIdQuery, PatientResponseDTO> queryHandlerGetPatientById, CancellationToken cancellationToken = default) =>
-        {
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
-
-            return await queryHandlerGetPatientById.Handle(new GetPatientByIdQuery(id), cancellationToken);
-        }).WithDescription("Busca paciente pelo Id").RequireAuthorization();
+        patientGroup.MapGet("/patient/{id}", async (int id, IQueryHandler<GetPatientByIdQuery, ApiResponse<PatientResponseDTO>> queryHandlerGetPatientById, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await queryHandlerGetPatientById.Handle(new GetPatientByIdQuery(id), cancellationToken))).WithDescription("Busca paciente pelo Id").RequireAuthorization();
 
         patientGroup.MapPost("/patient", async (CreatePatientCommand command, ICommandHandler<CreatePatientCommand, Patient> commandHandlerCreatePatients, CancellationToken cancellationToken = default) =>
-            await commandHandlerCreatePatients.Handle(command, cancellationToken)).WithDescription("Cria novo paciente").RequireAuthorization(policy => policy.RequireRole("Admin"));
+            TypedResults.Created($"/api/patients/patient/{command}", await commandHandlerCreatePatients.Handle(command, cancellationToken))).WithDescription("Cria novo paciente").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;
     }

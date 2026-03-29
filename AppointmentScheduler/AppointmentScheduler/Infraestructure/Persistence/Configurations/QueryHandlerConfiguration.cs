@@ -11,8 +11,8 @@
             services.AddScoped<IQueryHandler<GetDoctorsQuery, IEnumerable<DoctorResponseDTO>>, GetDoctorsQueryHandler>();
             services.AddScoped<IQueryHandler<GetDoctorByIdQuery, DoctorResponseDTO>, GetDoctorByIdQueryHandler>();
             services
-                .AddScoped<IQueryHandler<GetPatientsQuery, IEnumerable<PatientResponseDTO>>, GetPatientsQueryHandler>();
-            services.AddScoped<IQueryHandler<GetPatientByIdQuery, PatientResponseDTO>, GetPatientByIdQueryHandler>();
+                .AddScoped<IQueryHandler<GetPatientsQuery, ApiResponse<IEnumerable<PatientResponseDTO>>>, GetPatientsQueryHandler>();
+            services.AddScoped<IQueryHandler<GetPatientByIdQuery, ApiResponse<PatientResponseDTO>>, GetPatientByIdQueryHandler>();
             services
                 .AddScoped<IQueryHandler<GetRequestsQuery, IEnumerable<RequestResponseDTO>>, GetRequestsQueryHandler>();
             services.AddScoped<IQueryHandler<GetRequestByIdQuery, RequestResponseDTO>, GetRequestByIdQueryHandler>();

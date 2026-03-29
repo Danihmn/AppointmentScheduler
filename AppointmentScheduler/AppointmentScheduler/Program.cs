@@ -29,6 +29,9 @@ public class Program
             options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
         });
 
+        builder.Services.AddProblemDetails();
+        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
         builder.Services.AddOpenApi();
 
         var app = builder.Build();
@@ -41,6 +44,8 @@ public class Program
 
         if (!isDevelopment)
             app.UseHttpsRedirection();
+
+        app.UseExceptionHandler();
 
         app.UseAuthentication();
 
