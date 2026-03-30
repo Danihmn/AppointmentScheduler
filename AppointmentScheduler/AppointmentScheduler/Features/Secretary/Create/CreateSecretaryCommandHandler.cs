@@ -1,6 +1,6 @@
 ﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infraestructure.Authentication.Services.Contract;
-using AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
+using AppointmentScheduler.Infrastructure.Authentication.Services.Contract;
+using AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
 
 namespace AppointmentScheduler.Features.Secretary.Create;
 

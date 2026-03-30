@@ -1,5 +1,5 @@
 ﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
+using AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
 
 namespace AppointmentScheduler.Features.Appointment.Create;
 

@@ -1,26 +1,16 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
-
-namespace AppointmentScheduler.Features.Specialty.Get.GetById
+﻿namespace AppointmentScheduler.Features.Specialty.Get.GetById
 {
     public class GetSpecialtyByIdQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
-        : IQueryHandler<GetSpecialtyByIdQuery, SpecialtyResponseDTO>
+        : IQueryHandler<GetSpecialtyByIdQuery, ApiResponse<SpecialtyResponseDTO>>
     {
-        public async Task<SpecialtyResponseDTO> Handle
+        public async Task<ApiResponse<SpecialtyResponseDTO>> Handle
             (GetSpecialtyByIdQuery query, CancellationToken cancellationToken)
         {
-            try
-            {
-                var specialtyRepoitory
-                    = await unitOfWork.SpecialtyRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
+            var specialtyRepository = await unitOfWork.SpecialtyRepository.GetAllWithDetailAsync(cancellationToken);
 
-                return specialtyRepoitory == null ? throw new Exception()
-                    : mapper.Map<SpecialtyResponseDTO>(specialtyRepoitory);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error while getting Specialty", ex);
-            }
+            return specialtyRepository is null ?
+                throw new NotFoundException(nameof(SpecialtyResponseDTO), query.Id)
+                : ApiResponse<SpecialtyResponseDTO>.Ok(mapper.Map<SpecialtyResponseDTO>(specialtyRepository));
         }
     }
 }

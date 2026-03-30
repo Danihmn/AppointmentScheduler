@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-
-namespace AppointmentScheduler.Features.Specialty.Get.GetById
+﻿namespace AppointmentScheduler.Features.Specialty.Get.GetById
 {
-    public record GetSpecialtyByIdQuery (int Id) : IQuery<SpecialtyResponseDTO>;
+    public record GetSpecialtyByIdQuery (int Id) : IQuery<ApiResponse<SpecialtyResponseDTO>>;
 }

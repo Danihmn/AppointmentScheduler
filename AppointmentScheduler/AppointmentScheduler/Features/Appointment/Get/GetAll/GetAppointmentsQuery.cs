@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-
-namespace AppointmentScheduler.Features.Appointment.Get.GetAll
+﻿namespace AppointmentScheduler.Features.Appointment.Get.GetAll
 {
-    public record GetAppointmentsQuery () : IQuery<IEnumerable<AppointmentResponseDTO>>;
+    public record GetAppointmentsQuery () : IQuery<ApiResponse<IEnumerable<AppointmentResponseDTO>>>;
 }

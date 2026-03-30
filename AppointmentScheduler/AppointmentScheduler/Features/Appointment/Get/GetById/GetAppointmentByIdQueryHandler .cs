@@ -1,29 +1,16 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infraestructure.Persistence.UnifOfWork;
-
-namespace AppointmentScheduler.Features.Appointment.Get.GetById
+﻿namespace AppointmentScheduler.Features.Appointment.Get.GetById
 {
     public class GetAppointmentByIdQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
-        : IQueryHandler<GetAppointmentByIdQuery, AppointmentResponseDTO>
+        : IQueryHandler<GetAppointmentByIdQuery, ApiResponse<AppointmentResponseDTO>>
     {
-        public async Task<AppointmentResponseDTO> Handle
-            (
-                GetAppointmentByIdQuery query,
-                CancellationToken cancellationToken
-            )
+        public async Task<ApiResponse<AppointmentResponseDTO>> Handle
+            (GetAppointmentByIdQuery query, CancellationToken cancellationToken)
         {
-            try
-            {
-                var appointmentRepository
-                    = await unitOfWork.AppointmentRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
+            var appointmentRepository = await unitOfWork.AppointmentRepository.GetAllWithDetailAsync(cancellationToken);
 
-                return appointmentRepository == null ? throw new Exception()
-                    : mapper.Map<AppointmentResponseDTO>(appointmentRepository);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error while getting Appointment", ex);
-            }
+            return appointmentRepository is null ?
+                throw new NotFoundException(nameof(AppointmentResponseDTO), query.Id)
+                : ApiResponse<AppointmentResponseDTO>.Ok(mapper.Map<AppointmentResponseDTO>(appointmentRepository));
         }
     }
 }

@@ -1,35 +1,28 @@
 ﻿namespace AppointmentScheduler.Features.Secretary.Authenticate
 {
     public class AuthenticateSecretaryQueryHandler (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService, ITokenService tokenService)
-        : IQueryHandler<AuthenticateSecretaryQuery, LoginSecretaryResponseDTO>
+        : IQueryHandler<AuthenticateSecretaryQuery, ApiResponse<LoginSecretaryResponseDTO>>
     {
-        public async Task<LoginSecretaryResponseDTO> Handle
+        public async Task<ApiResponse<LoginSecretaryResponseDTO>> Handle
             (AuthenticateSecretaryQuery query, CancellationToken cancellationToken)
         {
-            try
-            {
-                var secretaryRepository = unitOfWork.LoginRepository;
-                var user = await secretaryRepository.GetByUsername(query.Username, cancellationToken)
-                    ?? throw new KeyNotFoundException("Usuário não existe");
-                var authenticatedUser = passwordHasherService.Verify(query.Password, user.HashedPassword);
+            var secretaryRepository = unitOfWork.LoginRepository;
+            var user = await secretaryRepository.GetByUsername(query.Username, cancellationToken)
+                ?? throw new UnauthorizedAccessException("Usuário ou senha inválidos");
+            var authenticatedUser = passwordHasherService.Verify(query.Password, user.HashedPassword);
 
-                if (authenticatedUser == false) throw new UnauthorizedAccessException("Usuário ou senha inválidos");
+            if (authenticatedUser == false) throw new UnauthorizedAccessException("Usuário ou senha inválidos");
 
-                return GenerateToken(new LoginSecretaryResponseDTO()
-                {
-                    Id = user.Id,
-                    Username = user.Username,
-                    Name = user.Name,
-                    Role = user.Role.ToString(),
-                });
-            }
-            catch (Exception ex)
+            return GenerateToken(new LoginSecretaryResponseDTO()
             {
-                throw new Exception("Error while authenticating Secretary", ex);
-            }
+                Id = user.Id,
+                Username = user.Username,
+                Name = user.Name,
+                Role = user.Role?.ToString(),
+            });
         }
 
-        private LoginSecretaryResponseDTO GenerateToken (LoginSecretaryResponseDTO user)
+        private ApiResponse<LoginSecretaryResponseDTO> GenerateToken (LoginSecretaryResponseDTO user)
         {
             var additionalClaims = new List<Claim>
             {
@@ -39,7 +32,14 @@
 
             user.AccessToken = tokenService.Generate(user, additionalClaims);
 
-            return user;
+            var response = new ApiResponse<LoginSecretaryResponseDTO>
+            {
+                Success = true,
+                Data = user,
+                Message = "Usuário autenticado com sucesso"
+            };
+
+            return response;
         }
     }
 }
