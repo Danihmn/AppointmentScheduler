@@ -4,7 +4,7 @@ public class Program
 {
     public static async Task Main (string[] args)
     {
-        var builder = WebApplication.CreateSlimBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddMapsterConfiguration();
 
@@ -23,11 +23,6 @@ public class Program
 
         builder.Services.MapCommandHandlers();
         builder.Services.MapQueryHandlers();
-
-        builder.Services.ConfigureHttpJsonOptions(options =>
-        {
-            options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
-        });
 
         builder.Services.AddProblemDetails();
         builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -61,41 +56,3 @@ public class Program
     }
 }
 
-[JsonSerializable(typeof(AppointmentResponseDTO))]
-[JsonSerializable(typeof(IEnumerable<AppointmentResponseDTO>))]
-[JsonSerializable(typeof(DoctorResponseDTO))]
-[JsonSerializable(typeof(IEnumerable<DoctorResponseDTO>))]
-[JsonSerializable(typeof(PatientResponseDTO))]
-[JsonSerializable(typeof(IEnumerable<PatientResponseDTO>))]
-[JsonSerializable(typeof(RequestResponseDTO))]
-[JsonSerializable(typeof(IEnumerable<RequestResponseDTO>))]
-[JsonSerializable(typeof(SecretaryResponseDTO))]
-[JsonSerializable(typeof(IEnumerable<SecretaryResponseDTO>))]
-[JsonSerializable(typeof(SpecialtyResponseDTO))]
-[JsonSerializable(typeof(IEnumerable<SpecialtyResponseDTO>))]
-[JsonSerializable(typeof(LoginSecretaryResponseDTO))]
-[JsonSerializable(typeof(GetAppointmentsQuery))]
-[JsonSerializable(typeof(GetAppointmentByIdQuery))]
-[JsonSerializable(typeof(ScheduleAppointmentCommand))]
-[JsonSerializable(typeof(GetDoctorsQuery))]
-[JsonSerializable(typeof(GetDoctorByIdQuery))]
-[JsonSerializable(typeof(GetPatientsQuery))]
-[JsonSerializable(typeof(GetPatientByIdQuery))]
-[JsonSerializable(typeof(GetRequestsQuery))]
-[JsonSerializable(typeof(GetRequestByIdQuery))]
-[JsonSerializable(typeof(GetSecretariesQuery))]
-[JsonSerializable(typeof(GetSecretaryByIdQuery))]
-[JsonSerializable(typeof(GetSpecialtiesQuery))]
-[JsonSerializable(typeof(GetSpecialtyByIdQuery))]
-[JsonSerializable(typeof(CreateDoctorCommand))]
-[JsonSerializable(typeof(CreatePatientCommand))]
-[JsonSerializable(typeof(CreateRequestCommand))]
-[JsonSerializable(typeof(CreateSecretaryCommand))]
-[JsonSerializable(typeof(CreateSpecialtyCommand))]
-[JsonSerializable(typeof(Appointment))]
-[JsonSerializable(typeof(Doctor))]
-[JsonSerializable(typeof(Patient))]
-[JsonSerializable(typeof(Request))]
-[JsonSerializable(typeof(Secretary))]
-[JsonSerializable(typeof(Specialty))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext { }

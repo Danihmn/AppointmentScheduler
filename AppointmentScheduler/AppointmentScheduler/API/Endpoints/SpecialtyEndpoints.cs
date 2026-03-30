@@ -12,7 +12,7 @@ public static class SpecialtyEndpoints
         specialtyGroup.MapGet("/specialty/{id}", async (int id, IQueryHandler<GetSpecialtyByIdQuery, ApiResponse<SpecialtyResponseDTO>> queryHandlerGetSpecialtyById, CancellationToken cancellationToken = default) =>
             TypedResults.Ok(await queryHandlerGetSpecialtyById.Handle(new GetSpecialtyByIdQuery(id), cancellationToken))).WithDescription("Busca especialidade pelo Id").RequireAuthorization();
 
-        specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ICommandHandler<CreateSpecialtyCommand, Specialty> commandHandlerCreateSpecialty, CancellationToken cancellationToken = default) =>
+        specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ICommandHandler<CreateSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>> commandHandlerCreateSpecialty, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/specialties/specialty/{command}", await commandHandlerCreateSpecialty.Handle(command, cancellationToken))).WithDescription("Cria nova especialidade").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;

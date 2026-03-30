@@ -12,7 +12,7 @@ public static class SecretaryEndpoints
         secretaryGroup.MapGet("/secretary/{id}", async (int id, IQueryHandler<GetSecretaryByIdQuery, ApiResponse<SecretaryResponseDTO>> queryHandlerGetSecretaryById, CancellationToken cancellationToken = default) =>
             TypedResults.Ok(await queryHandlerGetSecretaryById.Handle(new GetSecretaryByIdQuery(id), cancellationToken))).WithDescription("Busca secretária pelo Id");
 
-        secretaryGroup.MapPost("/secretary", async (CreateSecretaryCommand command, ICommandHandler<CreateSecretaryCommand, Secretary> commandHandlerCreateSecretary, CancellationToken cancellationToken = default) =>
+        secretaryGroup.MapPost("/secretary", async (CreateSecretaryCommand command, ICommandHandler<CreateSecretaryCommand, ApiResponse<SecretaryResponseDTO>> commandHandlerCreateSecretary, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/secretaries/secretary/{command}", await commandHandlerCreateSecretary.Handle(command, cancellationToken))).WithDescription("Cria nova secretária").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;

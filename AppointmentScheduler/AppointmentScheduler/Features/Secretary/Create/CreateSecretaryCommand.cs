@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-
-namespace AppointmentScheduler.Features.Secretary.Create;
+﻿namespace AppointmentScheduler.Features.Secretary.Create;
 
 public record CreateSecretaryCommand (
     string Username,
@@ -11,4 +9,4 @@ public record CreateSecretaryCommand (
     string Email,
     DateTime HiringDate,
     bool Active,
-    ERole Role) : ICommand<Domain.Entities.Secretary>;
+    ERole Role) : ICommand<ApiResponse<SecretaryResponseDTO>>;
