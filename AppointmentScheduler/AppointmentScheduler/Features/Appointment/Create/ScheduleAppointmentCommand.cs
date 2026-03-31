@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-
-namespace AppointmentScheduler.Features.Appointment.Create;
+﻿namespace AppointmentScheduler.Features.Appointment.Create;
 
 public record ScheduleAppointmentCommand (
     DateTime Date,
@@ -10,4 +8,4 @@ public record ScheduleAppointmentCommand (
     int DoctorId,
     int SpecialtyId,
     int SecretaryId,
-    string? Notes = null) : ICommand<Domain.Entities.Appointment>;
+    string? Notes = null) : ICommand<ApiResponse<AppointmentResponseDTO>>;

@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-
-namespace AppointmentScheduler.Features.Doctor.Create;
+﻿namespace AppointmentScheduler.Features.Doctor.Create;
 
 public record CreateDoctorCommand (
     string Name,
@@ -9,4 +7,4 @@ public record CreateDoctorCommand (
     string Email,
     DateTime HiringDate,
     bool Active,
-    int SpecialtyId) : ICommand<Domain.Entities.Doctor>;
+    int SpecialtyId) : ICommand<ApiResponse<DoctorResponseDTO>>;

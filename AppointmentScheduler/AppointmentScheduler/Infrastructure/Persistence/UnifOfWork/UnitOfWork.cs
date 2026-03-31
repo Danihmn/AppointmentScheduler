@@ -1,9 +1,4 @@
-﻿using AppointmentScheduler.Infrastructure.Persistence.ApplicationDbContext;
-using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract;
-using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract.Generic;
-using AppointmentScheduler.Infrastructure.Persistence.Repositories.Implementation;
-
-namespace AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
+﻿namespace AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
 
 public class UnitOfWork (AppDbContext context) : IUnitOfWork
 {
@@ -24,18 +19,6 @@ public class UnitOfWork (AppDbContext context) : IUnitOfWork
     public ISecretaryRepository SecretaryRepository => _secretaryRepository ??= new SecretaryRepository(context);
     public ISpecialtyRepository SpecialtyRepository => _specialtyRepository ??= new SpecialtyRepository(context);
     public ILoginRepository LoginRepository => _loginRepository ??= new LoginRepository(context);
-
-    public IRepository<T> GetRepository<T> () where T : BaseEntity
-    => typeof(T).Name switch
-    {
-        nameof(Appointment) => (IRepository<T>)AppointmentRepository,
-        nameof(Doctor) => (IRepository<T>)DoctorRepository,
-        nameof(Patient) => (IRepository<T>)PatientRepository,
-        nameof(Request) => (IRepository<T>)RequestRepository,
-        nameof(Secretary) => (IRepository<T>)SecretaryRepository,
-        nameof(Specialty) => (IRepository<T>)SpecialtyRepository,
-        _ => throw new ArgumentException($"No repository found for type {typeof(T).Name}")
-    };
 
     public async Task<int> SaveChangesAsync (CancellationToken cancellationToken = default)
     => await context.SaveChangesAsync(cancellationToken);

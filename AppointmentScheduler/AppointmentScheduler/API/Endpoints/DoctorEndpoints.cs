@@ -12,7 +12,7 @@ public static class DoctorEndpoints
         doctorGroup.MapGet("/doctor/{id}", async (int id, IQueryHandler<GetDoctorByIdQuery, ApiResponse<DoctorResponseDTO>> queryHandlerGetDoctorById, CancellationToken cancellationToken = default) =>
             TypedResults.Ok(await queryHandlerGetDoctorById.Handle(new GetDoctorByIdQuery(id), cancellationToken))).WithDescription("Busca médico pelo Id").RequireAuthorization();
 
-        doctorGroup.MapPost("/doctor", async (CreateDoctorCommand command, ICommandHandler<CreateDoctorCommand, Doctor> commandHandlerCreateDoctor, CancellationToken cancellationToken = default) =>
+        doctorGroup.MapPost("/doctor", async (CreateDoctorCommand command, ICommandHandler<CreateDoctorCommand, ApiResponse<DoctorResponseDTO>> commandHandlerCreateDoctor, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/doctors/doctor/{command}", await commandHandlerCreateDoctor.Handle(command, cancellationToken))).WithDescription("Cria novo médico").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;

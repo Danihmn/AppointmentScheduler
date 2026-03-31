@@ -6,7 +6,7 @@
         public async Task<ApiResponse<IEnumerable<RequestResponseDTO>>> Handle
             (GetRequestsQuery query, CancellationToken cancellationToken)
         {
-            var requestRepository = await unitOfWork.PatientRepository.GetAllWithDetailAsync(cancellationToken);
+            var requestRepository = await unitOfWork.RequestRepository.GetAllWithDetailAsync(cancellationToken);
 
             return requestRepository is null ?
                 throw new NotFoundException(nameof(RequestResponseDTO), null)

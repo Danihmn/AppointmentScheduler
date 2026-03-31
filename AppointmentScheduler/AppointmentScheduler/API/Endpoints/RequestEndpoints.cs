@@ -12,7 +12,7 @@ public static class RequestEndpoints
         requestGroup.MapGet("/request/{id}", async (int id, IQueryHandler<GetRequestByIdQuery, ApiResponse<RequestResponseDTO>> queryHandlerGetRequestById, CancellationToken cancellationToken = default) =>
             TypedResults.Ok(await queryHandlerGetRequestById.Handle(new GetRequestByIdQuery(id), cancellationToken))).WithDescription("Busca solicitação pelo Id").RequireAuthorization();
 
-        requestGroup.MapPost("/request", async (CreateRequestCommand command, ICommandHandler<CreateRequestCommand, Request> commandHandlerCreateRequest, CancellationToken cancellationToken = default) =>
+        requestGroup.MapPost("/request", async (CreateRequestCommand command, ICommandHandler<CreateRequestCommand, ApiResponse<RequestResponseDTO>> commandHandlerCreateRequest, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/requests/request/{command}", await commandHandlerCreateRequest.Handle(command, cancellationToken))).WithDescription("Cria nova solicitação").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         return app;

@@ -1,37 +1,28 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
+﻿namespace AppointmentScheduler.Features.Request.Create;
 
-namespace AppointmentScheduler.Features.Request.Create;
-
-public class CreateRequestCommandHandler (IUnitOfWork unitOfWork)
-    : ICommandHandler<CreateRequestCommand, Domain.Entities.Request>
+public class CreateRequestCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
+    : ICommandHandler<CreateRequestCommand, ApiResponse<RequestResponseDTO>>
 {
-    public async Task<Domain.Entities.Request> Handle (CreateRequestCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponse<RequestResponseDTO>> Handle
+        (CreateRequestCommand command, CancellationToken cancellationToken)
     {
-        try
+        var requestRepository = unitOfWork.RequestRepository;
+        var request = new Domain.Entities.Request
         {
-            var requestRepository = unitOfWork.GetRepository<Domain.Entities.Request>();
-            var request = new Domain.Entities.Request
-            {
-                Status = command.Status,
-                Type = command.Type,
-                DesiredDate = command.DesiredDate,
-                Description = command.Description,
-                Notes = command.Notes,
-                Priority = command.Priority,
-                PatientId = command.PatientId,
-                SpecialtyId = command.SpecialtyId,
-                ProcessedBySecretaryId = command.ProcessedBySecretaryId,
-            };
+            Status = command.Status,
+            Type = command.Type,
+            DesiredDate = command.DesiredDate,
+            Description = command.Description,
+            Notes = command.Notes,
+            Priority = command.Priority,
+            PatientId = command.PatientId,
+            SpecialtyId = command.SpecialtyId,
+            ProcessedBySecretaryId = command.ProcessedBySecretaryId,
+        };
 
-            await requestRepository.AddAsync(request, cancellationToken);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+        await requestRepository.AddAsync(request, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return request;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Error while creating new Request", ex);
-        }
+        return ApiResponse<RequestResponseDTO>.Created(mapper.Map<RequestResponseDTO>(request));
     }
 }

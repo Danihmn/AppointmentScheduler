@@ -1,38 +1,28 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
-
-namespace AppointmentScheduler.Features.Appointment.Create;
+﻿namespace AppointmentScheduler.Features.Appointment.Create;
 
 public class
-    ScheduleAppointmentCommandHandler (IUnitOfWork unitOfWork)
-    : ICommandHandler<ScheduleAppointmentCommand, Domain.Entities.Appointment>
+    ScheduleAppointmentCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
+    : ICommandHandler<ScheduleAppointmentCommand, ApiResponse<AppointmentResponseDTO>>
 {
-    public async Task<Domain.Entities.Appointment> Handle (ScheduleAppointmentCommand command,
-        CancellationToken cancellationToken = default)
+    public async Task<ApiResponse<AppointmentResponseDTO>> Handle
+        (ScheduleAppointmentCommand command, CancellationToken cancellationToken = default)
     {
-        try
+        var appointmentRepository = unitOfWork.AppointmentRepository;
+        var appointment = new Domain.Entities.Appointment
         {
-            var appointmentRepository = unitOfWork.GetRepository<Domain.Entities.Appointment>();
-            var appointment = new Domain.Entities.Appointment
-            {
-                Date = command.Date,
-                Status = command.Status,
-                RequestId = command.RequestId,
-                PatientId = command.PatientId,
-                DoctorId = command.DoctorId,
-                SpecialtyId = command.SpecialtyId,
-                SecretaryId = command.SecretaryId,
-                Notes = command.Notes
-            };
+            Date = command.Date,
+            Status = command.Status,
+            RequestId = command.RequestId,
+            PatientId = command.PatientId,
+            DoctorId = command.DoctorId,
+            SpecialtyId = command.SpecialtyId,
+            SecretaryId = command.SecretaryId,
+            Notes = command.Notes
+        };
 
-            await appointmentRepository.AddAsync(appointment, cancellationToken);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+        await appointmentRepository.AddAsync(appointment, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return appointment;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Error while creating new Appointment", ex);
-        }
+        return ApiResponse<AppointmentResponseDTO>.Created(mapper.Map<AppointmentResponseDTO>(appointment));
     }
 }

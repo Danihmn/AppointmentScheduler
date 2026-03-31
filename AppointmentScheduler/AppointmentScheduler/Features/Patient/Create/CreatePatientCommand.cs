@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-
-namespace AppointmentScheduler.Features.Patient.Create;
+﻿namespace AppointmentScheduler.Features.Patient.Create;
 
 public record CreatePatientCommand (
     string Name,
@@ -9,4 +7,4 @@ public record CreatePatientCommand (
     string Email,
     EGender Gender,
     string? Notes
-) : ICommand<Domain.Entities.Patient>;
+) : ICommand<ApiResponse<PatientResponseDTO>>;

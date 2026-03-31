@@ -35,6 +35,9 @@ global using AppointmentScheduler.Infrastructure.Authentication.Services.Contrac
 global using AppointmentScheduler.Infrastructure.Authentication.Services.Implementation;
 global using AppointmentScheduler.Infrastructure.Persistence.ApplicationDbContext;
 global using AppointmentScheduler.Infrastructure.Persistence.Configurations;
+global using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract;
+global using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract.Generic;
+global using AppointmentScheduler.Infrastructure.Persistence.Repositories.Implementation;
 global using AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
 global using Mapster;
 global using MapsterMapper;

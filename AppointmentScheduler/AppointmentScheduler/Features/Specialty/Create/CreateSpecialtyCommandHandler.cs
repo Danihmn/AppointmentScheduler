@@ -6,7 +6,7 @@ public class CreateSpecialtyCommandHandler (IUnitOfWork unitOfWork, IMapper mapp
     public async Task<ApiResponse<SpecialtyResponseDTO>> Handle
         (CreateSpecialtyCommand command, CancellationToken cancellationToken)
     {
-        var specialtyRepository = unitOfWork.GetRepository<Domain.Entities.Specialty>();
+        var specialtyRepository = unitOfWork.SpecialtyRepository;
         var specialty = new Domain.Entities.Specialty
         {
             Description = command.Description,

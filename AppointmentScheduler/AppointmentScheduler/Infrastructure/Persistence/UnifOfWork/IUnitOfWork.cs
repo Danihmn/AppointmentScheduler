@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract;
-using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract.Generic;
-
-namespace AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
+﻿namespace AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
 
 public interface IUnitOfWork : IDisposable
 {
@@ -13,6 +10,5 @@ public interface IUnitOfWork : IDisposable
     ISpecialtyRepository SpecialtyRepository { get; }
     ILoginRepository LoginRepository { get; }
 
-    IRepository<T> GetRepository<T> () where T : BaseEntity;
     Task<int> SaveChangesAsync (CancellationToken cancellationToken = default);
 }

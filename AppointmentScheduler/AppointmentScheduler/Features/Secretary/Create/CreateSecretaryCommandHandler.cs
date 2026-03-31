@@ -6,7 +6,7 @@ public class CreateSecretaryCommandHandler (IUnitOfWork unitOfWork, IPasswordHas
     public async Task<ApiResponse<SecretaryResponseDTO>> Handle
         (CreateSecretaryCommand command, CancellationToken cancellationToken)
     {
-        var secretaryRepository = unitOfWork.GetRepository<Domain.Entities.Secretary>();
+        var secretaryRepository = unitOfWork.SecretaryRepository;
         var secretary = new Domain.Entities.Secretary
         {
             Username = command.Username,
