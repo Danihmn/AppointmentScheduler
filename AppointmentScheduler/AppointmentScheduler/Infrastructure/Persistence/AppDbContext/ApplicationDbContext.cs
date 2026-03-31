@@ -1,6 +1,6 @@
-﻿namespace AppointmentScheduler.Infrastructure.Persistence.ApplicationDbContext;
+﻿namespace AppointmentScheduler.Infrastructure.Persistence.AppDbContext;
 
-public class AppDbContext (DbContextOptions<AppDbContext> options) : DbContext(options)
+public class ApplicationDbContext (DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Doctor> Doctors { get; set; }
@@ -12,6 +12,6 @@ public class AppDbContext (DbContextOptions<AppDbContext> options) : DbContext(o
     protected override void OnModelCreating (ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

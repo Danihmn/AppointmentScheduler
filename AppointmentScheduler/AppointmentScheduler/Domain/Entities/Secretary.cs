@@ -2,14 +2,14 @@
 
 public class Secretary : BaseEntity
 {
-    public string Username { get; set; }
-    public string HashedPassword { get; set; }
+    public string Username { get; set; } = null!;
+    public string HashedPassword { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string Cpf { get; set; } = null!;
     public string PhoneNumber { get; set; } = null!;
     public string Email { get; set; } = null!;
     public DateTime HiringDate { get; set; }
-    public bool Active { get; set; }
+    public bool Active { get; set; } = true;
     public ERole? Role { get; set; }
 
     public virtual ICollection<Appointment> Appointments { get; set; } = [];

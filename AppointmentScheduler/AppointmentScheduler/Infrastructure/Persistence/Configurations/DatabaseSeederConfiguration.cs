@@ -5,7 +5,7 @@ public static class DatabaseSeederConfiguration
     public static async Task SeedDatabaseAsync (this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasherService>();
 
         var hasAdmin = await context.Secretaries.AnyAsync(secretary => secretary.Role == ERole.Admin);

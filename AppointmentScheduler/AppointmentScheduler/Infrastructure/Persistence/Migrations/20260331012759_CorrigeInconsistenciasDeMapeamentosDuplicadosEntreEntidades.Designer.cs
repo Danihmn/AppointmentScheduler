@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppointmentScheduler.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260121025555_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260331012759_CorrigeInconsistenciasDeMapeamentosDuplicadosEntreEntidades")]
+    partial class CorrigeInconsistenciasDeMapeamentosDuplicadosEntreEntidades
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "10.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -46,6 +46,9 @@ namespace AppointmentScheduler.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
+                    b.Property<int>("RequestId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SecretaryId")
                         .HasColumnType("int");
 
@@ -59,7 +62,12 @@ namespace AppointmentScheduler.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Date");
+
                     b.HasIndex("PatientId");
+
+                    b.HasIndex("RequestId")
+                        .IsUnique();
 
                     b.HasIndex("SecretaryId");
 
@@ -92,8 +100,8 @@ namespace AppointmentScheduler.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(254)
+                        .HasColumnType("nvarchar(254)");
 
                     b.Property<DateTime>("HiringDate")
                         .HasColumnType("datetime2");
@@ -146,8 +154,8 @@ namespace AppointmentScheduler.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(254)
+                        .HasColumnType("nvarchar(254)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -215,9 +223,6 @@ namespace AppointmentScheduler.Migrations
                     b.Property<int?>("ProcessedBySecretaryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ResultingAppointmentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SpecialtyId")
                         .HasColumnType("int");
 
@@ -242,10 +247,6 @@ namespace AppointmentScheduler.Migrations
                     b.HasIndex("Priority");
 
                     b.HasIndex("ProcessedBySecretaryId");
-
-                    b.HasIndex("ResultingAppointmentId")
-                        .IsUnique()
-                        .HasFilter("[ResultingAppointmentId] IS NOT NULL");
 
                     b.HasIndex("SpecialtyId");
 
@@ -278,6 +279,11 @@ namespace AppointmentScheduler.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(254)
+                        .HasColumnType("nvarchar(254)");
+
+                    b.Property<string>("HashedPassword")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -292,7 +298,17 @@ namespace AppointmentScheduler.Migrations
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
 
@@ -303,6 +319,9 @@ namespace AppointmentScheduler.Migrations
                         .IsUnique();
 
                     b.HasIndex("PhoneNumber")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("Secretaries", (string)null);
@@ -322,9 +341,16 @@ namespace AppointmentScheduler.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Description")
+                        .IsUnique();
+
+                    b.HasIndex("IsActive");
 
                     b.ToTable("Specialties", (string)null);
                 });
@@ -343,6 +369,12 @@ namespace AppointmentScheduler.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("AppointmentScheduler.Domain.Entities.Request", "Request")
+                        .WithOne("ResultingAppointment")
+                        .HasForeignKey("AppointmentScheduler.Domain.Entities.Appointment", "RequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("AppointmentScheduler.Domain.Entities.Secretary", "Secretary")
                         .WithMany("Appointments")
                         .HasForeignKey("SecretaryId")
@@ -358,6 +390,8 @@ namespace AppointmentScheduler.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
+
+                    b.Navigation("Request");
 
                     b.Navigation("Secretary");
 
@@ -386,11 +420,6 @@ namespace AppointmentScheduler.Migrations
                     b.HasOne("AppointmentScheduler.Domain.Entities.Secretary", "ProcessedBySecretary")
                         .WithMany("ProcessedRequests")
                         .HasForeignKey("ProcessedBySecretaryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("AppointmentScheduler.Domain.Entities.Appointment", "ResultingAppointment")
-                        .WithOne()
-                        .HasForeignKey("AppointmentScheduler.Domain.Entities.Request", "ResultingAppointmentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("AppointmentScheduler.Domain.Entities.Specialty", "Specialty")
@@ -402,8 +431,6 @@ namespace AppointmentScheduler.Migrations
                     b.Navigation("Patient");
 
                     b.Navigation("ProcessedBySecretary");
-
-                    b.Navigation("ResultingAppointment");
 
                     b.Navigation("Specialty");
                 });
@@ -418,6 +445,11 @@ namespace AppointmentScheduler.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("Requests");
+                });
+
+            modelBuilder.Entity("AppointmentScheduler.Domain.Entities.Request", b =>
+                {
+                    b.Navigation("ResultingAppointment");
                 });
 
             modelBuilder.Entity("AppointmentScheduler.Domain.Entities.Secretary", b =>

@@ -1,4 +1,4 @@
-﻿namespace AppointmentScheduler.Infrastructure.Persistence.ApplicationDbContext.Configurations;
+﻿namespace AppointmentScheduler.Infrastructure.Persistence.AppDbContext.ApplicationDbContextConfigurations;
 
 public class SpecialtyConfiguration : IEntityTypeConfiguration<Specialty>
 {
@@ -9,8 +9,9 @@ public class SpecialtyConfiguration : IEntityTypeConfiguration<Specialty>
         builder.HasKey(specialty => specialty.Id);
 
         builder.Property(specialty => specialty.Description).HasMaxLength(250).IsRequired();
+        builder.Property(specialty => specialty.IsActive).IsRequired().HasDefaultValue(true);
 
-        builder.HasMany(specialty => specialty.Requests).WithOne(request => request.Specialty)
-            .HasForeignKey(request => request.SpecialtyId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasIndex(specialty => specialty.Description).IsUnique();
+        builder.HasIndex(specialty => specialty.IsActive);
     }
 }

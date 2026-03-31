@@ -1,10 +1,10 @@
-﻿using AppointmentScheduler.Infrastructure.Persistence.ApplicationDbContext;
+﻿using AppointmentScheduler.Infrastructure.Persistence.AppDbContext;
 using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract;
 using AppointmentScheduler.Infrastructure.Persistence.Repositories.Implementation.Generic;
 
 namespace AppointmentScheduler.Infrastructure.Persistence.Repositories.Implementation
 {
-    public class SecretaryRepository (AppDbContext context)
+    public class SecretaryRepository (AppDbContext.ApplicationDbContext context)
         : Repository<Secretary>(context), ISecretaryRepository
     {
         private readonly DbSet<Secretary> _dbSet = context.Set<Secretary>();

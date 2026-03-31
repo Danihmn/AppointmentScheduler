@@ -12,7 +12,7 @@ public class Appointment : BaseEntity
     public int SpecialtyId { get; set; }
     public int SecretaryId { get; set; }
 
-    public virtual Request Request { get; set; }
+    public virtual Request Request { get; set; } = null!;
     public virtual Patient Patient { get; set; } = null!;
     public virtual Doctor Doctor { get; set; } = null!;
     public virtual Specialty Specialty { get; set; } = null!;
