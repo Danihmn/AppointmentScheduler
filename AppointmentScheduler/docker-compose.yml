@@ -6,8 +6,8 @@ services:
       dockerfile: AppointmentScheduler/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=AppointmentSchedulerDB;User Id=sa;Password=Admin1234;TrustServerCertificate=True;
-      - JWT_PRIVATE_KEY=8sxS4rjguFDhQBdqiDhefAYX6R/DfVsNPxHYS0twKh0wLmZ0/1vDCw4E1JawgKHS63/RRDc3Q2Xnex2JO97vuA==
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY}
     ports:
       - "8080:8080"
       - "8443:8443"
