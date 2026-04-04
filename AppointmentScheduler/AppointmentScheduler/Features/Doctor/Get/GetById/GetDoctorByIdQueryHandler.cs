@@ -5,7 +5,7 @@
     {
         public async Task<ApiResponse<DoctorResponseDTO>> Handle (GetDoctorByIdQuery query, CancellationToken cancellationToken)
         {
-            var doctorRepository = await unitOfWork.DoctorRepository.GetAllWithDetailAsync(cancellationToken);
+            var doctorRepository = await unitOfWork.DoctorRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
 
             return doctorRepository is null ?
                 throw new NotFoundException(nameof(DoctorResponseDTO), query.Id)

@@ -6,7 +6,7 @@
         public async Task<ApiResponse<AppointmentResponseDTO>> Handle
             (GetAppointmentByIdQuery query, CancellationToken cancellationToken)
         {
-            var appointmentRepository = await unitOfWork.AppointmentRepository.GetAllWithDetailAsync(cancellationToken);
+            var appointmentRepository = await unitOfWork.AppointmentRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
 
             return appointmentRepository is null ?
                 throw new NotFoundException(nameof(AppointmentResponseDTO), query.Id)

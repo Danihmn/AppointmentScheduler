@@ -6,7 +6,7 @@
         public async Task<ApiResponse<SpecialtyResponseDTO>> Handle
             (GetSpecialtyByIdQuery query, CancellationToken cancellationToken)
         {
-            var specialtyRepository = await unitOfWork.SpecialtyRepository.GetAllWithDetailAsync(cancellationToken);
+            var specialtyRepository = await unitOfWork.SpecialtyRepository.GetByIdWithDetailsAsync(query.Id, cancellationToken);
 
             return specialtyRepository is null ?
                 throw new NotFoundException(nameof(SpecialtyResponseDTO), query.Id)
