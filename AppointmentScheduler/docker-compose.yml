@@ -28,7 +28,17 @@ services:
       - portainer_data:/data
     networks:
       - appointment-scheduler_network
-    
+  ngrok:
+    image: ngrok/ngrok
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    command: http appointment-scheduler:8080
+    ports:
+      - "4040:4040"
+    depends_on:
+      - appointment-scheduler
+    networks:
+      - appointment-scheduler_network
   
 networks:
   appointment-scheduler_network: 
