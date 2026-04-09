@@ -1,6 +1,6 @@
 ﻿namespace AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
 
-public class UnitOfWork (AppDbContext.ApplicationDbContext context) : IUnitOfWork
+public class UnitOfWork (ApplicationDbContext context) : IUnitOfWork
 {
     private bool _disposed = false;
 

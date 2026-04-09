@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Infrastructure.Authentication.Services.Contract;
-
-namespace AppointmentScheduler.Infrastructure.Authentication.Services.Implementation
+﻿namespace AppointmentScheduler.Infrastructure.Authentication.Services.Implementation
 {
     public class PasswordHasherService : IPasswordHasherService
     {

@@ -1,8 +1,4 @@
-﻿using AppointmentScheduler.Features.Secretary.Authenticate;
-using AppointmentScheduler.Infrastructure.Authentication.Configuration;
-using AppointmentScheduler.Infrastructure.Authentication.Services.Contract;
-
-namespace AppointmentScheduler.Infrastructure.Authentication.Services.Implementation
+﻿namespace AppointmentScheduler.Infrastructure.Authentication.Services.Implementation
 {
     public class TokenService : ITokenService
     {
