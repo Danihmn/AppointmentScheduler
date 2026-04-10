@@ -4,7 +4,7 @@ public static class DatabaseConfiguration
 {
     public static IServiceCollection AddDatabaseConfiguration (this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration["ConnectionStrings:DefaultConnection"];
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         if (string.IsNullOrEmpty(connectionString))
             throw new Exception("No connection string found in the configuration file");
