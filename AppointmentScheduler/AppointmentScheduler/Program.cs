@@ -37,7 +37,7 @@ public class Program
         if (isDevelopment)
             app.MapOpenApi();
 
-        if (!isDevelopment)
+        if (!isDevelopment && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")))
             app.UseHttpsRedirection();
 
         app.UseExceptionHandler();
