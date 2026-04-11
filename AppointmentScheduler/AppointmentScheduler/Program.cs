@@ -34,8 +34,7 @@ public class Program
 
         await app.SeedDatabaseAsync();
 
-        if (isDevelopment)
-            app.MapOpenApi();
+        app.MapOpenApi();
 
         if (!isDevelopment && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")))
             app.UseHttpsRedirection();
