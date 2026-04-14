@@ -8,6 +8,8 @@ public static class DatabaseSeederConfiguration
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasherService>();
 
+        await context.Database.MigrateAsync();
+
         var hasAdmin = await context.Secretaries.AnyAsync(secretary => secretary.Role == ERole.Admin);
 
         if (hasAdmin) return;
