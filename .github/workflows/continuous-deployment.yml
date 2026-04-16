@@ -1,7 +1,7 @@
 name: Continuous Integration, Delivery and Deployment with GitHub Actions and .NET 10
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -35,8 +35,25 @@ jobs:
         run: docker compose build
         working-directory: AppointmentScheduler
 
+      - name: Azure Container Registry login
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY }}
+          username: ${{ secrets.AZ_CONTAINER_REGISTRY_USERNAME }}
+          password: ${{ secrets.AZ_CONTAINER_REGISTRY_PASSWORD }}
+
+      - name: Push Docker Images to Azure Container Registry
+        run: |
+          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:latest ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest &&
+            docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:latest ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:${{ github.run_id }}
+
+          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest
+          docker push ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:${{ github.run_id }}
+
       - name: Push to Docker Hub Container Registry
-        run: docker tag ${{ secrets.DOCKER_USERNAME }}/appointment-scheduler:latest ${{ secrets.DOCKER_USERNAME }}/appointment-scheduler:${{ github.run_id }}
+        run: docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:latest ${{
+          secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:${{ github.run_id }}
 
       - name: Push to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/appointment-scheduler:latest && docker push ${{ secrets.DOCKER_USERNAME }}/appointment-scheduler:${{ github.run_id }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:latest &&
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:${{ github.run_id }}

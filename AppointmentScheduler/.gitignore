@@ -60,3 +60,6 @@ nunit-*.xml
 
 # User-specific files
 *.user
+
+# GitHub Actions
+AzureCredentials.txt
