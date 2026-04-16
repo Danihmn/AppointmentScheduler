@@ -66,4 +66,4 @@ jobs:
         uses: Azure/webapps-deploy@v2.2.19
         with:
           app-name: appointment-scheduler-api
-          images: ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:${{ github.run_id }}
+          images: ${{ secrets.AZURE_CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest
