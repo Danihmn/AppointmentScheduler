@@ -62,6 +62,19 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Azure WebApp - Configure App Settings
+        uses: Azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az webapp config appsettings set \
+              --name appointment-scheduler-api \
+              --resource-group appointment_scheduler_api \
+              --settings \
+                "ConnectionStrings__DefaultConnection=${{ secrets.DB_CONNECTION_STRING }}" \
+                "JWT_PRIVATE_KEY=${{ secrets.JWT_PRIVATE_KEY }}" \
+                "ASPNETCORE_ENVIRONMENT=Production"
+
       - name: Azure WebApp - App Deployment
         uses: Azure/webapps-deploy@v2.2.19
         with:
