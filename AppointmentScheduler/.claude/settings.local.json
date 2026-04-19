@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(az webapp list *)",
+      "Bash(grep -E \"\\\\.cs$\")",
+      "Bash(dotnet build *)"
+    ]
+  }
+}

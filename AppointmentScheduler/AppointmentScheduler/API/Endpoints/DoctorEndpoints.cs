@@ -15,6 +15,12 @@ public static class DoctorEndpoints
         doctorGroup.MapPost("/doctor", async (CreateDoctorCommand command, ICommandHandler<CreateDoctorCommand, ApiResponse<DoctorResponseDTO>> commandHandlerCreateDoctor, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/doctors/doctor/{command}", await commandHandlerCreateDoctor.Handle(command, cancellationToken))).WithDescription("Cria novo médico").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
+        doctorGroup.MapPut("/doctor/{id}", async (int id, UpdateDoctorCommand command, ICommandHandler<UpdateDoctorCommand, ApiResponse<DoctorResponseDTO>> commandHandlerUpdateDoctor, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await commandHandlerUpdateDoctor.Handle(command with { Id = id }, cancellationToken))).WithDescription("Atualiza médico existente").RequireAuthorization(policy => policy.RequireRole("Admin"));
+
+        doctorGroup.MapDelete("/doctor/{id}", async (int id, ICommandHandler<DeleteDoctorCommand, ApiResponse<DoctorResponseDTO>> commandHandlerDeleteDoctor, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await commandHandlerDeleteDoctor.Handle(new DeleteDoctorCommand(id), cancellationToken))).WithDescription("Remove médico").RequireAuthorization(policy => policy.RequireRole("Admin"));
+
         return app;
     }
 }

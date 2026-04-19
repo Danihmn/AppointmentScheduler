@@ -15,6 +15,12 @@ public static class PatientEndpoints
         patientGroup.MapPost("/patient", async (CreatePatientCommand command, ICommandHandler<CreatePatientCommand, ApiResponse<PatientResponseDTO>> commandHandlerCreatePatients, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/patients/patient/{command}", await commandHandlerCreatePatients.Handle(command, cancellationToken))).WithDescription("Cria novo paciente").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
+        patientGroup.MapPut("/patient/{id}", async (int id, UpdatePatientCommand command, ICommandHandler<UpdatePatientCommand, ApiResponse<PatientResponseDTO>> commandHandlerUpdatePatient, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await commandHandlerUpdatePatient.Handle(command with { Id = id }, cancellationToken))).WithDescription("Atualiza paciente existente").RequireAuthorization(policy => policy.RequireRole("Admin"));
+
+        patientGroup.MapDelete("/patient/{id}", async (int id, ICommandHandler<DeletePatientCommand, ApiResponse<PatientResponseDTO>> commandHandlerDeletePatient, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await commandHandlerDeletePatient.Handle(new DeletePatientCommand(id), cancellationToken))).WithDescription("Remove paciente").RequireAuthorization(policy => policy.RequireRole("Admin"));
+
         return app;
     }
 }

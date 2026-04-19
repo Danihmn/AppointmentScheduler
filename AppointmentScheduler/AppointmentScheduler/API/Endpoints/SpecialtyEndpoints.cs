@@ -15,6 +15,12 @@ public static class SpecialtyEndpoints
         specialtyGroup.MapPost("/specialty", async (CreateSpecialtyCommand command, ICommandHandler<CreateSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>> commandHandlerCreateSpecialty, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/specialties/specialty/{command}", await commandHandlerCreateSpecialty.Handle(command, cancellationToken))).WithDescription("Cria nova especialidade").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
+        specialtyGroup.MapPut("/specialty/{id}", async (int id, UpdateSpecialtyCommand command, ICommandHandler<UpdateSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>> commandHandlerUpdateSpecialty, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await commandHandlerUpdateSpecialty.Handle(command with { Id = id }, cancellationToken))).WithDescription("Atualiza especialidade existente").RequireAuthorization(policy => policy.RequireRole("Admin"));
+
+        specialtyGroup.MapDelete("/specialty/{id}", async (int id, ICommandHandler<DeleteSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>> commandHandlerDeleteSpecialty, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await commandHandlerDeleteSpecialty.Handle(new DeleteSpecialtyCommand(id), cancellationToken))).WithDescription("Remove especialidade").RequireAuthorization(policy => policy.RequireRole("Admin"));
+
         return app;
     }
 }
