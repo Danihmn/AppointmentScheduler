@@ -14,12 +14,16 @@ public class Program
 
         builder.Services.AddAuthorization();
 
+        builder.Services.AddSignalR();
+
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         builder.Services.AddScoped<TokenConfiguration>();
         builder.Services.AddScoped<ITokenService, TokenService>();
 
         builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
+
+        builder.Services.AddScoped<INotificationService, NotificationService>();
 
         builder.Services.MapCommandHandlers();
         builder.Services.MapQueryHandlers();
@@ -46,6 +50,8 @@ public class Program
         app.UseAuthorization();
 
         app.MapEndpoints();
+
+        app.MapHub<NotificationHub>("/hubs/notifications");
 
         app.UseScalarDocumentation();
 
