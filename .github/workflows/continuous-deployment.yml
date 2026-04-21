@@ -84,7 +84,7 @@ jobs:
             az webapp config set \
               --name appointment-scheduler-api \
               --resource-group appointment_scheduler_api \
-              --set siteConfig.acrUseManagedIdentityCreds=true
+              --generic-configurations '{"acrUseManagedIdentityCreds": true}'
 
       - name: Azure WebApp - App Deployment
         uses: Azure/webapps-deploy@v2.2.19
