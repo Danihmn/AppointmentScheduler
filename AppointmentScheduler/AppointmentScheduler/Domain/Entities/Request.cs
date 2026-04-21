@@ -1,7 +1,4 @@
-﻿using AppointmentScheduler.Features.Common.CQRS;
-using AppointmentScheduler.Features.Request.Create;
-
-namespace AppointmentScheduler.Domain.Entities;
+﻿namespace AppointmentScheduler.Domain.Entities;
 
 public class Request : BaseEntity, ICommand<CreateRequestCommand>
 {

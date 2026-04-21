@@ -1,6 +1,6 @@
 namespace AppointmentScheduler.Features.Appointment.Update;
 
-public class UpdateAppointmentCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
+public class UpdateAppointmentCommandHandler (IUnitOfWork unitOfWork, IMapper mapper, INotificationService notificationService)
     : ICommandHandler<UpdateAppointmentCommand, ApiResponse<AppointmentResponseDTO>>
 {
     public async Task<ApiResponse<AppointmentResponseDTO>> Handle
@@ -21,6 +21,15 @@ public class UpdateAppointmentCommandHandler (IUnitOfWork unitOfWork, IMapper ma
         unitOfWork.AppointmentRepository.Update(appointment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
+        var secretary = await unitOfWork.SecretaryRepository.GetByIdAsync(appointment.SecretaryId, cancellationToken);
+        var patient = await unitOfWork.PatientRepository.GetByIdAsync(command.PatientId, cancellationToken);
+        var doctor = await unitOfWork.DoctorRepository.GetByIdAsync(command.DoctorId, cancellationToken);
+
+        if (secretary != null && patient != null && doctor != null)
+            await notificationService
+                .NotifyAppointmentUpdated(appointment.Id, secretary.Name, patient.Name, appointment.Date, doctor.Name);
+
         return ApiResponse<AppointmentResponseDTO>.Ok(mapper.Map<AppointmentResponseDTO>(appointment), "Consulta atualizada com sucesso.");
+
     }
 }

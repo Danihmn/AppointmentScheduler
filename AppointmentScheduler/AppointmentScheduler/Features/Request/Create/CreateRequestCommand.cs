@@ -3,7 +3,6 @@
 public record CreateRequestCommand (
     ERequestStatus Status,
     ERequestType Type,
-    DateTime DesiredDate,
     string Description,
     string Notes,
     EPriority Priority,

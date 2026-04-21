@@ -11,7 +11,6 @@ public class CreateRequestCommandHandler (IUnitOfWork unitOfWork, IMapper mapper
         {
             Status = command.Status,
             Type = command.Type,
-            DesiredDate = command.DesiredDate,
             Description = command.Description,
             Notes = command.Notes,
             Priority = command.Priority,

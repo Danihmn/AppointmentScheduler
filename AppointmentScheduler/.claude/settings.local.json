@@ -3,7 +3,8 @@
     "allow": [
       "Bash(az webapp list *)",
       "Bash(grep -E \"\\\\.cs$\")",
-      "Bash(dotnet build *)"
+      "Bash(dotnet build *)",
+      "Skill(update-config)"
     ]
   }
 }
