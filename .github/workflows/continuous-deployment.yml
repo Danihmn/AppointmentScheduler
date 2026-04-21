@@ -62,6 +62,26 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Azure WebApp - Assign AcrPull Role to Managed Identity
+        uses: Azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            PRINCIPAL_ID=$(az webapp identity show \
+              --name appointment-scheduler-api \
+              --resource-group appointment_scheduler_api \
+              --query principalId --output tsv)
+
+            ACR_ID=$(az acr show \
+              --name appointmentschedulerregistry \
+              --resource-group appointment_scheduler_api \
+              --query id --output tsv)
+
+            az role assignment create \
+              --assignee $PRINCIPAL_ID \
+              --role AcrPull \
+              --scope $ACR_ID
+
       - name: Azure WebApp - Configure App Settings
         uses: Azure/cli@v2
         with:
@@ -76,7 +96,7 @@ jobs:
                 "JWT_PRIVATE_KEY=${{ secrets.JWT_PRIVATE_KEY }}" \
                 "ASPNETCORE_ENVIRONMENT=Production"
 
-      - name: Azure WebApp - Enable Managed Identity for ACR
+      - name: Azure WebApp - Enable Managed Identity for Azure Container Registry
         uses: Azure/cli@v2
         with:
           azcliversion: latest
@@ -84,7 +104,7 @@ jobs:
             az webapp config set \
               --name appointment-scheduler-api \
               --resource-group appointment_scheduler_api \
-              --generic-configurations '{"acrUseManagedIdentityCreds": true}'
+              --generic-configurations '{"acrUseManagedIdentityCreds": true}' 
 
       - name: Azure WebApp - App Deployment
         uses: Azure/webapps-deploy@v2.2.19
