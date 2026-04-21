@@ -71,6 +71,7 @@ jobs:
               --name appointment-scheduler-api \
               --resource-group appointment_scheduler_api \
               --settings \
+                "WEBSITES_PORT=8080" \
                 "ConnectionStrings__DefaultConnection=${{ secrets.DB_CONNECTION_STRING }}" \
                 "JWT_PRIVATE_KEY=${{ secrets.JWT_PRIVATE_KEY }}" \
                 "ASPNETCORE_ENVIRONMENT=Production"
