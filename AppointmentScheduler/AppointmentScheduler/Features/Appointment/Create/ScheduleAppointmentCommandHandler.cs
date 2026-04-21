@@ -9,8 +9,19 @@ public class ScheduleAppointmentCommandHandler
     {
         var requestRepository = unitOfWork.RequestRepository;
         var appointmentRepository = unitOfWork.AppointmentRepository;
+        var doctorRepository = unitOfWork.DoctorRepository;
+        var secretaryRepository = unitOfWork.SecretaryRepository;
+        var patientRepository = unitOfWork.PatientRepository;
 
         var request = await requestRepository.GetByIdAsync(command.RequestId, cancellationToken);
+        var doctor = await doctorRepository.GetByIdAsync(command.DoctorId, cancellationToken);
+
+        if (request is null)
+            throw new NotFoundException($"Pedido não encontrado.", command.RequestId);
+
+        if (doctor is not null)
+            if (request.SpecialtyId != doctor.SpecialtyId)
+                throw new BusinessRuleException("O médico selecionado não possui a especialidade requerida pelo pedido.");
 
         var appointment = new Domain.Entities.Appointment
         {
@@ -20,16 +31,15 @@ public class ScheduleAppointmentCommandHandler
             PatientId = request.PatientId,
             DoctorId = command.DoctorId,
             SpecialtyId = request.SpecialtyId,
-            SecretaryId = request.ProcessedBySecretaryId ??= 0,
+            SecretaryId = request.ProcessedBySecretaryId,
             Notes = request.Notes
         };
 
         await appointmentRepository.AddAsync(appointment, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var secretary = await unitOfWork.SecretaryRepository.GetByIdAsync(request.ProcessedBySecretaryId ??= 0, cancellationToken);
-        var patient = await unitOfWork.PatientRepository.GetByIdAsync(request.PatientId, cancellationToken);
-        var doctor = await unitOfWork.DoctorRepository.GetByIdAsync(command.DoctorId, cancellationToken);
+        var secretary = await secretaryRepository.GetByIdAsync(request.ProcessedBySecretaryId, cancellationToken);
+        var patient = await patientRepository.GetByIdAsync(request.PatientId, cancellationToken);
 
         if (secretary is not null && patient is not null && doctor is not null)
             await notificationService.NotifyAppointmentCreated(secretary.Name, patient.Name, command.Date, doctor.Name);

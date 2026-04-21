@@ -4,6 +4,7 @@ using AppointmentScheduler.Infrastructure.Persistence.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppointmentScheduler.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260421194809_AumentaLimiteDeTamanhoDaSenhaCriptografadaNaTabelaDeSecretarias")]
+    partial class AumentaLimiteDeTamanhoDaSenhaCriptografadaNaTabelaDeSecretarias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,8 +200,11 @@ namespace AppointmentScheduler.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(600)
-                        .HasColumnType("nvarchar(600)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("DesiredDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
@@ -209,8 +215,10 @@ namespace AppointmentScheduler.Migrations
 
                     b.Property<string>("Priority")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValue("Medium");
 
                     b.Property<int>("ProcessedBySecretaryId")
                         .HasColumnType("int");
@@ -232,6 +240,8 @@ namespace AppointmentScheduler.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DesiredDate");
+
                     b.HasIndex("PatientId");
 
                     b.HasIndex("Priority");
@@ -241,6 +251,8 @@ namespace AppointmentScheduler.Migrations
                     b.HasIndex("SpecialtyId");
 
                     b.HasIndex("Status");
+
+                    b.HasIndex("Status", "Priority", "DesiredDate");
 
                     b.ToTable("Requests", (string)null);
                 });

@@ -54,6 +54,7 @@ global using AppointmentScheduler.Infrastructure.Persistence.Repositories.Implem
 global using AppointmentScheduler.Infrastructure.Persistence.Repositories.Implementation.Generic;
 global using AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
 global using AppointmentScheduler.Infrastructure.Services;
+global using FluentValidation;
 global using Mapster;
 global using MapsterMapper;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;

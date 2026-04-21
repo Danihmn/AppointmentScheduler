@@ -3,7 +3,7 @@
 public class Appointment : BaseEntity
 {
     public DateTime Date { get; set; }
-    public EStatus Status { get; set; }
+    public EAppointmentStatus Status { get; set; }
     public string? Notes { get; set; }
 
     public int RequestId { get; set; }

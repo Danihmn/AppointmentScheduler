@@ -2,6 +2,6 @@
 
 public record ScheduleAppointmentCommand (
     DateTime Date,
-    EStatus Status,
+    EAppointmentStatus Status,
     int RequestId,
     int DoctorId) : ICommand<ApiResponse<AppointmentResponseDTO>>;

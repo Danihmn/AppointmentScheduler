@@ -1,11 +1,14 @@
 namespace AppointmentScheduler.Features.Doctor.Update;
 
-public class UpdateDoctorCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
+public class UpdateDoctorCommandHandler
+    (IUnitOfWork unitOfWork, IMapper mapper, IValidator<UpdateDoctorCommand> validator)
     : ICommandHandler<UpdateDoctorCommand, ApiResponse<DoctorResponseDTO>>
 {
     public async Task<ApiResponse<DoctorResponseDTO>> Handle
         (UpdateDoctorCommand command, CancellationToken cancellationToken)
     {
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         var doctor = await unitOfWork.DoctorRepository.GetByIdAsync(command.Id, cancellationToken)
             ?? throw new NotFoundException(nameof(DoctorResponseDTO), command.Id);
 

@@ -1,9 +1,8 @@
 ﻿namespace AppointmentScheduler.Domain.Enums;
 
-public enum EStatus
+public enum EAppointmentStatus
 {
     Scheduled,
     Cancelled,
     Finished,
-    NotStarted,
 }

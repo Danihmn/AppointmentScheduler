@@ -3,7 +3,7 @@ namespace AppointmentScheduler.Features.Appointment.Update;
 public record UpdateAppointmentCommand (
     int Id,
     DateTime Date,
-    EStatus Status,
+    EAppointmentStatus Status,
     int RequestId,
     int PatientId,
     int DoctorId,

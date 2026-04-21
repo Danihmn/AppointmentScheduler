@@ -1,11 +1,14 @@
 ﻿namespace AppointmentScheduler.Features.Specialty.Create;
 
-public class CreateSpecialtyCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
+public class CreateSpecialtyCommandHandler
+    (IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSpecialtyCommand> validator)
     : ICommandHandler<CreateSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>>
 {
     public async Task<ApiResponse<SpecialtyResponseDTO>> Handle
         (CreateSpecialtyCommand command, CancellationToken cancellationToken)
     {
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         var specialtyRepository = unitOfWork.SpecialtyRepository;
         var specialty = new Domain.Entities.Specialty
         {

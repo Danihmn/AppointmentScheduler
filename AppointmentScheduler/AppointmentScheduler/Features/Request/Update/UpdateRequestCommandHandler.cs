@@ -1,17 +1,18 @@
 namespace AppointmentScheduler.Features.Request.Update;
 
-public class UpdateRequestCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
+public class UpdateRequestCommandHandler (IUnitOfWork unitOfWork, IMapper mapper, IValidator<UpdateRequestCommand> validator)
     : ICommandHandler<UpdateRequestCommand, ApiResponse<RequestResponseDTO>>
 {
     public async Task<ApiResponse<RequestResponseDTO>> Handle
         (UpdateRequestCommand command, CancellationToken cancellationToken)
     {
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         var request = await unitOfWork.RequestRepository.GetByIdAsync(command.Id, cancellationToken)
             ?? throw new NotFoundException(nameof(RequestResponseDTO), command.Id);
 
         request.Status = command.Status;
         request.Type = command.Type;
-        request.DesiredDate = command.DesiredDate;
         request.Description = command.Description;
         request.Notes = command.Notes;
         request.Priority = command.Priority;

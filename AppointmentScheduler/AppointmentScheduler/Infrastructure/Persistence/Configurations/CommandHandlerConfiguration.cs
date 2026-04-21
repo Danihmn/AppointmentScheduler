@@ -6,17 +6,25 @@
         {
             services.AddScoped<ICommandHandler<ScheduleAppointmentCommand, ApiResponse<AppointmentResponseDTO>>, ScheduleAppointmentCommandHandler>();
             services.AddScoped<ICommandHandler<CreateSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>>, CreateSpecialtyCommandHandler>();
+            services.AddScoped<IValidator<CreateSpecialtyCommand>, CreateSpecialtyCommandValidator>();
             services.AddScoped<ICommandHandler<CreatePatientCommand, ApiResponse<PatientResponseDTO>>, CreatePatientCommandHandler>();
             services.AddScoped<ICommandHandler<CreateDoctorCommand, ApiResponse<DoctorResponseDTO>>, CreateDoctorCommandHandler>();
+            services.AddScoped<IValidator<CreateDoctorCommand>, CreateDoctorCommandValidator>();
             services.AddScoped<ICommandHandler<CreateSecretaryCommand, ApiResponse<SecretaryResponseDTO>>, CreateSecretaryCommandHandler>();
+            services.AddScoped<IValidator<CreateSecretaryCommand>, CreateSecretaryCommandValidator>();
             services.AddScoped<ICommandHandler<CreateRequestCommand, ApiResponse<RequestResponseDTO>>, CreateRequestCommandHandler>();
+            services.AddScoped<IValidator<CreateRequestCommand>, CreateRequestCommandValidator>();
 
             services.AddScoped<ICommandHandler<UpdateAppointmentCommand, ApiResponse<AppointmentResponseDTO>>, UpdateAppointmentCommandHandler>();
             services.AddScoped<ICommandHandler<UpdateDoctorCommand, ApiResponse<DoctorResponseDTO>>, UpdateDoctorCommandHandler>();
+            services.AddScoped<IValidator<UpdateDoctorCommand>, UpdateDoctorCommandValidator>();
             services.AddScoped<ICommandHandler<UpdatePatientCommand, ApiResponse<PatientResponseDTO>>, UpdatePatientCommandHandler>();
             services.AddScoped<ICommandHandler<UpdateSecretaryCommand, ApiResponse<SecretaryResponseDTO>>, UpdateSecretaryCommandHandler>();
+            services.AddScoped<IValidator<UpdateSecretaryCommand>, UpdateSecretaryCommandValidator>();
             services.AddScoped<ICommandHandler<UpdateSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>>, UpdateSpecialtyCommandHandler>();
+            services.AddScoped<IValidator<UpdateSpecialtyCommand>, UpdateSpecialtyCommandValidator>();
             services.AddScoped<ICommandHandler<UpdateRequestCommand, ApiResponse<RequestResponseDTO>>, UpdateRequestCommandHandler>();
+            services.AddScoped<IValidator<UpdateRequestCommand>, UpdateRequestCommandValidator>();
 
             services.AddScoped<ICommandHandler<DeleteAppointmentCommand, ApiResponse<AppointmentResponseDTO>>, DeleteAppointmentCommandHandler>();
             services.AddScoped<ICommandHandler<DeleteDoctorCommand, ApiResponse<DoctorResponseDTO>>, DeleteDoctorCommandHandler>();

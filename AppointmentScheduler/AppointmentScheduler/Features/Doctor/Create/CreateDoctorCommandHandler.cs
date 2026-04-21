@@ -1,11 +1,14 @@
 ﻿namespace AppointmentScheduler.Features.Doctor.Create;
 
-public class CreateDoctorCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
+public class CreateDoctorCommandHandler
+    (IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateDoctorCommand> validator)
     : ICommandHandler<CreateDoctorCommand, ApiResponse<DoctorResponseDTO>>
 {
     public async Task<ApiResponse<DoctorResponseDTO>> Handle
         (CreateDoctorCommand command, CancellationToken cancellationToken)
     {
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         var doctorRepository = unitOfWork.DoctorRepository;
         var doctor = new Domain.Entities.Doctor
         {

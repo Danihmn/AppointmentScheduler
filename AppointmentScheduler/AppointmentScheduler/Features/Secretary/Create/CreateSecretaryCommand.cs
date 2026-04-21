@@ -8,5 +8,5 @@ public record CreateSecretaryCommand (
     string PhoneNumber,
     string Email,
     DateTime HiringDate,
-    bool Active,
+    bool IsActive,
     ERole Role) : ICommand<ApiResponse<SecretaryResponseDTO>>;

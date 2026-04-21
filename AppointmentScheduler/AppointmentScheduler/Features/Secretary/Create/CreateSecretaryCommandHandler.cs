@@ -1,11 +1,14 @@
 ﻿namespace AppointmentScheduler.Features.Secretary.Create;
 
-public class CreateSecretaryCommandHandler (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService, IMapper mapper)
+public class CreateSecretaryCommandHandler
+    (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService, IMapper mapper, IValidator<CreateSecretaryCommand> validator)
     : ICommandHandler<CreateSecretaryCommand, ApiResponse<SecretaryResponseDTO>>
 {
     public async Task<ApiResponse<SecretaryResponseDTO>> Handle
         (CreateSecretaryCommand command, CancellationToken cancellationToken)
     {
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         var secretaryRepository = unitOfWork.SecretaryRepository;
         var secretary = new Domain.Entities.Secretary
         {
@@ -16,7 +19,7 @@ public class CreateSecretaryCommandHandler (IUnitOfWork unitOfWork, IPasswordHas
             PhoneNumber = command.PhoneNumber,
             Email = command.Email,
             HiringDate = command.HiringDate,
-            Active = command.Active,
+            IsActive = command.IsActive,
             Role = command.Role,
         };
 

@@ -25,7 +25,7 @@ public static class DatabaseSeederConfiguration
             PhoneNumber = "00000000000",
             Email = "admin@admin.com",
             HiringDate = DateTime.UtcNow,
-            Active = true,
+            IsActive = true,
             Role = ERole.Admin,
         };
 

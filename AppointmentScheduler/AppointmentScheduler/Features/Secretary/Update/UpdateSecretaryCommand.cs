@@ -8,6 +8,6 @@ public record UpdateSecretaryCommand (
     string PhoneNumber,
     string Email,
     DateTime HiringDate,
-    bool Active,
+    bool IsActive,
     ERole Role,
     string? Password = null) : ICommand<ApiResponse<SecretaryResponseDTO>>;

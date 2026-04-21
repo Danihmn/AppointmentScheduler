@@ -1,11 +1,14 @@
 namespace AppointmentScheduler.Features.Secretary.Update;
 
-public class UpdateSecretaryCommandHandler (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService, IMapper mapper)
+public class UpdateSecretaryCommandHandler
+    (IUnitOfWork unitOfWork, IPasswordHasherService passwordHasherService, IMapper mapper, IValidator<UpdateSecretaryCommand> validator)
     : ICommandHandler<UpdateSecretaryCommand, ApiResponse<SecretaryResponseDTO>>
 {
     public async Task<ApiResponse<SecretaryResponseDTO>> Handle
         (UpdateSecretaryCommand command, CancellationToken cancellationToken)
     {
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         var secretary = await unitOfWork.SecretaryRepository.GetByIdAsync(command.Id, cancellationToken)
             ?? throw new NotFoundException(nameof(SecretaryResponseDTO), command.Id);
 
@@ -15,7 +18,7 @@ public class UpdateSecretaryCommandHandler (IUnitOfWork unitOfWork, IPasswordHas
         secretary.PhoneNumber = command.PhoneNumber;
         secretary.Email = command.Email;
         secretary.HiringDate = command.HiringDate;
-        secretary.Active = command.Active;
+        secretary.IsActive = command.IsActive;
         secretary.Role = command.Role;
 
         if (!string.IsNullOrWhiteSpace(command.Password))

@@ -9,7 +9,7 @@ public class Secretary : BaseEntity
     public string PhoneNumber { get; set; } = null!;
     public string Email { get; set; } = null!;
     public DateTime HiringDate { get; set; }
-    public bool Active { get; set; } = true;
+    public bool IsActive { get; set; } = true;
     public ERole? Role { get; set; }
 
     public virtual ICollection<Appointment> Appointments { get; set; } = [];
