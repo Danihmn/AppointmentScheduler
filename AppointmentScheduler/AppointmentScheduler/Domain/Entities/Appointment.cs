@@ -7,14 +7,8 @@ public class Appointment : BaseEntity
     public string? Notes { get; set; }
 
     public int RequestId { get; set; }
-    public int PatientId { get; set; }
     public int DoctorId { get; set; }
-    public int SpecialtyId { get; set; }
-    public int SecretaryId { get; set; }
 
     public virtual Request Request { get; set; } = null!;
-    public virtual Patient Patient { get; set; } = null!;
     public virtual Doctor Doctor { get; set; } = null!;
-    public virtual Specialty Specialty { get; set; } = null!;
-    public virtual Secretary Secretary { get; set; } = null!;
 }

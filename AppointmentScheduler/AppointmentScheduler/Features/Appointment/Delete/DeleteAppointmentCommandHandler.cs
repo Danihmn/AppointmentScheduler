@@ -1,6 +1,7 @@
 namespace AppointmentScheduler.Features.Appointment.Delete;
 
-public class DeleteAppointmentCommandHandler (IUnitOfWork unitOfWork, IMapper mapper, INotificationService notificationService)
+public class DeleteAppointmentCommandHandler
+    (IUnitOfWork unitOfWork, IMapper mapper, INotificationService notificationService)
     : ICommandHandler<DeleteAppointmentCommand, ApiResponse<AppointmentResponseDTO>>
 {
     public async Task<ApiResponse<AppointmentResponseDTO>> Handle
@@ -12,10 +13,7 @@ public class DeleteAppointmentCommandHandler (IUnitOfWork unitOfWork, IMapper ma
         unitOfWork.AppointmentRepository.Remove(appointment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var secretary = await unitOfWork.SecretaryRepository.GetByIdAsync(appointment.SecretaryId, cancellationToken);
-
-        if (secretary != null)
-            await notificationService.NotifyAppointmentDeleted(command.Id, secretary.Name);
+        await notificationService.NotifyAppointmentDeleted(command.Id);
 
         return ApiResponse<AppointmentResponseDTO>.Ok(mapper.Map<AppointmentResponseDTO>(appointment), "Consulta removida com sucesso.");
     }

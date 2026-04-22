@@ -13,16 +13,10 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
         builder.Property(appointment => appointment.Notes).HasMaxLength(250);
 
         builder.HasOne(appointment => appointment.Request).WithOne(request => request.ResultingAppointment).HasForeignKey<Appointment>(appointment => appointment.RequestId).OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(appointment => appointment.Patient).WithMany(patient => patient.Appointments).HasForeignKey(appointment => appointment.PatientId).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(appointment => appointment.Doctor).WithMany(doctor => doctor.Appointments).HasForeignKey(appointment => appointment.DoctorId).OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(appointment => appointment.Specialty).WithMany().HasForeignKey(appointment => appointment.SpecialtyId).OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(appointment => appointment.Secretary).WithMany(secretary => secretary.Appointments).HasForeignKey(appointment => appointment.SecretaryId).OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(appointment => new { appointment.DoctorId, appointment.Date }).IsUnique();
         builder.HasIndex(appointment => appointment.RequestId).IsUnique();
-        builder.HasIndex(appointment => appointment.PatientId);
-        builder.HasIndex(appointment => appointment.SecretaryId);
-        builder.HasIndex(appointment => appointment.SpecialtyId);
         builder.HasIndex(appointment => appointment.Date);
     }
 }

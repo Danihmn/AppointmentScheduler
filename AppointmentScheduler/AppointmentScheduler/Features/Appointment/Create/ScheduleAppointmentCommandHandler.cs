@@ -1,16 +1,17 @@
 ﻿namespace AppointmentScheduler.Features.Appointment.Create;
 
 public class ScheduleAppointmentCommandHandler
-    (IUnitOfWork unitOfWork, IMapper mapper, INotificationService notificationService)
+    (IUnitOfWork unitOfWork, IMapper mapper, INotificationService notificationService, IValidator<ScheduleAppointmentCommand> validator)
     : ICommandHandler<ScheduleAppointmentCommand, ApiResponse<AppointmentResponseDTO>>
 {
     public async Task<ApiResponse<AppointmentResponseDTO>> Handle
         (ScheduleAppointmentCommand command, CancellationToken cancellationToken = default)
     {
+        await validator.ValidateAndThrowAsync(command, cancellationToken);
+
         var requestRepository = unitOfWork.RequestRepository;
         var appointmentRepository = unitOfWork.AppointmentRepository;
         var doctorRepository = unitOfWork.DoctorRepository;
-        var secretaryRepository = unitOfWork.SecretaryRepository;
         var patientRepository = unitOfWork.PatientRepository;
 
         var request = await requestRepository.GetByIdAsync(command.RequestId, cancellationToken);
@@ -18,6 +19,9 @@ public class ScheduleAppointmentCommandHandler
 
         if (request is null)
             throw new NotFoundException($"Pedido não encontrado.", command.RequestId);
+
+        if (request.Status != ERequestStatus.Approved)
+            throw new BusinessRuleException("A solicitação deve estar aprovada para agendar uma consulta.");
 
         if (doctor is not null)
             if (request.SpecialtyId != doctor.SpecialtyId)
@@ -28,21 +32,16 @@ public class ScheduleAppointmentCommandHandler
             Date = command.Date,
             Status = command.Status,
             RequestId = command.RequestId,
-            PatientId = request.PatientId,
             DoctorId = command.DoctorId,
-            SpecialtyId = request.SpecialtyId,
-            SecretaryId = request.ProcessedBySecretaryId,
             Notes = request.Notes
         };
 
         await appointmentRepository.AddAsync(appointment, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        var secretary = await secretaryRepository.GetByIdAsync(request.ProcessedBySecretaryId, cancellationToken);
         var patient = await patientRepository.GetByIdAsync(request.PatientId, cancellationToken);
 
-        if (secretary is not null && patient is not null && doctor is not null)
-            await notificationService.NotifyAppointmentCreated(secretary.Name, patient.Name, command.Date, doctor.Name);
+        if (patient is not null && doctor is not null)
+            await notificationService.NotifyAppointmentCreated(patient.Name, command.Date, doctor.Name);
 
         return ApiResponse<AppointmentResponseDTO>.Created(mapper.Map<AppointmentResponseDTO>(appointment));
     }

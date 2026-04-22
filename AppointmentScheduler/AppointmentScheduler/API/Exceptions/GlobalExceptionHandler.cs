@@ -11,6 +11,7 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
             UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Não autorizado"),
             ArgumentOutOfRangeException => (StatusCodes.Status400BadRequest, "Parâmetro inválido"),
             KeyNotFoundException => (StatusCodes.Status404NotFound, "Recurso não encontrado"),
+            ValidationException => (StatusCodes.Status400BadRequest, "Validação falhou"),
             _ => (StatusCodes.Status500InternalServerError, "Erro interno do servidor")
         };
 
@@ -21,6 +22,13 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
             Detail = ex.Message,
             Instance = context.Request.Path
         };
+
+        if (ex is ValidationException validationException)
+            problemDetails.Extensions["errors"] = validationException.Errors
+                .GroupBy(error => error.PropertyName)
+                .ToDictionary(failure => failure.Key, g => g
+                .Select(error => error.ErrorMessage)
+                .ToArray());
 
         problemDetails.Extensions["traceId"] = context.TraceIdentifier;
 

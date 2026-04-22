@@ -7,7 +7,7 @@ public static class ScalarConfiguration
         app.MapScalarApiReference("/scalar", options =>
         {
             options
-                .WithTitle("API APPOINTMENT SCHEDULER")
+                .WithTitle("APPOINTMENT SCHEDULER API")
                 .WithOpenApiRoutePattern("/openapi/v1.json");
         });
 

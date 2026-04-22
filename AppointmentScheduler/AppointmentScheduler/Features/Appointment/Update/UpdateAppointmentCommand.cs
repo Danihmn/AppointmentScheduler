@@ -4,9 +4,6 @@ public record UpdateAppointmentCommand (
     int Id,
     DateTime Date,
     EAppointmentStatus Status,
+    string? Notes,
     int RequestId,
-    int PatientId,
-    int DoctorId,
-    int SpecialtyId,
-    int SecretaryId,
-    string? Notes = null) : ICommand<ApiResponse<AppointmentResponseDTO>>;
+    int DoctorId) : ICommand<ApiResponse<AppointmentResponseDTO>>;
