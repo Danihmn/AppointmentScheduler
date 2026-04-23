@@ -1,6 +1,6 @@
 namespace AppointmentScheduler.Features.Specialty.Delete;
 
-public class DeleteSpecialtyCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
+public class DeleteSpecialtyCommandHandler (IUnitOfWork unitOfWork, IMapper mapper, INotificationService notificationService)
     : ICommandHandler<DeleteSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>>
 {
     public async Task<ApiResponse<SpecialtyResponseDTO>> Handle
@@ -11,6 +11,8 @@ public class DeleteSpecialtyCommandHandler (IUnitOfWork unitOfWork, IMapper mapp
 
         unitOfWork.SpecialtyRepository.Remove(specialty);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await notificationService.NotifySpecialtyDeleted(specialty.Id, specialty.Description);
 
         return ApiResponse<SpecialtyResponseDTO>.Ok(mapper.Map<SpecialtyResponseDTO>(specialty), "Especialidade removida com sucesso.");
     }

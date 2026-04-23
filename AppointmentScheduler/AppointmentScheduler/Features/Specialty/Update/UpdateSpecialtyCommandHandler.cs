@@ -1,7 +1,7 @@
 namespace AppointmentScheduler.Features.Specialty.Update;
 
 public class UpdateSpecialtyCommandHandler
-    (IUnitOfWork unitOfWork, IMapper mapper, IValidator<UpdateSpecialtyCommand> validator)
+    (IUnitOfWork unitOfWork, IMapper mapper, IValidator<UpdateSpecialtyCommand> validator, INotificationService notificationService)
     : ICommandHandler<UpdateSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>>
 {
     public async Task<ApiResponse<SpecialtyResponseDTO>> Handle
@@ -17,6 +17,8 @@ public class UpdateSpecialtyCommandHandler
 
         unitOfWork.SpecialtyRepository.Update(specialty);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await notificationService.NotifySpecialtyUpdated(specialty.Id, specialty.Description);
 
         return ApiResponse<SpecialtyResponseDTO>.Ok(mapper.Map<SpecialtyResponseDTO>(specialty), "Especialidade atualizada com sucesso.");
     }

@@ -4,22 +4,11 @@
     {
         public void Register (TypeAdapterConfig config)
         {
-            config.NewConfig<Appointment, AppointmentResponseDTO>()
-                .Map(dest => dest.Status, src => src.Status.ToString())
-                .Map(dest => dest.Request, src => src.Request != null ? src.Request.Adapt<RequestResponseDTO>() : null);
-
-            config.NewConfig<Doctor, DoctorResponseDTO>()
-                .Map(dest => dest.Specialty, src => src.Specialty != null ? src.Specialty.Adapt<SpecialtyResponseDTO>() : null);
-
+            config.NewConfig<Appointment, AppointmentResponseDTO>();
+            config.NewConfig<Doctor, DoctorResponseDTO>();
             config.NewConfig<Patient, PatientResponseDTO>();
-
-            config.NewConfig<Request, RequestResponseDTO>()
-                .Map(dest => dest.Patient, src => src.Patient != null ? src.Patient.Adapt<PatientResponseDTO>() : null)
-                .Map(dest => dest.Specialty, src => src.Specialty != null ? src.Specialty.Adapt<SpecialtyResponseDTO>() : null)
-                .Map(dest => dest.ProcessedBySecretary, src => src.ProcessedBySecretary != null ? src.ProcessedBySecretary.Adapt<SecretaryResponseDTO>() : null);
-
+            config.NewConfig<Request, RequestResponseDTO>();
             config.NewConfig<Secretary, SecretaryResponseDTO>();
-
             config.NewConfig<Specialty, SpecialtyResponseDTO>();
         }
     }

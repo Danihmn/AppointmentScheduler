@@ -15,8 +15,8 @@ public static class AppointmentEndpoints
         appointmentGroup.MapPost("/appointment", async (ScheduleAppointmentCommand command, ICommandHandler<ScheduleAppointmentCommand, ApiResponse<AppointmentResponseDTO>> commandHandlerCreateAppointment, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/appointments/appointment/{command}", await commandHandlerCreateAppointment.Handle(command, cancellationToken))).WithDescription("Cria nova consulta").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
-        appointmentGroup.MapPut("/appointment/{id}", async (int id, UpdateAppointmentCommand command, ICommandHandler<UpdateAppointmentCommand, ApiResponse<AppointmentResponseDTO>> commandHandlerUpdateAppointment, CancellationToken cancellationToken = default) =>
-            TypedResults.Ok(await commandHandlerUpdateAppointment.Handle(command with { Id = id }, cancellationToken))).WithDescription("Atualiza consulta existente").RequireAuthorization(policy => policy.RequireRole("Admin"));
+        appointmentGroup.MapPut("/appointment", async (UpdateAppointmentCommand command, ICommandHandler<UpdateAppointmentCommand, ApiResponse<AppointmentResponseDTO>> commandHandlerUpdateAppointment, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await commandHandlerUpdateAppointment.Handle(command, cancellationToken))).WithDescription("Atualiza consulta existente").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         appointmentGroup.MapDelete("/appointment/{id}", async (int id, ICommandHandler<DeleteAppointmentCommand, ApiResponse<AppointmentResponseDTO>> commandHandlerDeleteAppointment, CancellationToken cancellationToken = default) =>
             TypedResults.Ok(await commandHandlerDeleteAppointment.Handle(new DeleteAppointmentCommand(id), cancellationToken))).WithDescription("Remove consulta").RequireAuthorization(policy => policy.RequireRole("Admin"));

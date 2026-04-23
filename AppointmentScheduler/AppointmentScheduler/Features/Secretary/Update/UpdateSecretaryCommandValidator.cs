@@ -24,7 +24,7 @@
             RuleFor(secretary => secretary.Cpf)
                 .NotEmpty().WithMessage("O CPF é obrigatório.")
                 .Length(11).WithMessage("O CPF deve conter exatamente 11 caracteres.")
-                .Matches(@"^\d{11}$").WithMessage("O CPF deve conter apenas números.");
+                .Matches(@"^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$").WithMessage("O CPF informado é inválido.");
 
             RuleFor(secretary => secretary.PhoneNumber)
                 .NotEmpty().WithMessage("O número de telefone é obrigatório.")

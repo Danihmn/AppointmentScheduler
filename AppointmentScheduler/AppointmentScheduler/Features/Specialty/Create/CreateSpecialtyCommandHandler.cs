@@ -1,7 +1,7 @@
 ﻿namespace AppointmentScheduler.Features.Specialty.Create;
 
 public class CreateSpecialtyCommandHandler
-    (IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSpecialtyCommand> validator)
+    (IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSpecialtyCommand> validator, INotificationService notificationService)
     : ICommandHandler<CreateSpecialtyCommand, ApiResponse<SpecialtyResponseDTO>>
 {
     public async Task<ApiResponse<SpecialtyResponseDTO>> Handle
@@ -18,6 +18,8 @@ public class CreateSpecialtyCommandHandler
 
         await specialtyRepository.AddAsync(specialty, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await notificationService.NotifySpecialtyCreated(specialty.Description);
 
         return ApiResponse<SpecialtyResponseDTO>.Created(mapper.Map<SpecialtyResponseDTO>(specialty));
     }

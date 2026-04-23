@@ -14,7 +14,7 @@
 
             RuleFor(patient => patient.Cpf)
                 .NotEmpty().WithMessage("O CPF do paciente é obrigatório.")
-                .Matches(@"^\d{3}\.\d{3}\.\d{3}\-\d{2}$").WithMessage("O CPF do paciente está em um formato inválido.");
+                .Matches(@"^(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})$").WithMessage("O CPF do paciente está em um formato inválido.");
 
             RuleFor(patient => patient.PhoneNumber)
                 .NotEmpty().WithMessage("O número de telefone do paciente é obrigatório.")

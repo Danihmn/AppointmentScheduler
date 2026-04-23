@@ -1,6 +1,4 @@
-﻿using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract.Generic;
-
-namespace AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract
+﻿namespace AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract
 {
     public interface IRequestRepository : IRepository<Request>
     {

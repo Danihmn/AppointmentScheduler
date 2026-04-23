@@ -15,8 +15,8 @@ public static class RequestEndpoints
         requestGroup.MapPost("/request", async (CreateRequestCommand command, ICommandHandler<CreateRequestCommand, ApiResponse<RequestResponseDTO>> commandHandlerCreateRequest, CancellationToken cancellationToken = default) =>
             TypedResults.Created($"/api/requests/request/{command}", await commandHandlerCreateRequest.Handle(command, cancellationToken))).WithDescription("Cria nova solicitação").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
-        requestGroup.MapPut("/request/{id}", async (int id, UpdateRequestCommand command, ICommandHandler<UpdateRequestCommand, ApiResponse<RequestResponseDTO>> commandHandlerUpdateRequest, CancellationToken cancellationToken = default) =>
-            TypedResults.Ok(await commandHandlerUpdateRequest.Handle(command with { Id = id }, cancellationToken))).WithDescription("Atualiza solicitação existente").RequireAuthorization(policy => policy.RequireRole("Admin"));
+        requestGroup.MapPut("/request", async (UpdateRequestCommand command, ICommandHandler<UpdateRequestCommand, ApiResponse<RequestResponseDTO>> commandHandlerUpdateRequest, CancellationToken cancellationToken = default) =>
+            TypedResults.Ok(await commandHandlerUpdateRequest.Handle(command, cancellationToken))).WithDescription("Atualiza solicitação existente").RequireAuthorization(policy => policy.RequireRole("Admin"));
 
         requestGroup.MapDelete("/request/{id}", async (int id, ICommandHandler<DeleteRequestCommand, ApiResponse<RequestResponseDTO>> commandHandlerDeleteRequest, CancellationToken cancellationToken = default) =>
             TypedResults.Ok(await commandHandlerDeleteRequest.Handle(new DeleteRequestCommand(id), cancellationToken))).WithDescription("Remove solicitação").RequireAuthorization(policy => policy.RequireRole("Admin"));

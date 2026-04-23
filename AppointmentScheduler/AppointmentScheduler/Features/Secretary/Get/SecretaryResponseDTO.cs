@@ -2,12 +2,12 @@
 {
     public class SecretaryResponseDTO
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Cpf { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? Email { get; set; }
-        public DateTime HiringDate { get; set; }
-        public bool Active { get; set; }
+        public required int Id { get; set; }
+        public required string Name { get; set; }
+        public required string Cpf { get; set; }
+        public required string PhoneNumber { get; set; }
+        public required string Email { get; set; }
+        public required DateTime HiringDate { get; set; }
+        public required bool Active { get; set; }
     }
 }

@@ -1,20 +1,16 @@
-﻿using AppointmentScheduler.Features.Patient.Get;
-using AppointmentScheduler.Features.Secretary.Get;
-using AppointmentScheduler.Features.Specialty.Get;
-
-namespace AppointmentScheduler.Features.Request.Get
+﻿namespace AppointmentScheduler.Features.Request.Get
 {
     public class RequestResponseDTO
     {
-        public int Id { get; set; }
-        public string? Status { get; set; }
-        public string? Type { get; set; }
-        public DateTime DesiredDate { get; set; }
-        public string? Description { get; set; }
+        public required int Id { get; set; }
+        public required string Status { get; set; }
+        public required string Type { get; set; }
+        public required DateTime DesiredDate { get; set; }
+        public required string Description { get; set; }
         public string? Notes { get; set; }
-        public string? Priority { get; set; }
-        public PatientResponseDTO? Patient { get; set; }
-        public SpecialtyResponseDTO? Specialty { get; set; }
-        public SecretaryResponseDTO? ProcessedBySecretary { get; set; }
+        public required string Priority { get; set; }
+        public required int PatientId { get; set; }
+        public required int SpecialtyId { get; set; }
+        public required int ProcessedBySecretaryId { get; set; }
     }
 }
