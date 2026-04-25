@@ -10,7 +10,8 @@
 
             RuleFor(doctor => doctor.Crm)
                 .NotEmpty().WithMessage("O CRM do médico é obrigatório.")
-                .Matches(@"^(\d{6})([P])?$").WithMessage("O CRM do médico está em um formato inválido.");
+                .Matches(@"^(?:(?:CRM\s*[-/]?\s*)?[A-Z]{2}\s*[-/]?\s*)?\d{4,7}(?:-?P)?$")
+                .WithMessage("O CRM do médico está em um formato inválido.");
 
             RuleFor(doctor => doctor.PhoneNumber)
                 .NotEmpty().WithMessage("O número de telefone do médico é obrigatório.")
