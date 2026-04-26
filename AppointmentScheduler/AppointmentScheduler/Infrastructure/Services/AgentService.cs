@@ -12,7 +12,12 @@
 
             _agent = chatClient.AsAIAgent(
                 instructions: "You are an agent who will provide important information about a medical clinic, such as appointment scheduling, doctors, patients, receptionists, and specialties. The system is always used by receptionists (internal employees of the clinic), provide relevant information for receptionists. Always respond in Portuguese - Brazil.",
-                tools: [AIFunctionFactory.Create(appointmentTools.GetAllAppointmentsAsync)]
+                tools: [
+                    AIFunctionFactory.Create(appointmentTools.GetAllAppointmentsAsync),
+                    AIFunctionFactory.Create(appointmentTools.GetAppointmentByIdAsync),
+                    AIFunctionFactory.Create(appointmentTools.CreateAppointmentAsync),
+                    AIFunctionFactory.Create(appointmentTools.UpdateAppointmentAsync)
+                    ]
             );
         }
 
