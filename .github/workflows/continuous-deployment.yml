@@ -94,6 +94,9 @@ jobs:
                 "WEBSITES_PORT=8080" \
                 "ConnectionStrings__DefaultConnection=${{ secrets.DB_CONNECTION_STRING }}" \
                 "JWT_PRIVATE_KEY=${{ secrets.JWT_PRIVATE_KEY }}" \
+                "AzureOpenAI__Endpoint=${{ secrets.AZURE_OPENAI_ENDPOINT }}" \
+                "AzureOpenAI__Deployment=${{ secrets.AZURE_OPENAI_DEPLOYMENT }}" \
+                "AzureOpenAI__ApiKey=${{ secrets.AZURE_OPENAI_API_KEY }}" \
                 "ASPNETCORE_ENVIRONMENT=Production"
 
       - name: Azure WebApp - Enable Managed Identity for Azure Container Registry

@@ -11,6 +11,7 @@ public static class EndpointConfiguration
         app.MapSecretaryEndpoints();
         app.MapSpecialtyEndpoints();
         app.MapLoginEndpoints();
+        app.MapAgentEndpoints();
 
         return app;
     }
