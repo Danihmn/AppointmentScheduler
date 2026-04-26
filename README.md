@@ -1,6 +1,6 @@
 # Appointment Scheduler
 
-> A RESTful API built with ASP.NET Core 10 as a hands-on study project for exploring the .NET ecosystem — covering clean architecture, CQRS, JWT authentication, real-time communication, containerization, and CI/CD pipelines. Business rules are intentionally kept simple; the focus is on applying and understanding the toolset.
+> A RESTful API built with ASP.NET Core 10 as a hands-on study project for exploring the .NET ecosystem — covering clean architecture, CQRS, JWT authentication, real-time communication, AI agents with tool use, containerization, and CI/CD pipelines. Business rules are intentionally kept simple; the focus is on applying and understanding the toolset.
 
 [![Continuous Integration, Delivery and Deployment with GitHub Actions and .NET 10](https://github.com/Danihmn/AppointmentScheduler/actions/workflows/continuous-deployment.yml/badge.svg)](https://github.com/Danihmn/AppointmentScheduler/actions/workflows/continuous-deployment.yml)
 
@@ -46,6 +46,7 @@ API          → Minimal API endpoints, exception handling
 | Real-Time | ASP.NET Core SignalR |
 | Error Handling | Hellang.Middleware.ProblemDetails |
 | API Docs | Scalar (`/scalar/v1`) |
+| AI | Azure OpenAI + Microsoft Agent Framework (MAF) |
 | Containerization | Docker + Docker Compose + Portainer |
 | CI/CD | GitHub Actions |
 
@@ -59,6 +60,9 @@ API          → Minimal API endpoints, exception handling
 |---|---|
 | `DB_CONNECTION_STRING` | SQL Server connection string |
 | `JWT_PRIVATE_KEY` | Secret key used to sign JWT tokens |
+| `AzureOpenAI__Endpoint` | Azure OpenAI resource endpoint URL |
+| `AzureOpenAI__Deployment` | Model deployment name (e.g. `gpt-4o`) |
+| `AzureOpenAI__ApiKey` | Azure OpenAI API key |
 
 ### Running locally
 
@@ -95,6 +99,40 @@ API documentation is available at `http://localhost:8080/scalar/v1`.
 
 ---
 
+## AI Agent
+
+The API includes an AI agent powered by **Azure OpenAI** and the **Microsoft Agent Framework (MAF)** (`Microsoft.Agents.AI.OpenAI`).
+
+The agent is stateless — each request runs a fresh `RunAsync` cycle with no conversation memory between calls. It is given a system prompt contextualizing it as a medical clinic assistant aimed at receptionists, and always responds in Brazilian Portuguese.
+
+### Tool Use
+
+The agent has access to one registered tool:
+
+| Tool | Description |
+|---|---|
+| `GetAllAppointmentsAsync` | Lists all appointments. Invoked when the user asks about scheduled appointments. |
+
+Tools are exposed via `AIFunctionFactory.Create()` and decorated with `[Description]` so the model can decide when to invoke them.
+
+### Endpoint
+
+| Method | Route | Auth | Description |
+|---|---|---|---|
+| `POST` | `/api/agent/ask` | JWT — `Admin` role | Sends a prompt to the agent and returns its response |
+
+**Request body:**
+```json
+{ "userInput": "Quais consultas estão agendadas?" }
+```
+
+**Response:**
+```json
+{ "response": "Aqui estão todas as consultas agendadas: ..." }
+```
+
+---
+
 ## API Endpoints
 
 Full interactive documentation is available via **Scalar** at `/scalar/v1`.
@@ -104,6 +142,12 @@ Full interactive documentation is available via **Scalar** at `/scalar/v1`.
 | Method | Route | Description |
 |---|---|---|
 | `POST` | `/api/auth/login` | Authenticate and receive a JWT token |
+
+### AI Agent
+
+| Method | Route | Description |
+|---|---|---|
+| `POST` | `/api/agent/ask` | Send a prompt to the AI agent (Admin only) |
 
 ### Real-Time — SignalR
 
