@@ -55,8 +55,8 @@ global using AppointmentScheduler.Infrastructure.Persistence.Repositories.Implem
 global using AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
 global using AppointmentScheduler.Infrastructure.Services;
 global using AppointmentScheduler.Infrastructure.Tools;
+global using Azure;
 global using Azure.AI.OpenAI;
-global using Azure.Identity;
 global using FluentValidation;
 global using Mapster;
 global using MapsterMapper;

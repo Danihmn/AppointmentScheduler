@@ -1,7 +1,3 @@
-
-
-using Azure;
-
 namespace AppointmentScheduler;
 
 public class Program
@@ -29,14 +25,7 @@ public class Program
 
         builder.Services.AddScoped<INotificationService, NotificationService>();
 
-        builder.Services.AddScoped<AppointmentTools>();
-
-        builder.Services.AddSingleton(_ =>
-            new AzureOpenAIClient(
-                new Uri(builder.Configuration["AzureOpenAI:Endpoint"]!),
-                new AzureKeyCredential(builder.Configuration["AzureOpenAI:ApiKey"]!)));
-
-        builder.Services.AddScoped<IAgentService, AgentService>();
+        builder.Services.AddAgentConfiguration(builder.Configuration);
 
         builder.Services.MapCommandHandlers();
         builder.Services.MapQueryHandlers();

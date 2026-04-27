@@ -9,7 +9,11 @@
             AzureOpenAIClient client,
             IConfiguration configuration,
             AppointmentTools appointmentTools,
-            SpecialtyTools specialtyTools
+            SpecialtyTools specialtyTools,
+            DoctorTools doctorTools,
+            PatientTools patientTools,
+            SecretaryTools secretaryTools,
+            RequestTools requestTools
         )
         {
             var deploymentModel = configuration["AzureOpenAI:Deployment"]
@@ -28,6 +32,22 @@
                     AIFunctionFactory.Create(specialtyTools.GetSpecialtyByIdAsync),
                     AIFunctionFactory.Create(specialtyTools.CreateSpecialtyAsync),
                     AIFunctionFactory.Create(specialtyTools.UpdateSpecialtyAsync),
+                    AIFunctionFactory.Create(doctorTools.GetAllDoctorsAsync),
+                    AIFunctionFactory.Create(doctorTools.GetDoctorByIdAsync),
+                    AIFunctionFactory.Create(doctorTools.CreateDoctorAsync),
+                    AIFunctionFactory.Create(doctorTools.UpdateDoctorAsync),
+                    AIFunctionFactory.Create(patientTools.GetAllPatientsAsync),
+                    AIFunctionFactory.Create(patientTools.GetPatientByIdAsync),
+                    AIFunctionFactory.Create(patientTools.CreatePatientAsync),
+                    AIFunctionFactory.Create(patientTools.UpdatePatientAsync),
+                    AIFunctionFactory.Create(secretaryTools.GetAllSecretariesAsync),
+                    AIFunctionFactory.Create(secretaryTools.GetSecretaryByIdAsync),
+                    AIFunctionFactory.Create(secretaryTools.CreateSecretaryAsync),
+                    AIFunctionFactory.Create(secretaryTools.UpdateSecretaryAsync),
+                    AIFunctionFactory.Create(requestTools.GetAllRequestsAsync),
+                    AIFunctionFactory.Create(requestTools.GetRequestByIdAsync),
+                    AIFunctionFactory.Create(requestTools.CreateRequestAsync),
+                    AIFunctionFactory.Create(requestTools.UpdateRequestAsync),
                 ]
             );
         }
