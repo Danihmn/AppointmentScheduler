@@ -4,5 +4,6 @@
     {
         Task<IEnumerable<Appointment>> GetAllWithDetailAsync (CancellationToken cancellationToken = default);
         Task<Appointment?> GetByIdWithDetailsAsync (int id, CancellationToken cancellationToken = default);
+        Task<bool> HasConflictAsync (int doctorId, DateTime date, CancellationToken cancellationToken = default);
     }
 }

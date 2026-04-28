@@ -16,5 +16,11 @@
             .Include(appointment => appointment.Request)
             .Include(appointment => appointment.Doctor)
             .FirstOrDefaultAsync(appointment => appointment.Id == id, cancellationToken);
+
+        public async Task<bool> HasConflictAsync (int doctorId, DateTime date, CancellationToken cancellationToken = default)
+        => await _dbSet
+            .AnyAsync(appointment => appointment.DoctorId == doctorId
+            && appointment.Date == date
+            && appointment.Status == EAppointmentStatus.Scheduled, cancellationToken);
     }
 }

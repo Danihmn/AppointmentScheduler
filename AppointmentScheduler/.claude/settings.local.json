@@ -4,7 +4,9 @@
       "Bash(az webapp list *)",
       "Bash(grep -E \"\\\\.cs$\")",
       "Bash(dotnet build *)",
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "Bash(rtk ls *)",
+      "Bash(rtk find *)"
     ]
   }
 }

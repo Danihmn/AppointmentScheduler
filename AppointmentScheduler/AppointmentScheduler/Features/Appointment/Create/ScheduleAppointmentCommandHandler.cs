@@ -19,18 +19,20 @@ public class ScheduleAppointmentCommandHandler
 
         if (request is null)
             throw new NotFoundException($"Pedido não encontrado.", command.RequestId);
-
-        if (request.Status != ERequestStatus.Approved)
+        else if (request.Status != ERequestStatus.Approved)
             throw new BusinessRuleException("A solicitação deve estar aprovada para agendar uma consulta.");
 
-        if (doctor is not null)
+        else if (doctor is not null)
             if (request.SpecialtyId != doctor.SpecialtyId)
                 throw new BusinessRuleException("O médico selecionado não possui a especialidade requerida pelo pedido.");
+
+        if (await appointmentRepository.HasConflictAsync(command.DoctorId, command.Date, cancellationToken))
+            throw new BusinessRuleException("O médico selecionado já possui um compromisso agendado para o horário solicitado.");
 
         var appointment = new Domain.Entities.Appointment
         {
             Date = command.Date,
-            Status = command.Status,
+            Status = EAppointmentStatus.Scheduled,
             RequestId = command.RequestId,
             DoctorId = command.DoctorId,
             Notes = request.Notes
