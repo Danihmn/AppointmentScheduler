@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../AppointmentSchedulerTest/AppointmentSchedulerTest.csproj" Id="c965769c-126e-4ddf-9b0f-d5aa57b30dc9" />
   <Project Path="AppointmentScheduler/AppointmentScheduler.csproj" />
   <Project Path="docker-compose.dcproj">
     <Build />

@@ -1,0 +1,11 @@
+﻿global using AppointmentScheduler.Domain.Entities;
+global using AppointmentScheduler.Domain.Enums;
+global using AppointmentScheduler.Features.Appointment.Create;
+global using AppointmentScheduler.Features.Appointment.Get;
+global using AppointmentScheduler.Infrastructure.Persistence.Repositories.Contract;
+global using AppointmentScheduler.Infrastructure.Persistence.UnifOfWork;
+global using AppointmentScheduler.Infrastructure.Services;
+global using FluentAssertions;
+global using FluentValidation;
+global using MapsterMapper;
+global using Moq;

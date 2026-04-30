@@ -12,5 +12,5 @@ public class Doctor : BaseEntity
     public int SpecialtyId { get; set; }
 
     public virtual Specialty Specialty { get; set; } = null!;
-    public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    public virtual ICollection<Appointment> Appointments { get; set; } = [];
 }

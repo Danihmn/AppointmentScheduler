@@ -25,6 +25,10 @@ jobs:
         run: dotnet build AppointmentScheduler.slnx --configuration Release --no-restore
         working-directory: AppointmentScheduler
 
+      - name: Run Tests
+        run: dotnet test AppointmentScheduler.slnx --configuration Release --no-build --verbosity normal
+        working-directory: AppointmentScheduler
+
       - name: Docker Compose Build
         run: docker compose build
         working-directory: AppointmentScheduler
