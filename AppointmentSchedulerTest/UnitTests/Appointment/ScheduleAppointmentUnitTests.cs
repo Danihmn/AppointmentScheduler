@@ -24,6 +24,8 @@
             _unitOfWork.Setup(unitOfWork => unitOfWork.SecretaryRepository).Returns(_secretaryRepository.Object);
             _unitOfWork.Setup(unitOfWork => unitOfWork.SpecialtyRepository).Returns(_specialtyRepository.Object);
 
+            _notificationService.Setup(service => service.NotifyAppointmentCreated(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<string>())).Returns(Task.CompletedTask);
+
             _handler = new(_unitOfWork.Object, _mapper.Object, _notificationService.Object, _validator.Object);
         }
 
@@ -43,6 +45,16 @@
                 PatientId = 1,
                 SpecialtyId = 1,
                 ProcessedBySecretaryId = 1
+            };
+
+            var patient = new Patient
+            {
+                Id = request.PatientId,
+                Name = "Test Patient",
+                Cpf = "00000000000",
+                PhoneNumber = "00000000000",
+                Email = "",
+                Gender = EGender.Male
             };
 
             var doctor = new Doctor
@@ -78,6 +90,7 @@
 
             _requestRepository.Setup(repo => repo.GetByIdAsync(command.RequestId)).ReturnsAsync(request);
             _doctorRepository.Setup(repo => repo.GetByIdAsync(command.DoctorId)).ReturnsAsync(doctor);
+            _patientRepository.Setup(repo => repo.GetByIdAsync(request.PatientId)).ReturnsAsync(patient);
             _appointmentRepository.Setup(repo => repo.HasConflictAsync(command.DoctorId, command.Date)).ReturnsAsync(false);
             _appointmentRepository.Setup(repo => repo.AddAsync(It.IsAny<AppointmentScheduler.Domain.Entities.Appointment>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
@@ -92,6 +105,7 @@
             result.Should().NotBeNull();
             result.Success.Should().BeTrue();
             _unitOfWork.Verify(unitOfWork => unitOfWork.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            _notificationService.Verify(service => service.NotifyAppointmentCreated(It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
             #endregion
         }
     }

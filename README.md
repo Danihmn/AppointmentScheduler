@@ -4,6 +4,8 @@
 
 [![Continuous Integration, Delivery and Deployment with GitHub Actions and .NET 10](https://github.com/Danihmn/AppointmentScheduler/actions/workflows/continuous-deployment.yml/badge.svg)](https://github.com/Danihmn/AppointmentScheduler/actions/workflows/continuous-deployment.yml)
 
+> **Note:** This is a learning and experimentation project. The focus is not on business rules, but on hands-on contact with frameworks, technologies, and packages. The AI agent feature has been disabled to avoid ongoing cloud costs.
+
 ---
 
 ## About
@@ -100,6 +102,8 @@ API documentation is available at `http://localhost:8080/scalar/v1`.
 ---
 
 ## AI Agent
+
+> **Disabled:** The AI agent feature has been deactivated to avoid Azure OpenAI costs. The implementation remains in the codebase as a reference for studying the Microsoft Agent Framework (MAF) and Azure OpenAI integration.
 
 The API includes an AI agent powered by **Azure OpenAI** and the **Microsoft Agent Framework (MAF)** (`Microsoft.Agents.AI.OpenAI`).
 

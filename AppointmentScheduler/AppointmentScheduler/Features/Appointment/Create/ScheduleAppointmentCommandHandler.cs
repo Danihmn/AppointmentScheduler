@@ -40,6 +40,7 @@ public class ScheduleAppointmentCommandHandler
 
         await appointmentRepository.AddAsync(appointment, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
         var patient = await patientRepository.GetByIdAsync(request.PatientId, cancellationToken);
 
         if (patient is not null && doctor is not null)
