@@ -1,3 +1,5 @@
+## Discontinued
+
 # Appointment Scheduler
 
 > A RESTful API built with ASP.NET Core 10 as a hands-on study project for exploring the .NET ecosystem — covering clean architecture, CQRS, JWT authentication, real-time communication, AI agents with tool use, containerization, and CI/CD pipelines. Business rules are intentionally kept simple; the focus is on applying and understanding the toolset.
